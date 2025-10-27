@@ -1,0 +1,93 @@
+{
+  "common": {
+    "welcome": "Welcome",
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "language": "Language",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search"
+  },
+  "hero": {
+    "title": "Start your order now and enjoy",
+    "titleLine2": "a stress-free moving experience",
+    "subtitle": "Ready to move? Book an appointment, specify your needs, and let our professional team move your furniture safely and quickly",
+    "ratingExcellent": "Excellent",
+    "ratingHigh": "High Rating",
+    "ctaOrderMove": "Request a transfer",
+    "ctaJoinPartner": "Join as a moving company"
+  },
+  "partners": {
+    "title": "Success Partners"
+  },
+  "services": {
+    "title": "Services",
+    "liveTracking": "Live Tracking",
+    "disassembly": "Disassembly & Assembly",
+    "packing": "Secure Packing",
+    "furnitureMoving": "Furniture Moving",
+    "newServices": "New Services & Accessories",
+    "cleaning": "Cleaning"
+  },
+  "about": {
+    "title": "About Us",
+    "visionTitle": "Our Vision",
+    "visionText": "To be the first choice in furniture moving in Saudi Arabia, by providing high-quality services at competitive prices.",
+    "missionTitle": "Our Mission",
+    "missionText": "We strive to provide the best furniture moving services safely and quickly, ensuring the satisfaction of our valued customers through a professional and highly trained team.",
+    "valuesTitle": "Our Values",
+    "trust": "Trust",
+    "speed": "Speed",
+    "quality": "Quality",
+    "satisfaction": "Customer Satisfaction"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "description": "We are always happy to communicate with you and listen to your questions and suggestions and help you choose. You can leave a message and fill in the data below and we will contact you as soon as possible",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Full Name",
+    "email": "Email",
+    "emailPlaceholder": "Email",
+    "phone": "Phone",
+    "phonePlaceholder": "Phone Number",
+    "pickupLocation": "Pickup Location",
+    "pickupPlaceholder": "Pickup Location",
+    "dropoffLocation": "Destination",
+    "dropoffPlaceholder": "Dropoff Location",
+    "additionalDetails": "Additional Details",
+    "detailsPlaceholder": "Add additional details...",
+    "sendMessage": "Send Message"
+  },
+  "newsletter": {
+    "title": "Subscribe to Newsletter",
+    "subtitle": "Get the latest offers and discounts",
+    "emailPlaceholder": "Enter your email",
+    "subscribeNow": "Subscribe Now",
+    "weeklyEmails": "Weekly Emails",
+    "exclusiveOffers": "Exclusive Offers",
+    "dataProtected": "Your data is protected"
+  },
+  "navigation": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "settings": "Settings",
+    "partners": "Success Partners",
+    "services": "Services",
+    "logout": "Logout"
+  },
+  "footer": {
+    "companyName": "Sakani",
+    "companyDescription": "Furniture Moving Service - We provide the best furniture moving services safely and quickly",
+    "quickLinks": "Quick Links",
+    "allRightsReserved": "All rights reserved"
+  },
+  "userMenu": {
+    "username": "Username"
+  }
+}

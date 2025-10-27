@@ -1,0 +1,93 @@
+{
+  "common": {
+    "welcome": "مرحباً بك",
+    "home": "الرئيسية",
+    "about": "من نحن",
+    "contact": "اتصل بنا",
+    "language": "اللغة",
+    "loading": "جاري التحميل...",
+    "error": "حدث خطأ",
+    "submit": "إرسال",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "search": "بحث"
+  },
+  "hero": {
+    "title": "ابدأ طلبك الآن واستمتع",
+    "titleLine2": "بتجربة نقل خالية من التوتر!",
+    "subtitle": "جاهز للانتقال؟ احجز موعد، حدد الاحتياجات ودلبة فريقنا المحترف بنقل أثاثك بأمانة كاملة وسرعة",
+    "ratingExcellent": "متميز جداً",
+    "ratingHigh": "تقييم عالي",
+    "ctaOrderMove": "اطلب نقلة",
+    "ctaJoinPartner": "إنضم كشركة نقل"
+  },
+  "partners": {
+    "title": "شركاء النجاح"
+  },
+  "services": {
+    "title": "الخدمات",
+    "liveTracking": "تتبع مباشر",
+    "disassembly": "فك وتركيب",
+    "packing": "تغليف محكم",
+    "furnitureMoving": "نقل الأثاث",
+    "newServices": "ناس جدد الفند والإكسسوار",
+    "cleaning": "تنظيف"
+  },
+  "about": {
+    "title": "من نحن",
+    "visionTitle": "رؤيتنا",
+    "visionText": "أن نكون الخيار الأول في مجال نقل الأثاث في المملكة العربية السعودية، من خلال تقديم خدمات عالية الجودة وبأسعار تنافسية.",
+    "missionTitle": "رسالتنا",
+    "missionText": "نسعى لتقديم أفضل خدمات نقل الأثاث بأمان وسرعة، مع ضمان رضا عملائنا الكرام من خلال فريق عمل محترف ومدرب على أعلى مستوى.",
+    "valuesTitle": "قيمنا",
+    "trust": "الأمانة",
+    "speed": "السرعة",
+    "quality": "الجودة",
+    "satisfaction": "رضا العملاء"
+  },
+  "contact": {
+    "title": "تواصل معنا",
+    "description": "نسعد دائماً بالتواصل معك والاستماع إلى أسئلتك واقتراحاتك ومساعدتك في الاختيار، يمكنك ترك الرسالة و تعبئة البيانات أدناه وسيتم التواصل معك في أسرع وقت ممكن",
+    "fullName": "الأسم كاملا",
+    "fullNamePlaceholder": "الاسم الكامل",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "البريد الإلكتروني",
+    "phone": "جوال الواصل",
+    "phonePlaceholder": "جوال الواصل",
+    "pickupLocation": "الموقع",
+    "pickupPlaceholder": "موقع الاستلام",
+    "dropoffLocation": "الوجهة",
+    "dropoffPlaceholder": "موقع التسليم",
+    "additionalDetails": "تفاصيل أخرى",
+    "detailsPlaceholder": "أضف تفاصيل إضافية...",
+    "sendMessage": "إرسال الرسالة"
+  },
+  "newsletter": {
+    "title": "اشترك في القائمة البريدية",
+    "subtitle": "احصل على أحدث العروض والخصومات",
+    "emailPlaceholder": "أدخل بريدك الإلكتروني",
+    "subscribeNow": "اشترك الآن",
+    "weeklyEmails": "رسائل أسبوعية",
+    "exclusiveOffers": "عروض حصرية",
+    "dataProtected": "بياناتك محمية"
+  },
+  "navigation": {
+    "home": "الرئيسية",
+    "dashboard": "لوحة التحكم",
+    "settings": "الإعدادات",
+    "partners": "شركاء النجاح",
+    "services": "الخدمات",
+    "logout": "تسجيل الخروج"
+  },
+  "footer": {
+    "companyName": "سكني",
+    "companyDescription": "خدمة نقل الأثاث - نقدم أفضل خدمات نقل الأثاث بأمان وسرعة",
+    "quickLinks": "روابط سريعة",
+    "allRightsReserved": "جميع الحقوق محفوظة"
+  },
+  "userMenu": {
+    "username": "اسم المستخدم"
+  }
+}
