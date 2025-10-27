@@ -129,28 +129,21 @@ export default function MobileNavbar() {
             </Link>
           )}
 
-          {/* Hamburger Menu with Avatar */}
-          <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger asChild>
-              <button
-                className={`flex items-center gap-3 rounded-xl px-2 py-1 ${
-                  isRTL ? 'order-1' : 'order-2'
-                } ${isLoggedIn ? 'border-2 border-gray-300' : 'border-2 border-white'}`}
-              >
-                <Menu className="w-6 h-6" />
-                <div
-                  className={`w-7 h-7 rounded-full overflow-hidden ${
-                    isLoggedIn ? 'bg-gray-200' : 'bg-white'
+          {/* Hamburger Menu and User Avatar */}
+          <div className={`flex items-center gap-3 ${isRTL ? 'order-1' : 'order-2'}`}>
+            {/* Menu Button */}
+            <Sheet open={open} onOpenChange={setOpen}>
+              <SheetTrigger asChild>
+                <button
+                  className={`p-2 rounded-xl ${
+                    isLoggedIn
+                      ? 'border-2 border-gray-300'
+                      : 'border-2 border-white'
                   }`}
                 >
-                  <User
-                    className={`w-full h-full p-1 ${
-                      isLoggedIn ? 'text-gray-900' : 'text-[#00B8A9]'
-                    }`}
-                  />
-                </div>
-              </button>
-            </SheetTrigger>
+                  <Menu className="w-6 h-6" />
+                </button>
+              </SheetTrigger>
 
             <SheetContent
               side={isRTL ? 'right' : 'left'}
@@ -214,7 +207,20 @@ export default function MobileNavbar() {
                 {/* Menu Footer */}
               </div>
             </SheetContent>
-          </Sheet>
+            </Sheet>
+
+            {/* User Avatar - Navigate to Profile */}
+            <Link
+              href="/profile"
+              className={`w-9 h-9 rounded-full overflow-hidden ${
+                isLoggedIn ? 'bg-gray-200' : 'bg-white'
+              }`}
+            >
+              <User className={`w-full h-full p-1.5 ${
+                isLoggedIn ? 'text-gray-900' : 'text-[#00B8A9]'
+              }`} />
+            </Link>
+          </div>
         </div>
       </div>
     </>
