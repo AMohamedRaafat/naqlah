@@ -130,15 +130,15 @@ export default function MobileNavbar() {
           )}
 
           {/* Hamburger Menu and User Avatar - Same Border */}
-          <div className={`flex items-center gap-3 rounded-xl px-2 py-1 ${
-            isRTL ? 'order-1' : 'order-2'
-          } ${
-            isLoggedIn ? 'border-2 border-gray-300' : 'border-2 border-white'
-          }`}>
+          <div
+            className={`flex items-center gap-3 rounded-xl px-2 py-1 ${
+              isRTL ? 'order-1' : 'order-2'
+            } ${isLoggedIn ? 'border border-gray-300' : 'border border-white'}`}
+          >
             {/* Menu Button */}
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
-                <button className="p-0">
+                <button className={`p-0 ${isRTL ? 'order-1' : 'order-2'}`}>
                   <Menu className="w-6 h-6" />
                 </button>
               </SheetTrigger>
@@ -217,13 +217,11 @@ export default function MobileNavbar() {
             {/* User Avatar - Navigate to Profile */}
             <Link
               href="/profile"
-              className={`w-7 h-7 rounded-full overflow-hidden ${
+              className={`w-7 h-7 rounded-full overflow-hidden border-2 border-white ${
                 isLoggedIn ? 'bg-gray-200' : 'bg-white'
               }`}
             >
-              <User
-                className={`w-full h-full p-1 ${isLoggedIn ? 'text-gray-900' : 'text-[#00B8A9]'}`}
-              />
+              {!isLoggedIn ? <div className="w-full h-full p-1 bg-[#007973] " /> : ''}
             </Link>
           </div>
         </div>
