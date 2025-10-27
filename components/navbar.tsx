@@ -76,7 +76,7 @@ export default function Navbar() {
                 <h1 className="text-2xl font-semibold">{getPageTitle()}</h1>
               </div>
             ) : (
-              <Link href="/" className="flex items-center order-3">
+              <Link href="/" className="flex items-center order-1">
                 <Image
                   src="/assets/logo.svg"
                   alt="سكني"
@@ -88,7 +88,7 @@ export default function Navbar() {
             )}
 
             {/* Navigation Links - Center/Left in RTL */}
-            <div className="flex items-center gap-8 order-1">
+            <div className="flex items-center gap-8 order-2">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
@@ -109,7 +109,7 @@ export default function Navbar() {
               ))}
             </div>
 
-            <div className="flex items-center gap-4 order-2">
+            <div className="flex items-center gap-4 order-3">
               {/* Language Switcher */}
               <button
                 onClick={switchLanguage}
