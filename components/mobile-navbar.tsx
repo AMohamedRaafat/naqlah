@@ -129,96 +129,101 @@ export default function MobileNavbar() {
             </Link>
           )}
 
-          {/* Hamburger Menu and User Avatar */}
-          <div className={`flex items-center gap-3 ${isRTL ? 'order-1' : 'order-2'}`}>
+          {/* Hamburger Menu and User Avatar - Same Border */}
+          <div className={`flex items-center gap-3 rounded-xl px-2 py-1 ${
+            isRTL ? 'order-1' : 'order-2'
+          } ${
+            isLoggedIn ? 'border-2 border-gray-300' : 'border-2 border-white'
+          }`}>
             {/* Menu Button */}
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
-                <button
-                  className={`p-2 rounded-xl ${
-                    isLoggedIn
-                      ? 'border-2 border-gray-300'
-                      : 'border-2 border-white'
-                  }`}
-                >
+                <button className="p-0">
                   <Menu className="w-6 h-6" />
                 </button>
               </SheetTrigger>
 
-            <SheetContent
-              side={isRTL ? 'right' : 'left'}
-              className="w-full max-w-none p-0 font-expo-arabic"
-            >
-              <div className="flex flex-col h-full bg-white">
-                {/* Menu Items */}
-                <nav className="flex-1 pt-10 pb-4 px-4 text-black font-regular">
-                  <ul className="space-y-0">
-                    {menuItems.map((item, index) => (
-                      <li key={index}>
-                        {item.isExternal ? (
-                          <Link
-                            href={item.href || '/'}
-                            onClick={() => setOpen(false)}
-                            className={`flex items-center gap-4 px-4 py-3 hover:bg-gray-50 transition-colors ${
-                              isRTL ? 'flex-row text-right' : 'flex-row text-left'
-                            }`}
-                          >
-                            <Image src={item.icon} alt="icon" width={20} height={20} />
-                            <span className="text-gray-800 text-[15px]">{item.label}</span>
-                          </Link>
-                        ) : (
-                          <button
-                            onClick={() => item.section && scrollToSection(item.section)}
-                            className={`flex items-center gap-4 px-4 py-3 hover:bg-gray-50 transition-colors w-full  ${
-                              isRTL ? 'flex-row text-right' : 'flex-row text-left'
-                            }`}
-                          >
-                            <Image src={item.icon} alt="icon" width={20} height={20} />
-                            <span className="text-gray-800 text-[15px]">{item.label}</span>
-                          </button>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="border-t border-gray-200 mt-4 py-3 ">
-                    <button
-                      onClick={switchLanguage}
-                      className={`flex items-center gap-4 px-4 py-4 w-full hover:bg-gray-50 transition-colors  ${
-                        isRTL ? 'flex-row text-right' : 'flex-row text-left'
-                      }`}
-                    >
-                      <Image src="/assets/menu-icons/out.svg" alt="icon" width={20} height={20} />
-                      <span className="text-gray-800 text-[15px]">{t('common.language')}</span>
-                    </button>
-                    {isLoggedIn && (
+              <SheetContent
+                side={isRTL ? 'right' : 'left'}
+                className="w-full max-w-none p-0 font-expo-arabic"
+              >
+                <div className="flex flex-col h-full bg-white">
+                  {/* Menu Items */}
+                  <nav className="flex-1 pt-10 pb-4 px-4 text-black font-regular">
+                    <ul className="space-y-0">
+                      {menuItems.map((item, index) => (
+                        <li key={index}>
+                          {item.isExternal ? (
+                            <Link
+                              href={item.href || '/'}
+                              onClick={() => setOpen(false)}
+                              className={`flex items-center gap-4 px-4 py-3 hover:bg-gray-50 transition-colors ${
+                                isRTL ? 'flex-row text-right' : 'flex-row text-left'
+                              }`}
+                            >
+                              <Image src={item.icon} alt="icon" width={20} height={20} />
+                              <span className="text-gray-800 text-[15px]">{item.label}</span>
+                            </Link>
+                          ) : (
+                            <button
+                              onClick={() => item.section && scrollToSection(item.section)}
+                              className={`flex items-center gap-4 px-4 py-3 hover:bg-gray-50 transition-colors w-full  ${
+                                isRTL ? 'flex-row text-right' : 'flex-row text-left'
+                              }`}
+                            >
+                              <Image src={item.icon} alt="icon" width={20} height={20} />
+                              <span className="text-gray-800 text-[15px]">{item.label}</span>
+                            </button>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="border-t border-gray-200 mt-4 py-3 ">
                       <button
-                        onClick={handleLogout}
-                        className={`flex items-center gap-4 px-4 py-4 w-full hover:bg-gray-50 transition-colors ${
+                        onClick={switchLanguage}
+                        className={`flex items-center gap-4 px-4 py-4 w-full hover:bg-gray-50 transition-colors  ${
                           isRTL ? 'flex-row text-right' : 'flex-row text-left'
                         }`}
                       >
                         <Image src="/assets/menu-icons/out.svg" alt="icon" width={20} height={20} />
-                        <span className="text-gray-800 text-[15px]">{t('navigation.logout')}</span>
+                        <span className="text-gray-800 text-[15px]">{t('common.language')}</span>
                       </button>
-                    )}
-                  </div>
-                </nav>
+                      {isLoggedIn && (
+                        <button
+                          onClick={handleLogout}
+                          className={`flex items-center gap-4 px-4 py-4 w-full hover:bg-gray-50 transition-colors ${
+                            isRTL ? 'flex-row text-right' : 'flex-row text-left'
+                          }`}
+                        >
+                          <Image
+                            src="/assets/menu-icons/out.svg"
+                            alt="icon"
+                            width={20}
+                            height={20}
+                          />
+                          <span className="text-gray-800 text-[15px]">
+                            {t('navigation.logout')}
+                          </span>
+                        </button>
+                      )}
+                    </div>
+                  </nav>
 
-                {/* Menu Footer */}
-              </div>
-            </SheetContent>
+                  {/* Menu Footer */}
+                </div>
+              </SheetContent>
             </Sheet>
 
             {/* User Avatar - Navigate to Profile */}
             <Link
               href="/profile"
-              className={`w-9 h-9 rounded-full overflow-hidden ${
+              className={`w-7 h-7 rounded-full overflow-hidden ${
                 isLoggedIn ? 'bg-gray-200' : 'bg-white'
               }`}
             >
-              <User className={`w-full h-full p-1.5 ${
-                isLoggedIn ? 'text-gray-900' : 'text-[#00B8A9]'
-              }`} />
+              <User
+                className={`w-full h-full p-1 ${isLoggedIn ? 'text-gray-900' : 'text-[#00B8A9]'}`}
+              />
             </Link>
           </div>
         </div>
