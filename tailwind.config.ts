@@ -66,11 +66,22 @@ const config: Config = {
           '0%, 100%': { transform: 'scale(1)' },
           '50%': { transform: 'scale(1.1)' },
         },
+        'slide-up': {
+          '0%': { 
+            transform: 'translateY(100%)',
+            opacity: '0',
+          },
+          '100%': { 
+            transform: 'translateY(0)',
+            opacity: '1',
+          },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'bounce-scale': 'bounce-scale 1s ease-in-out infinite',
+        'slide-up-delayed': 'slide-up 0.6s ease-out 1s forwards',
       },
     },
   },
