@@ -54,7 +54,7 @@ export default function PartnersSection() {
   }, [api]);
 
   return (
-    <section id="partners" className="mb-6 px-4 bg-gray-50">
+    <section id="partners" className="mb-6 px-4 ">
       <div className="container mx-auto max-w-4xl">
         <h2 className="text-2xl md:text-3xl font-bold text-start text-[#4B4F63] mb-4">
           {t('title')}
