@@ -9,6 +9,7 @@ import { useAuth } from '@/contexts/auth-context';
 import { usePathname } from 'next/navigation';
 import MobileNavbar from './mobile-navbar';
 import DesktopUserMenu from './desktop-user-menu';
+import { getNavItems, getPageTitle as getTitle } from '@/constants/navigation';
 
 export default function Navbar() {
   const t = useTranslations();
@@ -16,40 +17,12 @@ export default function Navbar() {
   const { isLoggedIn, isCompany } = useAuth();
   const pathname = usePathname();
 
-  // Get current page title
-  const getPageTitle = () => {
-    if (pathname === '/dashboard') return t('navigation.dashboard');
-    if (pathname === '/settings') return t('navigation.settings');
-    return t('navigation.home');
-  };
+  // Get current page title from centralized function
+  const pageTitle = getTitle(pathname, t);
 
-  // Define nav items based on auth state
+  // Get nav items from centralized configuration
   const navItems = useMemo(() => {
-    const items = [];
-
-    // Always show home
-    items.push({ label: t('navigation.home'), href: '/' });
-
-    // Show dashboard only if logged in
-    if (isLoggedIn) {
-      items.push({ label: t('navigation.dashboard'), href: '/dashboard' });
-    }
-
-    // Show partners section only for non-companies or non-logged-in users
-    if (!isLoggedIn || !isCompany) {
-      items.push({ label: t('navigation.partners'), href: '#partners' });
-    }
-
-    // Always show services
-    items.push({ label: t('navigation.services'), href: '#services' });
-
-    // Always show about
-    items.push({ label: t('common.about'), href: '#about' });
-
-    // Always show contact
-    items.push({ label: t('common.contact'), href: '#contact' });
-
-    return items;
+    return getNavItems({ isLoggedIn, isCompany, t });
   }, [isLoggedIn, isCompany, t]);
 
   const switchLanguage = () => {
@@ -73,7 +46,7 @@ export default function Navbar() {
             {/* Logo or Page Title - Right side in RTL */}
             {isLoggedIn ? (
               <div className="flex items-center order-3">
-                <h1 className="text-2xl font-semibold">{getPageTitle()}</h1>
+                <h1 className="text-2xl font-semibold">{pageTitle}</h1>
               </div>
             ) : (
               <Link href="/" className="flex items-center order-1">

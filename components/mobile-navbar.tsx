@@ -9,6 +9,7 @@ import { useAuth } from '@/contexts/auth-context';
 import { usePathname } from 'next/navigation';
 import { Menu, User } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { getMobileMenuItems, getPageTitle as getTitle } from '@/constants/navigation';
 
 export default function MobileNavbar() {
   const t = useTranslations();
@@ -18,70 +19,12 @@ export default function MobileNavbar() {
   const [open, setOpen] = useState(false);
   const isRTL = locale === 'ar';
 
-  // Get current page title
-  const getPageTitle = () => {
-    if (pathname === '/dashboard') return t('navigation.dashboard');
-    if (pathname === '/settings') return t('navigation.settings');
-    return t('navigation.home');
-  };
+  // Get current page title from centralized function
+  const pageTitle = getTitle(pathname, t);
 
-  // Define menu items based on auth state
+  // Get menu items from centralized configuration
   const menuItems = useMemo(() => {
-    const items = [];
-
-    // Always show home
-    items.push({
-      icon: '/assets/menu-icons/home.svg',
-      label: t('navigation.home'),
-      href: '/',
-      isExternal: true,
-    });
-
-    // Show dashboard only if logged in
-    if (isLoggedIn) {
-      items.push({
-        icon: '/assets/menu-icons/dashboard.svg',
-        label: t('navigation.dashboard'),
-        href: '/dashboard',
-        isExternal: true,
-      });
-    }
-
-    // Show partners section only for companies
-    if (!isLoggedIn || !isCompany) {
-      items.push({
-        icon: '/assets/menu-icons/partners.svg',
-        label: t('navigation.partners'),
-        href: '#partners',
-        section: 'partners',
-      });
-    }
-
-    // Always show services
-    items.push({
-      icon: '/assets/menu-icons/partners.svg',
-      label: t('navigation.services'),
-      href: '#services',
-      section: 'services',
-    });
-
-    // Always show about
-    items.push({
-      icon: '/assets/menu-icons/who.svg',
-      label: t('common.about'),
-      href: '#about',
-      section: 'about',
-    });
-
-    // Always show contact
-    items.push({
-      icon: '/assets/menu-icons/phone.svg',
-      label: t('common.contact'),
-      href: '#contact',
-      section: 'contact',
-    });
-
-    return items;
+    return getMobileMenuItems({ isLoggedIn, isCompany, t });
   }, [isLoggedIn, isCompany, t]);
 
   const scrollToSection = (sectionId: string) => {
@@ -115,7 +58,7 @@ export default function MobileNavbar() {
           {/* Logo or Page Title */}
           {isLoggedIn ? (
             <div className={`flex items-center ${isRTL ? 'order-1' : 'order-1'}`}>
-              <h1 className="text-xl font-semibold">{getPageTitle()}</h1>
+              <h1 className="text-xl font-semibold">{pageTitle}</h1>
             </div>
           ) : (
             <Link href="/" className={`flex items-center ${isRTL ? 'order-1' : 'order-1'}`}>
