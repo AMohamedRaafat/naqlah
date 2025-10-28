@@ -112,7 +112,7 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
 
     try {
       const ac = new AbortController();
-      
+
       // Set timeout to abort after 5 minutes
       const timeoutId = setTimeout(() => {
         ac.abort();
@@ -134,7 +134,7 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
       if (credential && (credential as any).code) {
         const otpCode = (credential as any).code;
         console.log('WebOTP: ✅ OTP received and auto-filled:', otpCode);
-        
+
         // Auto-fill the OTP field
         setOtp(otpCode);
         setOtpError('');
@@ -153,7 +153,7 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
       } else {
         console.log('WebOTP: ❌ Error -', err.name, ':', err.message || err);
       }
-      
+
       // Always fall back gracefully - user can enter manually
       console.log('WebOTP: Falling back to manual OTP entry or autocomplete');
     }
