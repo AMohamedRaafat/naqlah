@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
@@ -17,7 +17,6 @@ export default function MobileNavbar() {
   const { isLoggedIn, isCompany, logout } = useAuth();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState<string>('');
   const isRTL = locale === 'ar';
 
   // Get current page title from centralized function
@@ -27,43 +26,6 @@ export default function MobileNavbar() {
   const menuItems = useMemo(() => {
     return getMobileMenuItems({ isLoggedIn, isCompany, t });
   }, [isLoggedIn, isCompany, t]);
-
-  // Track active section on homepage
-  useEffect(() => {
-    if (pathname !== '/') {
-      setActiveSection('');
-      return;
-    }
-
-    const observerOptions = {
-      root: null,
-      rootMargin: '-20% 0px -70% 0px', // Trigger when section is in the middle of viewport
-      threshold: 0,
-    };
-
-    const observerCallback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-    // Observe all sections
-    const sections = ['partners', 'services', 'about', 'contact'];
-    sections.forEach((sectionId) => {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        observer.observe(element);
-      }
-    });
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [pathname]);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -134,9 +96,7 @@ export default function MobileNavbar() {
                     <ul className="space-y-0">
                       {menuItems.map((item, index) => {
                         // Check if this item is active
-                        const isActive = item.isExternal
-                          ? pathname === item.href
-                          : pathname === '/' && item.section === activeSection;
+                        const isActive = pathname === item.href;
 
                         return (
                           <li key={index}>
