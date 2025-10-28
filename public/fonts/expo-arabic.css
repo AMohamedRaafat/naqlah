@@ -1,0 +1,36 @@
+/* Expo Arabic Font - Add your font files here */
+@font-face {
+  font-family: 'Expo Arabic';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/ExpoArabic-Regular.woff2') format('woff2'),
+    url('/fonts/ExpoArabic-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Expo Arabic';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/ExpoArabic-Medium.woff2') format('woff2'),
+    url('/fonts/ExpoArabic-Medium.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Expo Arabic';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/ExpoArabic-SemiBold.woff2') format('woff2'),
+    url('/fonts/ExpoArabic-SemiBold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Expo Arabic';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/ExpoArabic-Bold.woff2') format('woff2'),
+    url('/fonts/ExpoArabic-Bold.woff') format('woff');
+}

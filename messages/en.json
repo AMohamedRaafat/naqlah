@@ -1,0 +1,152 @@
+{
+  "common": {
+    "welcome": "Welcome",
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "language": "Language",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search"
+  },
+  "hero": {
+    "title": "Start your order now and enjoy",
+    "titleLine2": "a stress-free moving experience",
+    "subtitle": "Ready to move? Book an appointment, specify your needs, and let our professional team move your furniture safely and quickly",
+    "ratingExcellent": "Excellent",
+    "ratingHigh": "High Rating",
+    "ctaOrderMove": "Request a transfer",
+    "ctaJoinPartner": "Join as a moving company"
+  },
+  "partners": {
+    "title": "Success Partners"
+  },
+  "services": {
+    "title": "Services",
+    "liveTracking": "Live Tracking",
+    "disassembly": "Disassembly & Assembly",
+    "packing": "Secure Packing",
+    "furnitureMoving": "Furniture Moving",
+    "securityPacking": "Security Packing",
+    "cleaning": "Cleaning"
+  },
+  "about": {
+    "title": "About Us",
+    "visionTitle": "Our Vision",
+    "visionText": "To be the first choice in furniture moving in Saudi Arabia, by providing high-quality services at competitive prices.",
+    "missionTitle": "Our Mission",
+    "missionText": "We strive to provide the best furniture moving services safely and quickly, ensuring the satisfaction of our valued customers through a professional and highly trained team.",
+    "valuesTitle": "Our Values",
+    "trust": "Trust",
+    "speed": "Speed",
+    "quality": "Quality",
+    "satisfaction": "Customer Satisfaction"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "description": "For corporate and special transportation requests, we are happy to hear from you. Please fill out the form below and we will contact you as soon as possible.",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Full Name",
+    "email": "Email",
+    "emailPlaceholder": "Email",
+    "messageTitle": "Message Title",
+    "messageTitlePlaceholder": "Enter message title",
+    "message": "Message",
+    "messagePlaceholder": "Enter your message here...",
+    "sendMessage": "Send Message",
+    "ourAddress": "Our Address",
+    "contactUs": "Contact Us"
+  },
+  "banner": {
+    "description": "Now with Naqlah, moving your furniture is easier!",
+    "buttonText": "Order a move"
+  },
+  "navigation": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "logIn": "Login",
+    "settings": "Settings",
+    "partners": "Success Partners",
+    "services": "Services",
+    "logout": "Logout"
+  },
+  "footer": {
+    "companyName": "Naqlah",
+    "siteLinks": "On the Site",
+    "aboutUs": "About Us",
+    "login": "Login",
+    "otherLinks": "Other Links",
+    "privacyPolicy": "Privacy Policy",
+    "termsConditions": "Terms & Conditions",
+    "faq": "FAQ",
+    "poweredBy": "Powered by",
+    "copyright": "All rights reserved to Naqlah Company"
+  },
+  "userMenu": {
+    "username": "Username"
+  },
+  "requestMove": {
+    "firstStepTitle": "Request a move",
+    "secondStepTitle": "Login",
+    "subtitle": "Please enter your phone number to start the move request",
+    "phoneLabel": "Phone Number",
+    "phonePlaceholder": "Enter phone number",
+    "phoneIncomplete": "Phone number must be 9 digits",
+    "phoneInvalidStart": "Saudi phone number must start with 5",
+    "saveDataLabel": "Save my data to login again",
+    "submitButton": "Login",
+    "otpSubtitle": "Please enter the verification code sent to",
+    "otpLabel": "Verification Code",
+    "otpIncomplete": "Please enter the complete verification code",
+    "otpInvalid": "The verification code entered is incorrect, try again",
+    "didNotReceive": "Didn't receive the code?",
+    "resendOtp": "Resend",
+    "verifying": "Verifying..."
+  },
+  "registerCompany": {
+    "pageTitle": "Join as Moving Company",
+    "uploadLogo": "Upload Logo",
+    "companyName": "Company Commercial Name",
+    "covenant": "Covenant",
+    "commercialRegistration": "Commercial Registration",
+    "attachFile": "Attach Commercial Registration",
+    "fileAttached": "Commercial Registration File",
+    "city": "City",
+    "selectCity": "Select City",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "secretCode": "Phone Number",
+    "featuredServices": "Featured Services",
+    "selectServices": "Select Featured Services",
+    "aboutCompany": "Brief About Company",
+    "aboutCompanyPlaceholder": "Write a brief about your company",
+    "agreeTerms": "By creating an account, I agree to",
+    "termsLink": "Terms of Use",
+    "and": "and",
+    "privacyLink": "Privacy Policy",
+    "submitButton": "Submit Account Creation Request",
+    "services": {
+      "disassembly": "Disassembly & Installation",
+      "packing": "Secure Packing",
+      "insurance": "Insurance Against Loss",
+      "cleaning": "Cleaning",
+      "moving": "Store to Store Moving"
+    },
+    "cities": {
+      "jeddah": "Jeddah",
+      "riyadh": "Riyadh",
+      "dammam": "Dammam",
+      "mecca": "Mecca",
+      "medina": "Medina",
+      "khobar": "Khobar",
+      "tabuk": "Tabuk",
+      "abha": "Abha"
+    }
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "common": {
+    "welcome": "مرحباً بك",
+    "home": "الرئيسية",
+    "about": "من نحن",
+    "contact": "اتصل بنا",
+    "language": "اللغة",
+    "loading": "جاري التحميل...",
+    "error": "حدث خطأ",
+    "submit": "إرسال",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "search": "بحث"
+  },
+  "hero": {
+    "title": "ابدأ طلبك الآن واستمتع",
+    "titleLine2": "بتجربة نقل خالية من التوتر!",
+    "subtitle": "جاهز للانتقال؟ احجز موعد، حدد الاحتياجات ودلبة فريقنا المحترف بنقل أثاثك بأمانة كاملة وسرعة",
+    "ratingExcellent": "متميز جداً",
+    "ratingHigh": "تقييم عالي",
+    "ctaOrderMove": "اطلب نقلة",
+    "ctaJoinPartner": "إنضم كشركة نقل"
+  },
+  "partners": {
+    "title": "شركاء النجاح"
+  },
+  "services": {
+    "title": "الخدمات",
+    "liveTracking": "تتبع مباشر",
+    "disassembly": "فك وتركيب",
+    "packing": "تغليف محكم",
+    "furnitureMoving": "نقل الأثاث",
+    "securityPacking": "تأمين ضد الفقد والكسر",
+    "cleaning": "تنظيف"
+  },
+  "about": {
+    "title": "من نحن",
+    "visionTitle": "رؤيتنا",
+    "visionText": "أن نكون الخيار الأول في مجال نقل الأثاث في المملكة العربية السعودية، من خلال تقديم خدمات عالية الجودة وبأسعار تنافسية.",
+    "missionTitle": "رسالتنا",
+    "missionText": "نسعى لتقديم أفضل خدمات نقل الأثاث بأمان وسرعة، مع ضمان رضا عملائنا الكرام من خلال فريق عمل محترف ومدرب على أعلى مستوى.",
+    "valuesTitle": "قيمنا",
+    "trust": "الأمانة",
+    "speed": "السرعة",
+    "quality": "الجودة",
+    "satisfaction": "رضا العملاء"
+  },
+  "contact": {
+    "title": "تواصل معنا",
+    "description": "للشركات وطلبات النقل الخاصة, نسعد بتواصلك معنا، يُرجى ملء النموذج أدناه وسنعاود الاتصال بك في أقرب وقت ممكن.",
+    "fullName": "الأسم كاملا",
+    "fullNamePlaceholder": "أدخل الاسم كاملاً",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "أدخل البريد الإلكتروني",
+    "messageTitle": "عنوان الرسالة",
+    "messageTitlePlaceholder": "أدخل عنوان الرسالة",
+    "message": "الرسالة",
+    "messagePlaceholder": "أدخل نص رسالتك هنا...",
+    "sendMessage": "إرسال الرسالة",
+    "ourAddress": "عنواننا",
+    "contactUs": "اتصل بنا"
+  },
+  "banner": {
+    "description": "الآن مع نقلة نقل عفشك صار أسهل!",
+    "buttonText": "أطلب نقلة"
+  },
+  "navigation": {
+    "home": "الرئيسية",
+    "dashboard": "لوحة التحكم",
+    "logIn": "تسجيل الدخول",
+    "settings": "الإعدادات",
+    "partners": "شركاء النجاح",
+    "services": "الخدمات",
+    "logout": "تسجيل الخروج"
+  },
+  "footer": {
+    "companyName": "نقلة",
+    "siteLinks": "في الموقع",
+    "aboutUs": "من نحن",
+    "login": "تسجيل الدخول",
+    "otherLinks": "روابط أخرى",
+    "privacyPolicy": "سياسة الخصوصية",
+    "termsConditions": "الشروط والأحكام",
+    "faq": "الأسئلة والإستفسارات",
+    "poweredBy": "Powered by",
+    "copyright": "جميع الحقوق محفوظة لدى شركة نقلة"
+  },
+  "userMenu": {
+    "username": "اسم المستخدم"
+  },
+  "requestMove": {
+    "firstStepTitle": "أطلب نقلة",
+    "secondStepTitle": "تسجيل الدخول",
+    "subtitle": "يرجى إدخال رقم الهاتف لبدء طلب النقل",
+    "phoneLabel": "رقم الهاتف",
+    "phonePlaceholder": "أدخل رقم الهاتف",
+    "phoneIncomplete": "رقم الهاتف يجب أن يكون 9 أرقام",
+    "phoneInvalidStart": "رقم الهاتف السعودي يجب أن يبدأ بـ 5",
+    "saveDataLabel": "احفظ بياناتي للدخول مرة أخرى",
+    "submitButton": "تسجيل الدخول",
+    "otpSubtitle": "يرجى إدخال رقم التحقق المرسل إلى",
+    "otpLabel": "رمز التحقق",
+    "otpIncomplete": "يرجى إدخال رمز التحقق كاملاً",
+    "otpInvalid": "رمز التحقق المدخل غير صحيح، حاول مرة أخرى",
+    "didNotReceive": "لم يصلك الرمز بعد؟",
+    "resendOtp": "إعادة الإرسال",
+    "verifying": "جاري التحقق..."
+  },
+  "registerCompany": {
+    "pageTitle": "الإنضمام كشركة نقل",
+    "uploadLogo": "رفع الصورة",
+    "companyName": "اسم الشركة التجاري",
+    "covenant": "الميثاق",
+    "commercialRegistration": "السجل التجاري",
+    "attachFile": "أرفق السجل التجاري",
+    "fileAttached": "ملف السجل التجاري",
+    "city": "المدينة",
+    "selectCity": "اختر المدينة",
+    "email": "البريد الإلكتروني",
+    "password": "الرمز السري",
+    "confirmPassword": "تكرار الرمز السري",
+    "secretCode": "رقم الهاتف",
+    "featuredServices": "الخدمات المقدمة",
+    "selectServices": "اختر الخدمات المقدمة",
+    "aboutCompany": "نبذة قصيرة عن الشركة",
+    "aboutCompanyPlaceholder": "أكتب نبذة عن شركتك",
+    "agreeTerms": "من خلال إنشاء حساب، أوافق على",
+    "termsLink": "شروط الاستخدام",
+    "and": "و",
+    "privacyLink": "سياسة الخصوصية",
+    "submitButton": "إرسال طلب إنشاء الحساب",
+    "services": {
+      "disassembly": "فك وتركيب",
+      "packing": "تغليف محكم",
+      "insurance": "تأمين ضد الفقد والكسر",
+      "cleaning": "تنظيف",
+      "moving": "نقل من محل لمحل"
+    },
+    "cities": {
+      "jeddah": "جدة",
+      "riyadh": "الرياض",
+      "dammam": "الدمام",
+      "mecca": "مكة المكرمة",
+      "medina": "المدينة المنورة",
+      "khobar": "الخبر",
+      "tabuk": "تبوك",
+      "abha": "أبها"
+    }
+  }
+}
