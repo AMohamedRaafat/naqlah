@@ -2,7 +2,7 @@ import HeroSection from '@/components/home/hero-section';
 import PartnersSection from '@/components/home/partners-section';
 import ServicesSection from '@/components/home/services-section';
 import ContactSection from '@/components/home/contact-section';
-
+import BannerSection from '@/components/home/banner-section';
 export default function Home() {
   return (
     <main className="min-h-screen bg-white font-expo-arabic">
@@ -17,6 +17,9 @@ export default function Home() {
 
       {/* Contact Form Section */}
       <ContactSection />
+
+      {/* Banner Section */}
+      <BannerSection />
     </main>
   );
 }

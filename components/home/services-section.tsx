@@ -1,48 +1,42 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { MapPin, Cake, Package, Truck, Users, Sparkles } from 'lucide-react';
+import Image from 'next/image';
 
 export default function ServicesSection() {
   const t = useTranslations('services');
 
   const services = [
     {
-      icon: MapPin,
-      titleKey: 'liveTracking',
-      color: 'bg-blue-500',
-    },
-    {
-      icon: Cake,
+      icon: '/assets/services/fk.svg',
       titleKey: 'disassembly',
-      color: 'bg-pink-500',
     },
     {
-      icon: Package,
-      titleKey: 'packing',
-      color: 'bg-yellow-500',
+      icon: '/assets/services/track.svg',
+      titleKey: 'liveTracking',
     },
     {
-      icon: Truck,
+      icon: '/assets/services/move.svg',
       titleKey: 'furnitureMoving',
-      color: 'bg-orange-500',
     },
     {
-      icon: Users,
-      titleKey: 'newServices',
-      color: 'bg-teal-500',
+      icon: '/assets/services/cover.svg',
+      titleKey: 'packing',
     },
     {
-      icon: Sparkles,
+      icon: '/assets/services/clean.svg',
       titleKey: 'cleaning',
-      color: 'bg-blue-400',
+    },
+    {
+      icon: '/assets/services/secure.svg',
+      titleKey: 'securityPacking',
     },
   ];
 
   return (
-    <section id="services" className="py-12 px-4 bg-gray-50">
+    <section id="services" className="mb-6 px-4 bg-gray-50">
       <div className="container mx-auto max-w-6xl">
-        <h2 className="text-2xl md:text-3xl font-bold text-start text-[#4B4F63] mb-8">
+        <h2 className="text-2xl md:text-3xl font-bold text-start text-[#4B4F63] mb-4">
           {t('title')}
         </h2>
 
@@ -66,11 +60,17 @@ export default function ServicesSection() {
                 }}
               >
                 <div
-                  className={`w-16 h-16 ${service.color} rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}
+                  className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}
                 >
-                  <service.icon className="w-8 h-8 text-white" />
+                  <Image
+                    src={service.icon}
+                    alt={service.titleKey}
+                    width={64}
+                    height={64}
+                    className=" text-white"
+                  />
                 </div>
-                <h3 className="text-sm font-semibold text-gray-800 leading-snug">
+                <h3 className="text-sm font-semibold text-[#6B6E80] leading-snug">
                   {t(service.titleKey)}
                 </h3>
               </div>

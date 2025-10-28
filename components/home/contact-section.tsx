@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
-
+import Image from 'next/image';
 export default function ContactSection() {
   const t = useTranslations('contact');
 
@@ -27,8 +27,26 @@ export default function ContactSection() {
     });
   };
 
+  const contactInfo = [
+    {
+      icon: '/assets/contact/address.svg',
+      title: t('ourAddress'),
+      description: 'حي النسيم الغربي',
+    },
+    {
+      icon: '/assets/contact/email.svg',
+      title: t('email'),
+      description: 'info@naqlah.com',
+    },
+    {
+      icon: '/assets/contact/phone.svg',
+      title: t('contactUs'),
+      description: '+966 555 555 555',
+      textDirection: 'ltr',
+    },
+  ];
   return (
-    <section id="contact" className="py-12 px-4 bg-white">
+    <section id="contact" className="mb-6 px-4 bg-white">
       <div className="container mx-auto max-w-2xl border-2 border-[#ededed] rounded-3xl p-4">
         <h2 className="text-2xl md:text-3xl font-bold text-start text-[#4B4F63]  mb-2">
           {t('title')}
@@ -93,6 +111,25 @@ export default function ContactSection() {
             {t('sendMessage')}
           </Button>
         </form>
+      </div>
+
+      <div className="mt-4">
+        <div className="flex items-center justify-between flex-wrap ">
+          {contactInfo.map((info) => (
+            <div key={info.title} className="flex items-center justify-center gap-0 mb-4">
+              <Image src={info.icon} alt={info.title} width={54} height={54} />
+              <div>
+                <h3 className="text-md font-medium text-[#00B8A9]">{info.title}</h3>
+                <p
+                  className="text-[11.5px] text-[#7E7E7E]"
+                  style={{ direction: info.textDirection === 'ltr' ? 'ltr' : 'rtl' }}
+                >
+                  {info.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

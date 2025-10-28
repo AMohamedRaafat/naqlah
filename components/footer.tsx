@@ -1,87 +1,140 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useTranslations } from 'next-intl';
+import { useLanguage } from '@/contexts/language-context';
+import { Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
 
 export default function Footer() {
   const t = useTranslations();
+  const { locale } = useLanguage();
   const currentYear = new Date().getFullYear();
+  const isRTL = locale === 'ar';
 
   return (
-    <footer className="border-t bg-gray-50 dark:bg-gray-900 mt-auto font-expo-arabic">
-      <div className="container mx-auto px-4 py-6 lg:py-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {/* Company Info */}
-          <div>
-            <div className="mb-4">
-              <Image
-                src="/assets/logo.svg"
-                alt={t('footer.companyName')}
-                width={150}
-                height={60}
-                className="h-12 w-auto"
-              />
-            </div>
-            <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-              {t('footer.companyDescription')}
-            </p>
+    <footer className="bg-[#00B8A9] text-white mt-auto font-expo-arabic">
+      <div className="container mx-auto px-6 py-12">
+        {/* Top Section - Two Columns */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          {/* Other Links - Right side in RTL */}
+          <div className={isRTL ? 'md:order-2' : 'md:order-1'}>
+            <h3 className="text-xl font-bold mb-6">{t('footer.otherLinks')}</h3>
+            <ul className="space-y-3 text-base">
+              <li>
+                <Link href="/privacy" className="hover:opacity-80 transition-opacity">
+                  {t('footer.privacyPolicy')}
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="hover:opacity-80 transition-opacity">
+                  {t('footer.termsConditions')}
+                </Link>
+              </li>
+              <li>
+                <Link href="/faq" className="hover:opacity-80 transition-opacity">
+                  {t('footer.faq')}
+                </Link>
+              </li>
+            </ul>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-lg font-bold mb-3 lg:mb-4">{t('footer.quickLinks')}</h3>
-            <ul className="space-y-2 text-sm">
+          {/* Site Links - Left side in RTL */}
+          <div className={isRTL ? 'md:order-1' : 'md:order-2'}>
+            <h3 className="text-xl font-bold mb-6">{t('footer.siteLinks')}</h3>
+            <ul className="space-y-3 text-base">
               <li>
                 <button
                   onClick={() => {
                     const element = document.getElementById('about');
                     element?.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="text-gray-600 dark:text-gray-400 hover:text-[#00B8A9] transition-colors"
+                  className="hover:opacity-80 transition-opacity"
                 >
-                  {t('common.about')}
+                  {t('footer.aboutUs')}
                 </button>
               </li>
               <li>
                 <button
                   onClick={() => {
-                    const element = document.getElementById('services');
+                    const element = document.getElementById('about');
                     element?.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="text-gray-600 dark:text-gray-400 hover:text-[#00B8A9] transition-colors"
+                  className="hover:opacity-80 transition-opacity"
                 >
-                  {t('navigation.services')}
+                  {t('footer.aboutUs')}
                 </button>
               </li>
               <li>
-                <button
-                  onClick={() => {
-                    const element = document.getElementById('contact');
-                    element?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  className="text-gray-600 dark:text-gray-400 hover:text-[#00B8A9] transition-colors"
-                >
-                  {t('common.contact')}
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h3 className="text-lg font-bold mb-3 lg:mb-4">{t('common.contact')}</h3>
-            <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-              <li>info@sakani.com</li>
-              <li dir="ltr" className="text-right">
-                +966 XX XXX XXXX
+                <Link href="/login" className="hover:opacity-80 transition-opacity">
+                  {t('footer.login')}
+                </Link>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t mt-6 lg:mt-8 pt-6 lg:pt-8 text-center text-sm text-gray-600 dark:text-gray-400">
-          <p>
-            © {currentYear} {t('footer.companyName')} - {t('footer.allRightsReserved')}
+        {/* Center - Logo and Powered By */}
+        <div className="flex flex-col items-center mb-10">
+          {/* Logo Placeholder */}
+          <div className="mb-4">
+            <div className="w-48 h-20 bg-white/20 rounded-lg flex items-center justify-center">
+              {/* Replace this placeholder with your logo */}
+              <span className="text-white text-sm">Logo Placeholder</span>
+            </div>
+          </div>
+
+          {/* Powered By Placeholder */}
+          <div className="mb-6">
+            <div className="w-40 h-16 bg-white/20 rounded-lg flex items-center justify-center">
+              {/* Replace this placeholder with your powered by image */}
+              <span className="text-white text-xs">{t('footer.poweredBy')}</span>
+            </div>
+          </div>
+
+          {/* Social Media Icons */}
+          <div className="flex gap-6">
+            <Link
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:opacity-80 transition-opacity"
+            >
+              <Facebook className="w-6 h-6" />
+            </Link>
+            <Link
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:opacity-80 transition-opacity"
+            >
+              <Instagram className="w-6 h-6" />
+            </Link>
+            <Link
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:opacity-80 transition-opacity"
+            >
+              <Twitter className="w-6 h-6" />
+            </Link>
+            <Link
+              href="https://youtube.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:opacity-80 transition-opacity"
+            >
+              <Youtube className="w-6 h-6" />
+            </Link>
+          </div>
+        </div>
+
+        {/* Copyright */}
+        <div className="text-center border-t border-white/20 pt-8">
+          <p className="text-base flex items-center justify-center gap-2">
+            <span>©</span>
+            <span>{currentYear}</span>
+            <span>{t('footer.copyright')}</span>
           </p>
         </div>
       </div>

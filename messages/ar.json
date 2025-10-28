@@ -32,7 +32,7 @@
     "disassembly": "فك وتركيب",
     "packing": "تغليف محكم",
     "furnitureMoving": "نقل الأثاث",
-    "newServices": "ناس جدد الفند والإكسسوار",
+    "securityPacking": "تأمين ضد الفقد والكسر",
     "cleaning": "تنظيف"
   },
   "about": {
@@ -58,16 +58,13 @@
     "messageTitlePlaceholder": "أدخل عنوان الرسالة",
     "message": "الرسالة",
     "messagePlaceholder": "أدخل نص رسالتك هنا...",
-    "sendMessage": "إرسال الرسالة"
+    "sendMessage": "إرسال الرسالة",
+    "ourAddress": "عنواننا",
+    "contactUs": "اتصل بنا"
   },
-  "newsletter": {
-    "title": "اشترك في القائمة البريدية",
-    "subtitle": "احصل على أحدث العروض والخصومات",
-    "emailPlaceholder": "أدخل بريدك الإلكتروني",
-    "subscribeNow": "اشترك الآن",
-    "weeklyEmails": "رسائل أسبوعية",
-    "exclusiveOffers": "عروض حصرية",
-    "dataProtected": "بياناتك محمية"
+  "banner": {
+    "description": "الآن مع نقلة نقل عفشك صار أسهل!",
+    "buttonText": "أطلب نقلة"
   },
   "navigation": {
     "home": "الرئيسية",
@@ -78,10 +75,16 @@
     "logout": "تسجيل الخروج"
   },
   "footer": {
-    "companyName": "سكني",
-    "companyDescription": "خدمة نقل الأثاث - نقدم أفضل خدمات نقل الأثاث بأمان وسرعة",
-    "quickLinks": "روابط سريعة",
-    "allRightsReserved": "جميع الحقوق محفوظة"
+    "companyName": "نقلة",
+    "siteLinks": "في الموقع",
+    "aboutUs": "من نحن",
+    "login": "تسجيل الدخول",
+    "otherLinks": "روابط أخرى",
+    "privacyPolicy": "سياسة الخصوصية",
+    "termsConditions": "الشروط والأحكام",
+    "faq": "الأسئلة والإستفسارات",
+    "poweredBy": "Powered by",
+    "copyright": "جميع الحقوق محفوظة لدى شركة نقلة"
   },
   "userMenu": {
     "username": "اسم المستخدم"

@@ -32,7 +32,7 @@
     "disassembly": "Disassembly & Assembly",
     "packing": "Secure Packing",
     "furnitureMoving": "Furniture Moving",
-    "newServices": "New Services & Accessories",
+    "securityPacking": "Security Packing",
     "cleaning": "Cleaning"
   },
   "about": {
@@ -58,16 +58,13 @@
     "messageTitlePlaceholder": "Enter message title",
     "message": "Message",
     "messagePlaceholder": "Enter your message here...",
-    "sendMessage": "Send Message"
+    "sendMessage": "Send Message",
+    "ourAddress": "Our Address",
+    "contactUs": "Contact Us"
   },
-  "newsletter": {
-    "title": "Subscribe to Newsletter",
-    "subtitle": "Get the latest offers and discounts",
-    "emailPlaceholder": "Enter your email",
-    "subscribeNow": "Subscribe Now",
-    "weeklyEmails": "Weekly Emails",
-    "exclusiveOffers": "Exclusive Offers",
-    "dataProtected": "Your data is protected"
+  "banner": {
+    "description": "Now with Naqlah, moving your furniture is easier!",
+    "buttonText": "Order a move"
   },
   "navigation": {
     "home": "Home",
@@ -78,10 +75,16 @@
     "logout": "Logout"
   },
   "footer": {
-    "companyName": "Sakani",
-    "companyDescription": "Furniture Moving Service - We provide the best furniture moving services safely and quickly",
-    "quickLinks": "Quick Links",
-    "allRightsReserved": "All rights reserved"
+    "companyName": "Naqlah",
+    "siteLinks": "On the Site",
+    "aboutUs": "About Us",
+    "login": "Login",
+    "otherLinks": "Other Links",
+    "privacyPolicy": "Privacy Policy",
+    "termsConditions": "Terms & Conditions",
+    "faq": "FAQ",
+    "poweredBy": "Powered by",
+    "copyright": "All rights reserved to Naqlah Company"
   },
   "userMenu": {
     "username": "Username"
