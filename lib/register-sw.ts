@@ -15,10 +15,10 @@ export async function registerServiceWorker(options: ServiceWorkerUpdateOptions 
     return;
   }
 
-  // Check if we should register (can be controlled via env variable)
-  const isDevelopment = typeof window !== 'undefined' && window.location.hostname === 'localhost';
-  if (isDevelopment) {
-    console.log('[SW] Service Worker registration skipped in development (localhost)');
+  // Service Worker will now register on all environments
+  // For localhost testing, you can disable it by setting localStorage.disableSW = 'true'
+  if (typeof window !== 'undefined' && localStorage.getItem('disableSW') === 'true') {
+    console.log('[SW] Service Worker registration disabled via localStorage');
     return;
   }
 

@@ -6,6 +6,7 @@ import { registerServiceWorker, skipWaitingServiceWorker } from '@/lib/register-
 import { useLanguage } from '@/contexts/language-context';
 import { Button } from '@/components/ui/button';
 import { WifiOff, RefreshCw } from 'lucide-react';
+import PWAInstallPrompt from './pwa-install-prompt';
 
 export default function PWAManager() {
   const [showUpdatePrompt, setShowUpdatePrompt] = useState(false);
@@ -50,6 +51,9 @@ export default function PWAManager() {
 
   return (
     <>
+      {/* PWA Install Prompt */}
+      <PWAInstallPrompt />
+
       {/* Update Available Prompt */}
       {showUpdatePrompt && (
         <div className="fixed bottom-4 left-4 right-4 z-[100] lg:left-auto lg:right-4 lg:w-96">
