@@ -60,9 +60,9 @@ export default function ServicesSection() {
                 className="border-[#ededed] bg-white mx-2 mb-2 mt-2 py-2 px-2 flex flex-col items-center justify-center text-center hover:shadow-xl transition-shadow duration-300 cursor-pointer group"
                 style={{
                   borderTopWidth: '0px',
-                  borderRightWidth: index % 2 === 0 && index < totalItems - 1 ? '2px' : '0px', // Right border for left column items
-                  borderBottomWidth: !isLastRow ? '2px' : '0px', // Bottom border except last row
-                  borderLeftWidth: '0px',
+                  borderLeftWidth: index % 2 === 0 && index < totalItems - 1 ? '2px' : '0px', // Right border for left column items
+                  borderBottomWidth: '0px', // Bottom border except last row
+                  borderRightWidth: '0px',
                 }}
               >
                 <div

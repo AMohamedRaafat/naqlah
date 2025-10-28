@@ -1,14 +1,25 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useLanguage } from '@/contexts/language-context';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from '@/components/ui/carousel';
+import Autoplay from 'embla-carousel-autoplay';
 
 export default function PartnersSection() {
   const t = useTranslations('partners');
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const { locale } = useLanguage();
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const isRTL = locale === 'ar';
 
-  // Partners array - should be in pairs for 2 rows
+  // Partners array - 12 partners total, will show 6 per slide (3 cols x 2 rows)
   const partners = [
     { id: 1, name: 'Partner 1', logo: '/partners/partner1.png' },
     { id: 2, name: 'Partner 2', logo: '/partners/partner2.png' },
@@ -24,56 +35,58 @@ export default function PartnersSection() {
     { id: 12, name: 'Partner 12', logo: '/partners/partner12.png' },
   ];
 
-  // Organize partners into columns (2 items per column)
-  const columnsPerSlide = 3;
-  const partnersPerColumn = 2;
-  const totalColumns = Math.ceil(partners.length / partnersPerColumn);
-  const totalSlides = Math.ceil(totalColumns / columnsPerSlide);
+  // Group partners into slides of 6 (3 columns x 2 rows)
+  const partnersPerSlide = 6;
+  const slides = [];
+  for (let i = 0; i < partners.length; i += partnersPerSlide) {
+    slides.push(partners.slice(i, i + partnersPerSlide));
+  }
 
-  // Auto-play carousel
+  // Track current slide
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % totalSlides);
-    }, 3000);
+    if (!api) return;
 
-    return () => clearInterval(interval);
-  }, [totalSlides]);
+    setCurrent(api.selectedScrollSnap());
+
+    api.on('select', () => {
+      setCurrent(api.selectedScrollSnap());
+    });
+  }, [api]);
 
   return (
-    <section id="partners" className="py-12 px-4 bg-gray-50 ">
-      <div className="container mx-auto max-w-4xl ">
-        <h2 className="text-2xl md:text-3xl font-bold text-start text-[#4B4F63]  mb-8">
+    <section id="partners" className="py-12 px-4 bg-gray-50">
+      <div className="container mx-auto max-w-4xl">
+        <h2 className="text-2xl md:text-3xl font-bold text-start text-[#4B4F63] mb-8">
           {t('title')}
         </h2>
 
         {/* Partners Container */}
         <div className="bg-white rounded-3xl shadow-sm p-8 md:p-10 border-2 border-[#ededed]">
-          {/* Partners Grid - 3 columns, 2 rows with horizontal carousel */}
-          <div className="overflow-hidden">
-            <div
-              className="flex transition-transform duration-700 ease-in-out"
-              style={{
-                transform: `translateX(-${currentSlide * 100}%)`,
-              }}
-            >
-              {/* Generate all columns */}
-              {Array.from({ length: totalColumns }).map((_, colIndex) => {
-                const columnPartners = partners.slice(
-                  colIndex * partnersPerColumn,
-                  (colIndex + 1) * partnersPerColumn
-                );
-                return (
-                  <div
-                    key={colIndex}
-                    className="flex-shrink-0 w-1/3 grid grid-rows-2 gap-6 md:gap-8"
-                  >
-                    {columnPartners.map((partner) => (
+          <Carousel
+            opts={{
+              align: 'start',
+              loop: true,
+              direction: isRTL ? 'rtl' : 'ltr',
+            }}
+            plugins={[
+              Autoplay({
+                delay: 3000,
+              }),
+            ]}
+            setApi={setApi}
+            className="w-full"
+          >
+            <CarouselContent>
+              {slides.map((slidePartners, slideIndex) => (
+                <CarouselItem key={slideIndex}>
+                  {/* 3 columns x 2 rows grid */}
+                  <div className="grid grid-cols-3 gap-6 md:gap-8">
+                    {slidePartners.map((partner, index) => (
                       <div
                         key={partner.id}
                         className="flex items-center justify-center p-4 transition-transform duration-300 hover:scale-105"
                         style={{
-                          borderLeftWidth:
-                            colIndex !== 0 && colIndex % 3 !== 0 ? '2px' : '0px',
+                          borderLeftWidth: index % 3 !== 0 ? '2px' : '0px',
                           borderColor: '#ededed',
                         }}
                       >
@@ -92,33 +105,20 @@ export default function PartnersSection() {
                         </div>
                       </div>
                     ))}
-                    {/* Fill empty space if column has only 1 partner */}
-                    {columnPartners.length === 1 && (
-                      <div
-                        className="flex items-center justify-center p-4"
-                        style={{
-                          borderLeftWidth:
-                            colIndex !== 0 && colIndex % 3 !== 0 ? '2px' : '0px',
-                          borderColor: '#ededed',
-                        }}
-                      >
-                        <div className="relative w-full aspect-square opacity-0"></div>
-                      </div>
-                    )}
                   </div>
-                );
-              })}
-            </div>
-          </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
 
           {/* Pagination Dots */}
           <div className="flex justify-center gap-2 mt-8">
-            {Array.from({ length: totalSlides }).map((_, index) => (
+            {slides.map((_, index) => (
               <button
                 key={index}
-                onClick={() => setCurrentSlide(index)}
+                onClick={() => api?.scrollTo(index)}
                 className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                  currentSlide === index
+                  current === index
                     ? 'bg-[#00B8A9] scale-125'
                     : 'bg-gray-300 hover:bg-gray-400'
                 }`}
