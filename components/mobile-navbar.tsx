@@ -94,32 +94,63 @@ export default function MobileNavbar() {
                   {/* Menu Items */}
                   <nav className="flex-1 pt-10 pb-4 px-4 text-black font-regular">
                     <ul className="space-y-0">
-                      {menuItems.map((item, index) => (
+                      {menuItems.map((item, index) => {
+                        // Check if this item is active
+                        const isActive = item.isExternal 
+                          ? pathname === item.href 
+                          : pathname === '/' && item.section;
+                        
+                        return (
                         <li key={index}>
                           {item.isExternal ? (
                             <Link
                               href={item.href || '/'}
                               onClick={() => setOpen(false)}
-                              className={`flex items-center gap-4 px-4 py-3 hover:bg-gray-50 transition-colors ${
+                              className={`flex items-center gap-4 px-4 py-3 transition-colors ${
                                 isRTL ? 'flex-row text-right' : 'flex-row text-left'
+                              } ${
+                                isActive
+                                  ? 'bg-[#D2F2F0] border-r-2 border-[#00B8A9]'
+                                  : 'hover:bg-gray-50'
                               }`}
                             >
-                              <Image src={item.icon} alt="icon" width={20} height={20} />
-                              <span className="text-gray-800 text-[15px]">{item.label}</span>
+                              <Image
+                                src={item.icon}
+                                alt="icon"
+                                width={20}
+                                height={20}
+                                className={`w-6 h-6 ${isActive ? 'text-[#00B8A9]' : 'text-gray-800'}`}
+                              />
+                              <span className={`text-[15px] ${isActive ? 'text-[#00B8A9] font-semibold' : 'text-gray-800'}`}>
+                                {item.label}
+                              </span>
                             </Link>
                           ) : (
                             <button
                               onClick={() => item.section && scrollToSection(item.section)}
-                              className={`flex items-center gap-4 px-4 py-3 hover:bg-gray-50 transition-colors w-full  ${
+                              className={`flex items-center gap-4 px-4 py-3 transition-colors w-full ${
                                 isRTL ? 'flex-row text-right' : 'flex-row text-left'
+                              } ${
+                                isActive
+                                  ? 'bg-[#D2F2F0] border-r-2 border-[#00B8A9]'
+                                  : 'hover:bg-gray-50'
                               }`}
                             >
-                              <Image src={item.icon} alt="icon" width={20} height={20} />
-                              <span className="text-gray-800 text-[15px]">{item.label}</span>
+                              <Image
+                                src={item.icon}
+                                alt="icon"
+                                width={20}
+                                height={20}
+                                className={`w-6 h-6 ${isActive ? 'text-[#00B8A9]' : 'text-gray-800'}`}
+                              />
+                              <span className={`text-[15px] ${isActive ? 'text-[#00B8A9] font-semibold' : 'text-gray-800'}`}>
+                                {item.label}
+                              </span>
                             </button>
                           )}
                         </li>
-                      ))}
+                      );
+                      })}
                     </ul>
                     <div className="border-t border-gray-200 mt-4 py-3 ">
                       <button
@@ -143,6 +174,7 @@ export default function MobileNavbar() {
                             alt="icon"
                             width={20}
                             height={20}
+                            className="w-6 h-6 text-gray-800"
                           />
                           <span className="text-gray-800 text-[15px]">
                             {t('navigation.logout')}

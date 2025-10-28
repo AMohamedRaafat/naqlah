@@ -34,7 +34,7 @@ export default function LoadingScreen() {
           className="w-64 h-auto animate-bounce-scale"
           priority
         />
-        
+
         {/* Powered By Logo - Slides in from bottom after delay */}
         <Image
           src="/assets/powerdBy.svg"

@@ -29,44 +29,54 @@ export const getNavItems = ({ isLoggedIn, isCompany, t }: NavigationConfig): Nav
   const items: NavItem[] = [];
 
   // Home - Always visible
-  items.push({ 
-    label: t('navigation.home'), 
-    href: '/' 
+  items.push({
+    label: t('navigation.home'),
+    href: '/',
   });
 
   // Dashboard - Only when logged in
   if (isLoggedIn) {
-    items.push({ 
-      label: t('navigation.dashboard'), 
-      href: '/dashboard' 
+    items.push({
+      label: t('navigation.dashboard'),
+      href: '/dashboard',
+    });
+  }
+  if (!isLoggedIn) {
+    items.push({
+      label: t('navigation.logIn'),
+      href: '/dashboard',
     });
   }
 
   // Partners - Hidden for companies when logged in
   if (!isLoggedIn || !isCompany) {
-    items.push({ 
-      label: t('navigation.partners'), 
-      href: '#partners' 
+    items.push({
+      label: t('navigation.partners'),
+      href: '#partners',
     });
   }
 
   // Services - Always visible
-  items.push({ 
-    label: t('navigation.services'), 
-    href: '#services' 
-  });
-
+  if (!isLoggedIn) {
+    items.push({
+      label: t('navigation.services'),
+      href: '#services',
+    });
+  }
   // About - Always visible
-  items.push({ 
-    label: t('common.about'), 
-    href: '#about' 
-  });
-
+  if (!isLoggedIn) {
+    items.push({
+      label: t('common.about'),
+      href: '#about',
+    });
+  }
   // Contact - Always visible
-  items.push({ 
-    label: t('common.contact'), 
-    href: '#contact' 
-  });
+  if (!isLoggedIn) {
+    items.push({
+      label: t('common.contact'),
+      href: '#contact',
+    });
+  }
 
   return items;
 };
@@ -74,7 +84,11 @@ export const getNavItems = ({ isLoggedIn, isCompany, t }: NavigationConfig): Nav
 /**
  * Get menu items for mobile navbar
  */
-export const getMobileMenuItems = ({ isLoggedIn, isCompany, t }: NavigationConfig): MobileMenuItem[] => {
+export const getMobileMenuItems = ({
+  isLoggedIn,
+  isCompany,
+  t,
+}: NavigationConfig): MobileMenuItem[] => {
   const items: MobileMenuItem[] = [];
 
   // Home - Always visible
@@ -94,9 +108,17 @@ export const getMobileMenuItems = ({ isLoggedIn, isCompany, t }: NavigationConfi
       isExternal: true,
     });
   }
+  if (!isLoggedIn) {
+    items.push({
+      icon: '/assets/menu-icons/login.svg',
+      label: t('navigation.logIn'),
+      href: '/login',
+      isExternal: true,
+    });
+  }
 
   // Partners - Hidden for companies when logged in
-  if (!isLoggedIn || !isCompany) {
+  if (!isLoggedIn) {
     items.push({
       icon: '/assets/menu-icons/partners.svg',
       label: t('navigation.partners'),
@@ -105,29 +127,22 @@ export const getMobileMenuItems = ({ isLoggedIn, isCompany, t }: NavigationConfi
     });
   }
 
-  // Services - Always visible
-  items.push({
-    icon: '/assets/menu-icons/partners.svg',
-    label: t('navigation.services'),
-    href: '#services',
-    section: 'services',
-  });
-
-  // About - Always visible
-  items.push({
-    icon: '/assets/menu-icons/who.svg',
-    label: t('common.about'),
-    href: '#about',
-    section: 'about',
-  });
-
-  // Contact - Always visible
-  items.push({
-    icon: '/assets/menu-icons/phone.svg',
-    label: t('common.contact'),
-    href: '#contact',
-    section: 'contact',
-  });
+  if (!isLoggedIn) {
+    items.push({
+      icon: '/assets/menu-icons/who.svg',
+      label: t('common.about'),
+      href: '#about',
+      section: 'about',
+    });
+  }
+  if (!isLoggedIn) {
+    items.push({
+      icon: '/assets/menu-icons/phone.svg',
+      label: t('common.contact'),
+      href: '#contact',
+      section: 'contact',
+    });
+  }
 
   return items;
 };
@@ -141,4 +156,3 @@ export const getPageTitle = (pathname: string, t: (key: string) => string): stri
   if (pathname === '/profile') return t('navigation.profile');
   return t('navigation.home');
 };
-

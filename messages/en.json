@@ -69,6 +69,7 @@
   "navigation": {
     "home": "Home",
     "dashboard": "Dashboard",
+    "logIn": "Login",
     "settings": "Settings",
     "partners": "Success Partners",
     "services": "Services",
