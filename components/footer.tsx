@@ -100,7 +100,7 @@ export default function Footer() {
             </div>
 
             {/* Social Media Icons */}
-            <div className="  gap-6 flex-row-reverse">
+            <div className=" flex gap-6 flex-row-reverse">
               <Link
                 href="https://facebook.com"
                 target="_blank"
