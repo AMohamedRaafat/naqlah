@@ -56,22 +56,22 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
       setPhoneError('');
       return false;
     }
-    
+
     if (phone.length < 9) {
       setPhoneError(t('phoneIncomplete'));
       return false;
     }
-    
+
     if (!phone.startsWith('5')) {
       setPhoneError(t('phoneInvalidStart'));
       return false;
     }
-    
+
     if (phone.length === 9) {
       setPhoneError('');
       return true;
     }
-    
+
     return false;
   };
 
@@ -87,48 +87,75 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
 
   const handlePhoneSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validate before submitting
     if (!validatePhoneNumber(phoneNumber)) {
       return;
     }
-    
+
     // Simulate sending OTP
     console.log('Sending OTP to:', '+966' + phoneNumber);
     setStep('otp');
-    
+
     // Start WebOTP API to auto-detect SMS OTP
     startWebOTP();
   };
 
-  // WebOTP API implementation
+  // WebOTP API implementation with permission handling
   const startWebOTP = async () => {
     // Check if WebOTP API is supported
-    if ('OTPCredential' in window) {
-      try {
-        const ac = new AbortController();
+    if (!('OTPCredential' in window)) {
+      console.log('WebOTP: API not supported on this browser/device');
+      console.log('Fallback: Using autocomplete="one-time-code" for OTP autofill');
+      return;
+    }
 
-        // Set timeout to abort after 3 minutes
-        setTimeout(() => {
-          ac.abort();
-        }, 3 * 60 * 1000);
+    try {
+      const ac = new AbortController();
+      
+      // Set timeout to abort after 5 minutes
+      const timeoutId = setTimeout(() => {
+        ac.abort();
+        console.log('WebOTP: Request timed out after 5 minutes');
+      }, 5 * 60 * 1000);
 
-        // Request OTP from SMS
-        const otp = await navigator.credentials.get({
-          otp: { transport: ['sms'] },
-          signal: ac.signal,
-        } as any);
+      console.log('WebOTP: Requesting OTP from SMS...');
+      console.log('WebOTP: Make sure your SMS contains the format: @your-domain.com #123456');
 
-        if (otp && (otp as any).code) {
-          // Auto-fill the OTP field
-          setOtp((otp as any).code);
-          setOtpError('');
-          console.log('OTP auto-filled:', (otp as any).code);
-        }
-      } catch (err) {
-        // User cancelled or timeout - this is fine, user can enter manually
-        console.log('WebOTP cancelled or not available:', err);
+      // Request OTP from SMS - this will trigger browser permission if needed
+      const credential = await navigator.credentials.get({
+        otp: { transport: ['sms'] },
+        signal: ac.signal,
+      } as any);
+
+      // Clear the timeout
+      clearTimeout(timeoutId);
+
+      if (credential && (credential as any).code) {
+        const otpCode = (credential as any).code;
+        console.log('WebOTP: ✅ OTP received and auto-filled:', otpCode);
+        
+        // Auto-fill the OTP field
+        setOtp(otpCode);
+        setOtpError('');
+      } else {
+        console.log('WebOTP: ⚠️ No OTP code received from credential');
       }
+    } catch (err: any) {
+      // Handle different error types
+      if (err.name === 'AbortError') {
+        console.log('WebOTP: ℹ️ Request was aborted (timeout or cancelled)');
+      } else if (err.name === 'NotAllowedError') {
+        console.log('WebOTP: ❌ Permission denied by user');
+        console.log('WebOTP: User can still enter OTP manually or use autocomplete');
+      } else if (err.name === 'SecurityError') {
+        console.log('WebOTP: ❌ Security error - make sure you are on HTTPS');
+      } else {
+        console.log('WebOTP: ❌ Error -', err.name, ':', err.message || err);
+      }
+      
+      // Always fall back gracefully - user can enter manually
+      console.log('WebOTP: Falling back to manual OTP entry or autocomplete');
     }
   };
 
@@ -204,36 +231,34 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
               <p className="text-center text-[#868686] mb-6 text-md">{t('subtitle')}</p>
 
               <form onSubmit={handlePhoneSubmit}>
-                  {/* Phone number input */}
-                  <div className="mb-4">
-                    <label htmlFor="phone" className="block text-md font-medium text-[#353535] mb-2">
-                      {t('phoneLabel')}
-                    </label>
-                    <div
-                      className={`flex items-center border rounded-lg overflow-hidden focus-within:ring-2 flex-row ${
-                        phoneError 
-                          ? 'border-red-500 focus-within:ring-red-500 focus-within:border-red-500' 
-                          : 'border-[#EDEDED] focus-within:ring-[#00B8A9] focus-within:border-[#00B8A9]'
+                {/* Phone number input */}
+                <div className="mb-4">
+                  <label htmlFor="phone" className="block text-md font-medium text-[#353535] mb-2">
+                    {t('phoneLabel')}
+                  </label>
+                  <div
+                    className={`flex items-center border rounded-lg overflow-hidden focus-within:ring-2 flex-row ${
+                      phoneError
+                        ? 'border-red-500 focus-within:ring-red-500 focus-within:border-red-500'
+                        : 'border-[#EDEDED] focus-within:ring-[#00B8A9] focus-within:border-[#00B8A9]'
+                    }`}
+                  >
+                    <input
+                      type="tel"
+                      id="phone"
+                      value={phoneNumber}
+                      onChange={(e) => handlePhoneChange(e.target.value)}
+                      placeholder={t('phonePlaceholder')}
+                      className={`flex-1 px-4 py-3 outline-none ${
+                        isRTL ? 'text-right' : 'text-left'
                       }`}
-                    >
-                      <input
-                        type="tel"
-                        id="phone"
-                        value={phoneNumber}
-                        onChange={(e) => handlePhoneChange(e.target.value)}
-                        placeholder={t('phonePlaceholder')}
-                        className={`flex-1 px-4 py-3 outline-none ${
-                          isRTL ? 'text-right' : 'text-left'
-                        }`}
-                        dir={'ltr'}
-                        maxLength={9}
-                      />
-                      <span className="px-4 py-3 text-[#A3A3A3] font-regular">+966</span>
-                    </div>
-                    {phoneError && (
-                      <p className="text-red-500 text-sm mt-2">{phoneError}</p>
-                    )}
+                      dir={'ltr'}
+                      maxLength={9}
+                    />
+                    <span className="px-4 py-3 text-[#A3A3A3] font-regular">+966</span>
                   </div>
+                  {phoneError && <p className="text-red-500 text-sm mt-2">{phoneError}</p>}
+                </div>
 
                 {/* Checkbox */}
                 <div
@@ -255,7 +280,9 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
                 {/* Submit button */}
                 <Button
                   type="submit"
-                  disabled={phoneNumber.length !== 9 || !phoneNumber.startsWith('5') || !!phoneError}
+                  disabled={
+                    phoneNumber.length !== 9 || !phoneNumber.startsWith('5') || !!phoneError
+                  }
                   className="w-full bg-[#00B8A9] hover:bg-[#009688] text-white font-semibold py-6 text-base disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {t('submitButton')}
@@ -289,6 +316,7 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
                         setOtp(value);
                         setOtpError('');
                       }}
+                      autoComplete="one-time-code"
                     >
                       <InputOTPGroup className="gap-2 flex-row-reverse">
                         <InputOTPSlot

@@ -117,18 +117,55 @@ const sendOTP = async (phoneNumber, otpCode) => {
 
 ### Testing on Android Device:
 
-1. Build and deploy your app to HTTPS domain
-2. Open the app on Android Chrome
-3. Enter phone number and submit
-4. Send yourself an SMS with the correct format:
+1. **Deploy to HTTPS domain** (Required - WebOTP only works on HTTPS)
+2. **Open app on Android Chrome** (version 84+)
+3. **Open Developer Console** to see WebOTP logs:
+   - Chrome DevTools → Console
+   - Look for logs starting with "WebOTP:"
+4. **Enter phone number and submit**
+5. **Send SMS with correct format:**
 
    ```
-   Test OTP: 123456
+   Your Naqlah verification code is: 123456
 
    @your-domain.com #123456
    ```
 
-5. Browser should automatically detect and offer to fill the OTP
+6. **Check for permission prompt:**
+   - Browser will show a prompt asking to share OTP from SMS
+   - If you don't see prompt, check console for errors
+   - If "NotAllowedError" appears, user denied permission
+7. **Allow the prompt** - OTP will auto-fill!
+
+### Troubleshooting:
+
+**Issue: No permission prompt appears**
+- ✓ Verify you're on HTTPS (not HTTP)
+- ✓ Check browser version (Chrome 84+)
+- ✓ Verify SMS format has `@domain.com #code` on last line
+- ✓ Domain in SMS must match website domain exactly
+
+**Issue: "NotAllowedError" in console**
+- User denied permission
+- Clear browser data and try again
+- User can still enter OTP manually
+
+**Issue: "SecurityError" in console**
+- Website must be on HTTPS
+- Self-signed certificates may cause issues
+
+**Issue: OTP doesn't auto-fill**
+- Check console logs for WebOTP errors
+- Verify SMS format is correct
+- Try the fallback autocomplete method (see below)
+
+### Fallback: Autocomplete Method
+
+The app also uses `autocomplete="one-time-code"` as fallback:
+- Works on iOS Safari and other browsers
+- Doesn't require specific SMS format
+- Browser's native OTP detection
+- Less reliable but broader support
 
 ### Testing Locally (Development):
 
