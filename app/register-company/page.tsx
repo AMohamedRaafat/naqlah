@@ -96,7 +96,7 @@ export default function RegisterCompanyPage() {
   };
 
   return (
-    <div className="min-h-screenpb-8">
+    <div className="min-h-screen pb-8">
       <div className="container mx-auto px-4 max-w-2xl">
         <form onSubmit={handleSubmit} className="space-y-6 pt-6">
           {/* Company Logo Upload */}
