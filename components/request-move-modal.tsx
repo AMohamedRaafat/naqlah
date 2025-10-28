@@ -30,6 +30,7 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
   const router = useRouter();
   const [step, setStep] = useState<Step>('phone');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [phoneError, setPhoneError] = useState('');
   const [saveData, setSaveData] = useState(false);
   const [otp, setOtp] = useState('');
   const [otpError, setOtpError] = useState('');
@@ -41,22 +42,63 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
     if (!open) {
       setStep('phone');
       setPhoneNumber('');
+      setPhoneError('');
       setSaveData(false);
       setOtp('');
       setOtpError('');
     }
   }, [open]);
 
+  // Validate Saudi phone number
+  const validatePhoneNumber = (phone: string): boolean => {
+    // Saudi phone numbers should be 9 digits and start with 5
+    if (phone.length === 0) {
+      setPhoneError('');
+      return false;
+    }
+    
+    if (phone.length < 9) {
+      setPhoneError(t('phoneIncomplete'));
+      return false;
+    }
+    
+    if (!phone.startsWith('5')) {
+      setPhoneError(t('phoneInvalidStart'));
+      return false;
+    }
+    
+    if (phone.length === 9) {
+      setPhoneError('');
+      return true;
+    }
+    
+    return false;
+  };
+
+  const handlePhoneChange = (value: string) => {
+    const cleanedValue = value.replace(/\D/g, '');
+    setPhoneNumber(cleanedValue);
+    if (cleanedValue.length > 0) {
+      validatePhoneNumber(cleanedValue);
+    } else {
+      setPhoneError('');
+    }
+  };
+
   const handlePhoneSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (phoneNumber.length >= 9) {
-      // Simulate sending OTP
-      console.log('Sending OTP to:', '+966' + phoneNumber);
-      setStep('otp');
-      
-      // Start WebOTP API to auto-detect SMS OTP
-      startWebOTP();
+    
+    // Validate before submitting
+    if (!validatePhoneNumber(phoneNumber)) {
+      return;
     }
+    
+    // Simulate sending OTP
+    console.log('Sending OTP to:', '+966' + phoneNumber);
+    setStep('otp');
+    
+    // Start WebOTP API to auto-detect SMS OTP
+    startWebOTP();
   };
 
   // WebOTP API implementation
@@ -65,7 +107,7 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
     if ('OTPCredential' in window) {
       try {
         const ac = new AbortController();
-        
+
         // Set timeout to abort after 3 minutes
         setTimeout(() => {
           ac.abort();
@@ -162,30 +204,36 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
               <p className="text-center text-[#868686] mb-6 text-md">{t('subtitle')}</p>
 
               <form onSubmit={handlePhoneSubmit}>
-                {/* Phone number input */}
-                <div className="mb-4">
-                  <label htmlFor="phone" className="block text-md font-medium text-[#353535] mb-2">
-                    {t('phoneLabel')}
-                  </label>
-                  <div
-                    className={`flex items-center border border-[#EDEDED] rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-[#00B8A9] focus-within:border-[#00B8A9] flex-row
-                    `}
-                  >
-                    <input
-                      type="tel"
-                      id="phone"
-                      value={phoneNumber}
-                      onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, ''))}
-                      placeholder={t('phonePlaceholder')}
-                      className={`flex-1 px-4 py-3 outline-none ${
-                        isRTL ? 'text-right' : 'text-left'
+                  {/* Phone number input */}
+                  <div className="mb-4">
+                    <label htmlFor="phone" className="block text-md font-medium text-[#353535] mb-2">
+                      {t('phoneLabel')}
+                    </label>
+                    <div
+                      className={`flex items-center border rounded-lg overflow-hidden focus-within:ring-2 flex-row ${
+                        phoneError 
+                          ? 'border-red-500 focus-within:ring-red-500 focus-within:border-red-500' 
+                          : 'border-[#EDEDED] focus-within:ring-[#00B8A9] focus-within:border-[#00B8A9]'
                       }`}
-                      dir={'ltr'}
-                      maxLength={10}
-                    />
-                    <span className="px-4 py-3  text-[#A3A3A3]   font-regualr">+966</span>
+                    >
+                      <input
+                        type="tel"
+                        id="phone"
+                        value={phoneNumber}
+                        onChange={(e) => handlePhoneChange(e.target.value)}
+                        placeholder={t('phonePlaceholder')}
+                        className={`flex-1 px-4 py-3 outline-none ${
+                          isRTL ? 'text-right' : 'text-left'
+                        }`}
+                        dir={'ltr'}
+                        maxLength={9}
+                      />
+                      <span className="px-4 py-3 text-[#A3A3A3] font-regular">+966</span>
+                    </div>
+                    {phoneError && (
+                      <p className="text-red-500 text-sm mt-2">{phoneError}</p>
+                    )}
                   </div>
-                </div>
 
                 {/* Checkbox */}
                 <div
@@ -207,7 +255,7 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
                 {/* Submit button */}
                 <Button
                   type="submit"
-                  disabled={phoneNumber.length < 9}
+                  disabled={phoneNumber.length !== 9 || !phoneNumber.startsWith('5') || !!phoneError}
                   className="w-full bg-[#00B8A9] hover:bg-[#009688] text-white font-semibold py-6 text-base disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {t('submitButton')}

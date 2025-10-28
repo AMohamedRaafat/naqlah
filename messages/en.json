@@ -96,6 +96,8 @@
     "subtitle": "Please enter your phone number to start the move request",
     "phoneLabel": "Phone Number",
     "phonePlaceholder": "Enter phone number",
+    "phoneIncomplete": "Phone number must be 9 digits",
+    "phoneInvalidStart": "Saudi phone number must start with 5",
     "saveDataLabel": "Save my data to login again",
     "submitButton": "Login",
     "otpSubtitle": "Please enter the verification code sent to",

@@ -25,6 +25,7 @@ Your verification code is: 123456
 ### Format Requirements:
 
 1. **Last line must contain:**
+
    - `@` followed by your domain (e.g., `@naqlah.com`)
    - `#` followed by the OTP code
    - These must be on the last line of the message
@@ -82,7 +83,7 @@ const sendOTP = async (phoneNumber, otpCode) => {
   await twilioClient.messages.create({
     body: message,
     from: '+966XXXXXXXXX', // Your Twilio number
-    to: `+966${phoneNumber}`
+    to: `+966${phoneNumber}`,
   });
 };
 ```
@@ -90,12 +91,14 @@ const sendOTP = async (phoneNumber, otpCode) => {
 ## Browser Compatibility
 
 ### Supported Browsers:
+
 - ✅ Chrome 84+ (Android)
 - ✅ Edge 84+ (Android)
 - ✅ Opera 70+ (Android)
 - ✅ Samsung Internet 14+
 
 ### Not Supported:
+
 - ❌ iOS Safari (Apple uses their own autofill system)
 - ❌ Firefox (as of now)
 - ❌ Desktop browsers
@@ -118,11 +121,13 @@ const sendOTP = async (phoneNumber, otpCode) => {
 2. Open the app on Android Chrome
 3. Enter phone number and submit
 4. Send yourself an SMS with the correct format:
+
    ```
    Test OTP: 123456
-   
+
    @your-domain.com #123456
    ```
+
 5. Browser should automatically detect and offer to fill the OTP
 
 ### Testing Locally (Development):
@@ -130,20 +135,23 @@ const sendOTP = async (phoneNumber, otpCode) => {
 WebOTP API requires HTTPS, but you can test locally using:
 
 1. **Chrome Flags** (for testing):
+
    - Open `chrome://flags`
    - Enable "Experimental Web Platform features"
    - Restart browser
 
 2. **Use ngrok or similar** to create HTTPS tunnel:
+
    ```bash
    ngrok http 3000
    ```
 
 3. **Test SMS Format**:
    Send SMS with your ngrok domain:
+
    ```
    Your code: 123456
-   
+
    @your-ngrok-url.ngrok.io #123456
    ```
 
@@ -156,7 +164,7 @@ const startWebOTP = async () => {
   if ('OTPCredential' in window) {
     try {
       const ac = new AbortController();
-      
+
       // Set timeout to abort after 3 minutes
       setTimeout(() => {
         ac.abort();
@@ -183,6 +191,7 @@ const startWebOTP = async () => {
 ## Fallback Behavior
 
 If WebOTP API is not available:
+
 - ✅ User can still enter OTP manually
 - ✅ No errors or broken functionality
 - ✅ Full feature parity, just without auto-fill
@@ -196,4 +205,3 @@ If WebOTP API is not available:
 ## Support
 
 For issues or questions about WebOTP implementation, please contact the development team.
-

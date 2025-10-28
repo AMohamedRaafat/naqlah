@@ -96,6 +96,8 @@
     "subtitle": "يرجى إدخال رقم الهاتف لبدء طلب النقل",
     "phoneLabel": "رقم الهاتف",
     "phonePlaceholder": "أدخل رقم الهاتف",
+    "phoneIncomplete": "رقم الهاتف يجب أن يكون 9 أرقام",
+    "phoneInvalidStart": "رقم الهاتف السعودي يجب أن يبدأ بـ 5",
     "saveDataLabel": "احفظ بياناتي للدخول مرة أخرى",
     "submitButton": "تسجيل الدخول",
     "otpSubtitle": "يرجى إدخال رقم التحقق المرسل إلى",

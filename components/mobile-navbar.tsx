@@ -93,7 +93,7 @@ export default function MobileNavbar() {
                 <div className="flex flex-col h-full bg-white">
                   {/* Menu Items */}
                   <nav className="flex-1 pt-10 pb-4 px-4 text-black font-regular">
-                    <ul className="space-y-0">
+                    <ul className="space-y-0 mt-3">
                       {menuItems.map((item, index) => {
                         // Check if this item is active
                         const isActive = pathname === item.href;
@@ -108,7 +108,7 @@ export default function MobileNavbar() {
                                   isRTL ? 'flex-row text-right' : 'flex-row text-left'
                                 } ${
                                   isActive
-                                    ? 'bg-[#D2F2F0] border-r-2 border-[#00B8A9]'
+                                    ? 'bg-[#D2F2F0] rounded-md border-r-2 border-[#00B8A9]'
                                     : 'hover:bg-gray-50'
                                 }`}
                               >
@@ -142,7 +142,7 @@ export default function MobileNavbar() {
                                   isRTL ? 'flex-row text-right' : 'flex-row text-left'
                                 } ${
                                   isActive
-                                    ? 'bg-[#D2F2F0] border-r-2 border-[#00B8A9]'
+                                    ? 'bg-[#D2F2F0] rounded-md border-r-2 border-[#00B8A9]'
                                     : 'hover:bg-gray-50'
                                 }`}
                               >
