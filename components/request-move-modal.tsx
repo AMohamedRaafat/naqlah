@@ -291,7 +291,7 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
             </>
           ) : (
             <>
-              <p className="text-center text-[#868686] mb-2 text-md">
+              <p className="text-center text-[#868686] mb-2 text-sm">
                 {t('otpSubtitle')}
 
                 <span className="text-[#353535] font-medium">+966{phoneNumber}</span>

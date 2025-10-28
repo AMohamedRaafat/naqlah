@@ -24,14 +24,15 @@ The app automatically adjusts its theme color based on two factors:
 
 ### Color Scheme:
 
-| State | Light Mode | Dark Mode |
-|-------|-----------|-----------|
+| State         | Light Mode               | Dark Mode               |
+| ------------- | ------------------------ | ----------------------- |
 | Not Logged In | `#00B8A9` (Primary Teal) | `#007973` (Darker Teal) |
-| Logged In | `#FFFFFF` (White) | `#1F2937` (Dark Gray) |
+| Logged In     | `#FFFFFF` (White)        | `#1F2937` (Dark Gray)   |
 
 ### How It Works:
 
 The `ThemeColor` component:
+
 - Detects system theme using `prefers-color-scheme`
 - Listens for theme changes
 - Updates the theme-color meta tag dynamically
@@ -67,6 +68,7 @@ Location: `public/manifest.json`
 Location: `public/assets/icons/`
 
 Required sizes:
+
 - 72x72, 96x96, 128x128, 144x144
 - 152x152, 192x192, 384x384, 512x512
 - Apple Touch Icon: 180x180
@@ -78,6 +80,7 @@ See `public/assets/icons/README.md` for icon generation guide.
 Location: `public/assets/splash/`
 
 Required for different iOS devices:
+
 - iPhone SE: 750x1334
 - iPhone X/11/12/13: 1125x2436
 - iPhone XR/11: 828x1792
@@ -90,6 +93,7 @@ Required for different iOS devices:
 Location: `public/assets/screenshots/`
 
 For app store listings:
+
 - Mobile (narrow): 540x720 or similar
 - Desktop (wide): 1280x720 or similar
 
@@ -125,6 +129,7 @@ DevTools → Application Tab → Manifest
 ```
 
 Check:
+
 - ✓ Manifest loads correctly
 - ✓ All icons are accessible
 - ✓ Theme colors are correct
@@ -141,11 +146,13 @@ Run audit and aim for 100% PWA score.
 ### 3. Mobile Testing:
 
 Use Chrome DevTools Device Emulation:
+
 ```
 DevTools → Toggle Device Toolbar (Ctrl+Shift+M)
 ```
 
 Test on different device sizes and check:
+
 - Install prompt appears
 - Icons display correctly
 - Theme color matches navbar
@@ -208,12 +215,14 @@ All meta tags configured in `app/layout.tsx`:
 ### Issue: Install prompt doesn't appear
 
 **Causes:**
+
 - Not on HTTPS
 - Manifest file has errors
 - Icons missing or incorrect
 - Already installed
 
 **Solution:**
+
 - Check console for manifest errors
 - Verify all icon paths
 - Use Lighthouse to diagnose issues
@@ -221,11 +230,13 @@ All meta tags configured in `app/layout.tsx`:
 ### Issue: Wrong theme color on mobile
 
 **Causes:**
+
 - ThemeColor component not rendering
 - Meta tag not updating
 - Cache issues
 
 **Solution:**
+
 - Check browser console for errors
 - Clear browser cache
 - Verify ThemeColor component is in layout
@@ -233,11 +244,13 @@ All meta tags configured in `app/layout.tsx`:
 ### Issue: Icons don't show in install prompt
 
 **Causes:**
+
 - Icon files missing
 - Incorrect paths in manifest
 - Wrong file formats
 
 **Solution:**
+
 - Verify all icons exist in `/public/assets/icons/`
 - Check manifest.json paths
 - Use PNG format (not SVG for icons)
@@ -257,4 +270,3 @@ All meta tags configured in `app/layout.tsx`:
 4. **Run Lighthouse audit** and fix any issues
 5. **Add service worker** for offline support (optional)
 6. **Submit to app stores** (if desired)
-

@@ -16,7 +16,7 @@ export default function Footer() {
     <footer className="bg-[#00B8A9] text-white mt-auto font-expo-arabic">
       <div className="container mx-auto px-6 py-6">
         {/* Top Section - Two Columns */}
-        <div className="grid grid-cols-2 md:grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
           {/* Site Links - Left side in RTL */}
           <div className={isRTL ? 'md:order-1' : 'md:order-2'}>
             <h3 className="text-[16px] font-semibold mb-3">{t('footer.siteLinks')}</h3>
@@ -71,10 +71,74 @@ export default function Footer() {
               </li>
             </ul>
           </div>
+
+          <div
+            className={`flex flex-col items-center mb-6
+          ${isRTL ? 'md:order-3' : 'md:order-1'}
+          `}
+          >
+            {/* Logo Placeholder */}
+            <div className="mb-1">
+              <Image
+                src="/assets/logo.svg"
+                alt={t('footer.companyName')}
+                width={192}
+                height={80}
+                className="w-48 h-24"
+              />
+            </div>
+
+            {/* Powered By Placeholder */}
+            <div className="mb-6">
+              <Image
+                src="/assets/powerdBy.svg"
+                alt={t('footer.companyName')}
+                width={192}
+                height={40}
+                className="w-48 h-10"
+              />
+            </div>
+
+            {/* Social Media Icons */}
+            <div className=" hidden md:flex gap-6 flex-row-reverse">
+              <Link
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-80 transition-opacity"
+              >
+                <FaFacebookF className="w-6 h-6" />
+              </Link>
+              <Link
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-80 transition-opacity"
+              >
+                <FaInstagram className="w-6 h-6" />
+              </Link>
+              <Link
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-80 transition-opacity"
+              >
+                <FaTwitter className="w-6 h-6" />
+              </Link>
+              <Link
+                href="https://youtube.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-80 transition-opacity"
+              >
+                <FaYoutube className="w-6 h-6" />
+              </Link>
+            </div>
+          </div>
         </div>
 
         {/* Center - Logo and Powered By */}
-        <div className="flex flex-col items-center mb-6">
+        <div className="flex md:hidden flex-col items-center mb-6">
           {/* Logo Placeholder */}
           <div className="mb-1">
             <Image

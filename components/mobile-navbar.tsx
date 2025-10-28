@@ -22,6 +22,9 @@ export default function MobileNavbar() {
   // Get current page title from centralized function
   const pageTitle = getTitle(pathname, t);
 
+  // Check if we're on a page that should show logged-in style nav
+  const showLoggedInStyle = isLoggedIn || pathname === '/register-company';
+
   // Get menu items from centralized configuration
   const menuItems = useMemo(() => {
     return getMobileMenuItems({ isLoggedIn, isCompany, t });
@@ -51,12 +54,12 @@ export default function MobileNavbar() {
       {/* Mobile Header */}
       <div
         className={`lg:hidden font-expo-arabic ${
-          isLoggedIn ? 'bg-white text-gray-900 border-b border-gray-200' : 'bg-[#00B8A9] text-white'
+          showLoggedInStyle ? 'bg-white text-gray-900 border-b border-gray-200' : 'bg-[#00B8A9] text-white'
         }`}
       >
         <div className="flex items-end justify-between px-4 py-5">
           {/* Logo or Page Title */}
-          {isLoggedIn ? (
+          {showLoggedInStyle ? (
             <div className={`flex items-center ${isRTL ? 'order-1' : 'order-1'}`}>
               <h1 className="text-xl font-semibold">{pageTitle}</h1>
             </div>
@@ -76,7 +79,7 @@ export default function MobileNavbar() {
           <div
             className={`flex items-center gap-3 rounded-xl px-2 py-1 ${
               isRTL ? 'order-1' : 'order-2'
-            } ${isLoggedIn ? 'border border-gray-300' : 'border border-white'}`}
+            } ${showLoggedInStyle ? 'border border-gray-300' : 'border border-white'}`}
           >
             {/* Menu Button */}
             <Sheet open={open} onOpenChange={setOpen}>

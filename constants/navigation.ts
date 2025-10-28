@@ -154,5 +154,6 @@ export const getPageTitle = (pathname: string, t: (key: string) => string): stri
   if (pathname === '/dashboard') return t('navigation.dashboard');
   if (pathname === '/settings') return t('navigation.settings');
   if (pathname === '/profile') return t('navigation.profile');
+  if (pathname === '/register-company') return t('registerCompany.pageTitle');
   return t('navigation.home');
 };

@@ -20,6 +20,9 @@ export default function Navbar() {
   // Get current page title from centralized function
   const pageTitle = getTitle(pathname, t);
 
+  // Check if we're on a page that should show logged-in style nav
+  const showLoggedInStyle = isLoggedIn || pathname === '/register-company';
+
   // Get nav items from centralized configuration
   const navItems = useMemo(() => {
     return getNavItems({ isLoggedIn, isCompany, t });
@@ -38,13 +41,13 @@ export default function Navbar() {
       {/* Desktop Navbar */}
       <nav
         className={`hidden lg:block font-expo-arabic shadow-md ${
-          isLoggedIn ? 'bg-white text-gray-900 border-b border-gray-200' : 'bg-[#00B8A9] text-white'
+          showLoggedInStyle ? 'bg-white text-gray-900 border-b border-gray-200' : 'bg-[#00B8A9] text-white'
         }`}
       >
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between h-20">
             {/* Logo or Page Title - Right side in RTL */}
-            {isLoggedIn ? (
+            {showLoggedInStyle ? (
               <div className="flex items-center order-3">
                 <h1 className="text-2xl font-semibold">{pageTitle}</h1>
               </div>
@@ -67,7 +70,7 @@ export default function Navbar() {
                   key={item.href}
                   href={item.href}
                   className={`font-medium relative group transition-colors ${
-                    isLoggedIn
+                    showLoggedInStyle
                       ? 'text-gray-900 hover:text-[#00B8A9]'
                       : 'text-white hover:text-white/80'
                   }`}
@@ -75,7 +78,7 @@ export default function Navbar() {
                   {item.label}
                   <span
                     className={`absolute bottom-0 left-0 w-0 h-0.5 transition-all group-hover:w-full ${
-                      isLoggedIn ? 'bg-[#00B8A9]' : 'bg-white'
+                      showLoggedInStyle ? 'bg-[#00B8A9]' : 'bg-white'
                     }`}
                   ></span>
                 </Link>
@@ -87,7 +90,7 @@ export default function Navbar() {
               <button
                 onClick={switchLanguage}
                 className={`px-4 py-2 rounded-lg transition-colors text-sm font-medium ${
-                  isLoggedIn
+                  showLoggedInStyle
                     ? 'bg-gray-100 hover:bg-gray-200 text-gray-900'
                     : 'bg-white/10 hover:bg-white/20 text-white'
                 }`}

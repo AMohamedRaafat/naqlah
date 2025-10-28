@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
@@ -9,6 +10,7 @@ import RequestMoveModal from '@/components/request-move-modal';
 
 export default function HeroSection() {
   const t = useTranslations('hero');
+  const router = useRouter();
   const [modalOpen, setModalOpen] = useState(false);
 
   const scrollToSection = (sectionId: string) => {
@@ -54,7 +56,7 @@ export default function HeroSection() {
               {t('ctaOrderMove')}
             </Button>
             <Button
-              onClick={() => scrollToSection('contact')}
+              onClick={() => router.push('/register-company')}
               variant="outline"
               className="bg-[#18C9BF21] w-full border-2 border-[#00B8A9] text-[#00B8A9] hover:bg-[#00B8A9] hover:text-white font-semibold py-6 text-lg"
             >

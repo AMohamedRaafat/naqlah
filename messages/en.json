@@ -107,5 +107,46 @@
     "didNotReceive": "Didn't receive the code?",
     "resendOtp": "Resend",
     "verifying": "Verifying..."
+  },
+  "registerCompany": {
+    "pageTitle": "Join as Moving Company",
+    "uploadLogo": "Upload Logo",
+    "companyName": "Company Commercial Name",
+    "covenant": "Covenant",
+    "commercialRegistration": "Commercial Registration",
+    "attachFile": "Attach Commercial Registration",
+    "fileAttached": "Commercial Registration File",
+    "city": "City",
+    "selectCity": "Select City",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "secretCode": "Phone Number",
+    "featuredServices": "Featured Services",
+    "selectServices": "Select Featured Services",
+    "aboutCompany": "Brief About Company",
+    "aboutCompanyPlaceholder": "Write a brief about your company",
+    "agreeTerms": "By creating an account, I agree to",
+    "termsLink": "Terms of Use",
+    "and": "and",
+    "privacyLink": "Privacy Policy",
+    "submitButton": "Submit Account Creation Request",
+    "services": {
+      "disassembly": "Disassembly & Installation",
+      "packing": "Secure Packing",
+      "insurance": "Insurance Against Loss",
+      "cleaning": "Cleaning",
+      "moving": "Store to Store Moving"
+    },
+    "cities": {
+      "jeddah": "Jeddah",
+      "riyadh": "Riyadh",
+      "dammam": "Dammam",
+      "mecca": "Mecca",
+      "medina": "Medina",
+      "khobar": "Khobar",
+      "tabuk": "Tabuk",
+      "abha": "Abha"
+    }
   }
 }
