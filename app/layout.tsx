@@ -8,11 +8,12 @@ import './globals.css';
 export const metadata = {
   title: 'Naqlah',
   description: 'Next.js application with Arabic and English support',
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-  },
+};
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

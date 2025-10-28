@@ -10,10 +10,8 @@ export default function ContactSection() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    phone: '',
-    pickupLocation: '',
-    dropoffLocation: '',
-    details: '',
+    messageTitle: '',
+    message: '',
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -31,11 +29,11 @@ export default function ContactSection() {
 
   return (
     <section id="contact" className="py-12 px-4 bg-white">
-      <div className="container mx-auto max-w-2xl">
-        <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-900 mb-2">
+      <div className="container mx-auto max-w-2xl border-2 border-[#ededed] rounded-3xl p-4">
+        <h2 className="text-2xl md:text-3xl font-bold text-start text-[#4B4F63]  mb-2">
           {t('title')}
         </h2>
-        <p className="text-center text-gray-600 mb-8">{t('description')}</p>
+        <p className="text-start text-[#7E7E7E] mb-8  text-[14px]">{t('description')}</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -63,54 +61,26 @@ export default function ContactSection() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">{t('phone')}</label>
-            <input
-              type="tel"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              placeholder={t('phonePlaceholder')}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00B8A9] focus:border-transparent"
-            />
-          </div>
-
-          <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              {t('pickupLocation')}
+              {t('messageTitle')}
             </label>
             <input
               type="text"
-              name="pickupLocation"
-              value={formData.pickupLocation}
+              name="messageTitle"
+              value={formData.messageTitle}
               onChange={handleChange}
-              placeholder={t('pickupPlaceholder')}
+              placeholder={t('messageTitlePlaceholder')}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00B8A9] focus:border-transparent"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              {t('dropoffLocation')}
-            </label>
-            <input
-              type="text"
-              name="dropoffLocation"
-              value={formData.dropoffLocation}
-              onChange={handleChange}
-              placeholder={t('dropoffPlaceholder')}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00B8A9] focus:border-transparent"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              {t('additionalDetails')}
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">{t('message')}</label>
             <textarea
-              name="details"
-              value={formData.details}
+              name="message"
+              value={formData.message}
               onChange={handleChange}
-              placeholder={t('detailsPlaceholder')}
+              placeholder={t('messagePlaceholder')}
               rows={4}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00B8A9] focus:border-transparent resize-none"
             ></textarea>
@@ -118,7 +88,7 @@ export default function ContactSection() {
 
           <Button
             type="submit"
-            className="w-full bg-[#00B8A9] hover:bg-[#009688] text-white font-semibold py-4 text-lg"
+            className="w-full bg-[#00B8A9] hover:bg-[#009688] text-white font-semibold py-6 text-[14px]"
           >
             {t('sendMessage')}
           </Button>
