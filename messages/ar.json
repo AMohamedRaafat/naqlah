@@ -91,11 +91,18 @@
     "username": "اسم المستخدم"
   },
   "requestMove": {
-    "title": "اطلب نقلة",
+    "title": "تسجيل الدخول",
     "subtitle": "يرجى إدخال رقم الهاتف لبدء طلب النقل",
     "phoneLabel": "رقم الهاتف",
     "phonePlaceholder": "أدخل رقم الهاتف",
     "saveDataLabel": "احفظ بياناتي للدخول مرة أخرى",
-    "submitButton": "تسجيل الدخول"
+    "submitButton": "تسجيل الدخول",
+    "otpSubtitle": "يرجى إدخال رقم التحقق المرسل إلى",
+    "otpLabel": "رمز التحقق",
+    "otpIncomplete": "يرجى إدخال رمز التحقق كاملاً",
+    "otpInvalid": "رمز التحقق المدخل غير صحيح، حاول مرة أخرى",
+    "didNotReceive": "لم يصلك الرمز بعد؟",
+    "resendOtp": "إعادة الإرسال",
+    "verifying": "جاري التحقق..."
   }
 }

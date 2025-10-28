@@ -91,11 +91,18 @@
     "username": "Username"
   },
   "requestMove": {
-    "title": "Request a Move",
+    "title": "Login",
     "subtitle": "Please enter your phone number to start the move request",
     "phoneLabel": "Phone Number",
     "phonePlaceholder": "Enter phone number",
     "saveDataLabel": "Save my data to login again",
-    "submitButton": "Login"
+    "submitButton": "Login",
+    "otpSubtitle": "Please enter the verification code sent to",
+    "otpLabel": "Verification Code",
+    "otpIncomplete": "Please enter the complete verification code",
+    "otpInvalid": "The verification code entered is incorrect, try again",
+    "didNotReceive": "Didn't receive the code?",
+    "resendOtp": "Resend",
+    "verifying": "Verifying..."
   }
 }
