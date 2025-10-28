@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
@@ -17,6 +17,7 @@ export default function MobileNavbar() {
   const { isLoggedIn, isCompany, logout } = useAuth();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>('');
   const isRTL = locale === 'ar';
 
   // Get current page title from centralized function
@@ -26,6 +27,43 @@ export default function MobileNavbar() {
   const menuItems = useMemo(() => {
     return getMobileMenuItems({ isLoggedIn, isCompany, t });
   }, [isLoggedIn, isCompany, t]);
+
+  // Track active section on homepage
+  useEffect(() => {
+    if (pathname !== '/') {
+      setActiveSection('');
+      return;
+    }
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -70% 0px', // Trigger when section is in the middle of viewport
+      threshold: 0,
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    // Observe all sections
+    const sections = ['partners', 'services', 'about', 'contact'];
+    sections.forEach((sectionId) => {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [pathname]);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -96,60 +134,84 @@ export default function MobileNavbar() {
                     <ul className="space-y-0">
                       {menuItems.map((item, index) => {
                         // Check if this item is active
-                        const isActive = item.isExternal 
-                          ? pathname === item.href 
-                          : pathname === '/' && item.section;
-                        
+                        const isActive = item.isExternal
+                          ? pathname === item.href
+                          : pathname === '/' && item.section === activeSection;
+
                         return (
-                        <li key={index}>
-                          {item.isExternal ? (
-                            <Link
-                              href={item.href || '/'}
-                              onClick={() => setOpen(false)}
-                              className={`flex items-center gap-4 px-4 py-3 transition-colors ${
-                                isRTL ? 'flex-row text-right' : 'flex-row text-left'
-                              } ${
-                                isActive
-                                  ? 'bg-[#D2F2F0] border-r-2 border-[#00B8A9]'
-                                  : 'hover:bg-gray-50'
-                              }`}
-                            >
-                              <Image
-                                src={item.icon}
-                                alt="icon"
-                                width={20}
-                                height={20}
-                                className={`w-6 h-6 ${isActive ? 'text-[#00B8A9]' : 'text-gray-800'}`}
-                              />
-                              <span className={`text-[15px] ${isActive ? 'text-[#00B8A9] font-semibold' : 'text-gray-800'}`}>
-                                {item.label}
-                              </span>
-                            </Link>
-                          ) : (
-                            <button
-                              onClick={() => item.section && scrollToSection(item.section)}
-                              className={`flex items-center gap-4 px-4 py-3 transition-colors w-full ${
-                                isRTL ? 'flex-row text-right' : 'flex-row text-left'
-                              } ${
-                                isActive
-                                  ? 'bg-[#D2F2F0] border-r-2 border-[#00B8A9]'
-                                  : 'hover:bg-gray-50'
-                              }`}
-                            >
-                              <Image
-                                src={item.icon}
-                                alt="icon"
-                                width={20}
-                                height={20}
-                                className={`w-6 h-6 ${isActive ? 'text-[#00B8A9]' : 'text-gray-800'}`}
-                              />
-                              <span className={`text-[15px] ${isActive ? 'text-[#00B8A9] font-semibold' : 'text-gray-800'}`}>
-                                {item.label}
-                              </span>
-                            </button>
-                          )}
-                        </li>
-                      );
+                          <li key={index}>
+                            {item.isExternal ? (
+                              <Link
+                                href={item.href || '/'}
+                                onClick={() => setOpen(false)}
+                                className={`flex items-center gap-4 px-4 py-3 transition-colors ${
+                                  isRTL ? 'flex-row text-right' : 'flex-row text-left'
+                                } ${
+                                  isActive
+                                    ? 'bg-[#D2F2F0] border-r-2 border-[#00B8A9]'
+                                    : 'hover:bg-gray-50'
+                                }`}
+                              >
+                                <Image
+                                  src={item.icon}
+                                  alt="icon"
+                                  width={20}
+                                  height={20}
+                                  className="w-6 h-6"
+                                  style={
+                                    isActive
+                                      ? {
+                                          filter:
+                                            'invert(61%) sepia(85%) saturate(490%) hue-rotate(122deg) brightness(93%) contrast(101%)',
+                                        }
+                                      : undefined
+                                  }
+                                />
+                                <span
+                                  className={`text-[15px] ${
+                                    isActive ? 'text-[#00B8A9] font-semibold' : 'text-gray-800'
+                                  }`}
+                                >
+                                  {item.label}
+                                </span>
+                              </Link>
+                            ) : (
+                              <button
+                                onClick={() => item.section && scrollToSection(item.section)}
+                                className={`flex items-center gap-4 px-4 py-3 transition-colors w-full ${
+                                  isRTL ? 'flex-row text-right' : 'flex-row text-left'
+                                } ${
+                                  isActive
+                                    ? 'bg-[#D2F2F0] border-r-2 border-[#00B8A9]'
+                                    : 'hover:bg-gray-50'
+                                }`}
+                              >
+                                <Image
+                                  src={item.icon}
+                                  alt="icon"
+                                  width={20}
+                                  height={20}
+                                  className="w-6 h-6"
+                                  style={
+                                    isActive
+                                      ? {
+                                          filter:
+                                            'invert(61%) sepia(85%) saturate(490%) hue-rotate(122deg) brightness(93%) contrast(101%)',
+                                        }
+                                      : undefined
+                                  }
+                                />
+                                <span
+                                  className={`text-[15px] ${
+                                    isActive ? 'text-[#00B8A9] font-semibold' : 'text-gray-800'
+                                  }`}
+                                >
+                                  {item.label}
+                                </span>
+                              </button>
+                            )}
+                          </li>
+                        );
                       })}
                     </ul>
                     <div className="border-t border-gray-200 mt-4 py-3 ">
