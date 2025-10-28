@@ -91,7 +91,8 @@
     "username": "اسم المستخدم"
   },
   "requestMove": {
-    "title": "تسجيل الدخول",
+    "firstStepTitle": "أطلب نقلة",
+    "secondStepTitle": "تسجيل الدخول",
     "subtitle": "يرجى إدخال رقم الهاتف لبدء طلب النقل",
     "phoneLabel": "رقم الهاتف",
     "phonePlaceholder": "أدخل رقم الهاتف",

@@ -13,11 +13,7 @@ import {
   DialogClose,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSlot,
-} from '@/components/ui/input-otp';
+import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { X } from 'lucide-react';
 
 interface RequestMoveModalProps {
@@ -57,12 +53,46 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
       // Simulate sending OTP
       console.log('Sending OTP to:', '+966' + phoneNumber);
       setStep('otp');
+      
+      // Start WebOTP API to auto-detect SMS OTP
+      startWebOTP();
+    }
+  };
+
+  // WebOTP API implementation
+  const startWebOTP = async () => {
+    // Check if WebOTP API is supported
+    if ('OTPCredential' in window) {
+      try {
+        const ac = new AbortController();
+        
+        // Set timeout to abort after 3 minutes
+        setTimeout(() => {
+          ac.abort();
+        }, 3 * 60 * 1000);
+
+        // Request OTP from SMS
+        const otp = await navigator.credentials.get({
+          otp: { transport: ['sms'] },
+          signal: ac.signal,
+        } as any);
+
+        if (otp && (otp as any).code) {
+          // Auto-fill the OTP field
+          setOtp((otp as any).code);
+          setOtpError('');
+          console.log('OTP auto-filled:', (otp as any).code);
+        }
+      } catch (err) {
+        // User cancelled or timeout - this is fine, user can enter manually
+        console.log('WebOTP cancelled or not available:', err);
+      }
     }
   };
 
   const handleOtpSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (otp.length !== 6) {
       setOtpError(t('otpIncomplete'));
       return;
@@ -117,38 +147,29 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md font-expo-arabic p-0 gap-0">
+      <DialogContent className="sm:max-w-80 font-expo-arabic p-0 gap-0">
         {/* Header with close button */}
         <DialogHeader className="relative border-b border-gray-200 pb-4 pt-6 px-6">
           <DialogTitle className="text-center text-xl font-semibold text-gray-900">
-            {t('title')}
+            {step === 'phone' ? t('firstStepTitle') : t('secondStepTitle')}
           </DialogTitle>
-          <DialogClose
-            className={`absolute top-4 ${
-              isRTL ? 'left-4' : 'right-4'
-            } rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2`}
-          >
-            <X className="h-5 w-5" />
-            <span className="sr-only">Close</span>
-          </DialogClose>
         </DialogHeader>
 
         {/* Modal body */}
         <div className="px-6 py-6">
           {step === 'phone' ? (
             <>
-              <p className="text-center text-gray-600 mb-6 text-sm">{t('subtitle')}</p>
+              <p className="text-center text-[#868686] mb-6 text-md">{t('subtitle')}</p>
 
               <form onSubmit={handlePhoneSubmit}>
                 {/* Phone number input */}
                 <div className="mb-4">
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="phone" className="block text-md font-medium text-[#353535] mb-2">
                     {t('phoneLabel')}
                   </label>
                   <div
-                    className={`flex items-center border border-gray-300 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-[#00B8A9] focus-within:border-[#00B8A9] ${
-                      isRTL ? 'flex-row-reverse' : 'flex-row'
-                    }`}
+                    className={`flex items-center border border-[#EDEDED] rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-[#00B8A9] focus-within:border-[#00B8A9] flex-row
+                    `}
                   >
                     <input
                       type="tel"
@@ -156,26 +177,27 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
                       value={phoneNumber}
                       onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, ''))}
                       placeholder={t('phonePlaceholder')}
-                      className={`flex-1 px-4 py-3 outline-none ${isRTL ? 'text-right' : 'text-left'}`}
-                      dir={isRTL ? 'rtl' : 'ltr'}
+                      className={`flex-1 px-4 py-3 outline-none ${
+                        isRTL ? 'text-right' : 'text-left'
+                      }`}
+                      dir={'ltr'}
                       maxLength={10}
                     />
-                    <span className="px-4 py-3 bg-gray-50 text-gray-700 border-l border-gray-300 font-medium">
-                      +966
-                    </span>
+                    <span className="px-4 py-3  text-[#A3A3A3]   font-regualr">+966</span>
                   </div>
                 </div>
 
                 {/* Checkbox */}
                 <div
-                  className={`flex items-center gap-2 mb-6 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}
+                  className={`flex items-center gap-2 mb-6 flex-row
+                  `}
                 >
                   <input
                     type="checkbox"
                     id="saveData"
                     checked={saveData}
                     onChange={(e) => setSaveData(e.target.checked)}
-                    className="w-4 h-4 text-[#00B8A9] border-gray-300 rounded focus:ring-[#00B8A9]"
+                    className="w-5 h-5 text-[#00B8A9] border-[#E7E7E7] checked:bg-[#00B8A9]  focus:ring-[#00B8A9] rounded"
                   />
                   <label htmlFor="saveData" className="text-sm text-gray-700 cursor-pointer">
                     {t('saveDataLabel')}
@@ -194,19 +216,24 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
             </>
           ) : (
             <>
-              <p className="text-center text-gray-600 mb-2 text-sm">
-                {t('otpSubtitle')} +966{phoneNumber}
+              <p className="text-center text-[#868686] mb-2 text-md">
+                {t('otpSubtitle')}
+
+                <span className="text-[#353535] font-medium">+966{phoneNumber}</span>
               </p>
 
               <form onSubmit={handleOtpSubmit}>
                 {/* OTP Label */}
-                <div className="mb-4 mt-6">
+                <div className="mb-4 mt-4">
                   <label className="block text-sm font-medium text-gray-700 mb-3 text-center">
                     {t('otpLabel')}
                   </label>
 
                   {/* OTP Input using shadcn InputOTP */}
-                  <div className={`flex justify-center mb-4 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+                  <div
+                    className={`flex justify-center mb-4 flex-row
+                    `}
+                  >
                     <InputOTP
                       maxLength={6}
                       value={otp}
@@ -215,21 +242,49 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
                         setOtpError('');
                       }}
                     >
-                      <InputOTPGroup className="gap-2">
-                        <InputOTPSlot index={0} className={`w-12 h-12 text-lg font-semibold border-2 ${otpError ? 'border-red-500 bg-red-50' : 'border-gray-300'}`} />
-                        <InputOTPSlot index={1} className={`w-12 h-12 text-lg font-semibold border-2 ${otpError ? 'border-red-500 bg-red-50' : 'border-gray-300'}`} />
-                        <InputOTPSlot index={2} className={`w-12 h-12 text-lg font-semibold border-2 ${otpError ? 'border-red-500 bg-red-50' : 'border-gray-300'}`} />
-                        <InputOTPSlot index={3} className={`w-12 h-12 text-lg font-semibold border-2 ${otpError ? 'border-red-500 bg-red-50' : 'border-gray-300'}`} />
-                        <InputOTPSlot index={4} className={`w-12 h-12 text-lg font-semibold border-2 ${otpError ? 'border-red-500 bg-red-50' : 'border-gray-300'}`} />
-                        <InputOTPSlot index={5} className={`w-12 h-12 text-lg font-semibold border-2 ${otpError ? 'border-red-500 bg-red-50' : 'border-gray-300'}`} />
+                      <InputOTPGroup className="gap-2 flex-row-reverse">
+                        <InputOTPSlot
+                          index={0}
+                          className={` rounded-md w-12 h-12 text-lg font-semibold border-2 ${
+                            otpError ? 'border-red-500 bg-red-50' : 'border-[#E7E7E7]'
+                          }`}
+                        />
+                        <InputOTPSlot
+                          index={1}
+                          className={`rounded-md w-12 h-12 text-lg font-semibold border-2 ${
+                            otpError ? 'border-red-500 bg-red-50' : 'border-[#E7E7E7]'
+                          }`}
+                        />
+                        <InputOTPSlot
+                          index={2}
+                          className={` rounded-md w-12 h-12 text-lg font-semibold border-2 ${
+                            otpError ? 'border-red-500 bg-red-50' : 'border-[#E7E7E7]'
+                          }`}
+                        />
+                        <InputOTPSlot
+                          index={3}
+                          className={`rounded-md w-12 h-12 text-lg font-semibold border-2 ${
+                            otpError ? 'border-red-500 bg-red-50' : 'border-[#E7E7E7]'
+                          }`}
+                        />
+                        <InputOTPSlot
+                          index={4}
+                          className={`rounded-md w-12 h-12 text-lg font-semibold border-2 ${
+                            otpError ? 'border-red-500 bg-red-50' : 'border-[#E7E7E7]'
+                          }`}
+                        />
+                        <InputOTPSlot
+                          index={5}
+                          className={`rounded-md w-12 h-12 text-lg font-semibold border-2 ${
+                            otpError ? 'border-red-500 bg-red-50' : 'border-[#E7E7E7]'
+                          }`}
+                        />
                       </InputOTPGroup>
                     </InputOTP>
                   </div>
 
                   {/* OTP Error Message */}
-                  {otpError && (
-                    <p className="text-red-500 text-sm text-center mb-3">{otpError}</p>
-                  )}
+                  {otpError && <p className="text-red-500 text-sm text-center mb-3">{otpError}</p>}
                 </div>
 
                 {/* Resend OTP Link */}
