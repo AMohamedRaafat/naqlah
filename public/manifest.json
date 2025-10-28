@@ -2,13 +2,40 @@
   "name": "Naqlah - نقلة",
   "short_name": "Naqlah",
   "description": "أفضل خدمات نقل الأثاث في المملكة العربية السعودية - Best furniture moving services in Saudi Arabia",
-  "start_url": "/",
+  "start_url": "/?source=pwa",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#FFFFFF",
   "theme_color": "#00B8A9",
   "orientation": "portrait-primary",
   "lang": "ar",
   "dir": "rtl",
+  "shortcuts": [
+    {
+      "name": "أطلب نقلة",
+      "short_name": "نقلة",
+      "description": "اطلب نقلة جديدة",
+      "url": "/?action=request",
+      "icons": [
+        {
+          "src": "/assets/icons/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "short_name": "لوحة التحكم",
+      "description": "عرض لوحة التحكم",
+      "url": "/dashboard",
+      "icons": [
+        {
+          "src": "/assets/icons/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
   "icons": [
     {
       "src": "/assets/icons/icon-72x72.png",

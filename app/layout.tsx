@@ -1,6 +1,7 @@
 import { LanguageProvider } from '@/contexts/language-context';
 import { AuthProvider } from '@/contexts/auth-context';
 import ThemeColor from '@/components/theme-color';
+import PWAManager from '@/components/pwa-manager';
 import type { Metadata } from 'next';
 import './globals.css';
 
@@ -111,6 +112,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="flex flex-col min-h-screen font-expo-arabic">
         <AuthProvider>
           <ThemeColor />
+          <PWAManager />
           <LanguageProvider>{children}</LanguageProvider>
         </AuthProvider>
       </body>
