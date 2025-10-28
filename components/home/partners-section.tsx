@@ -92,7 +92,7 @@ export default function PartnersSection() {
                       >
                         <div className="relative w-full aspect-square">
                           {/* Placeholder for partner logo - replace with actual images */}
-                          <div className="w-full h-full flex items-center justify-center bg-gray-50 rounded-lg">
+                          <div className="w-full h-full flex items-center justify-center  rounded-lg">
                             <span className="text-4xl">🏢</span>
                           </div>
                           {/* Uncomment when you have actual images */}

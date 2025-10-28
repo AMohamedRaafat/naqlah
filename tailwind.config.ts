@@ -67,11 +67,11 @@ const config: Config = {
           '50%': { transform: 'scale(1.1)' },
         },
         'slide-up': {
-          '0%': { 
+          '0%': {
             transform: 'translateY(100%)',
             opacity: '0',
           },
-          '100%': { 
+          '100%': {
             transform: 'translateY(0)',
             opacity: '1',
           },
