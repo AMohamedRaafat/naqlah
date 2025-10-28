@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useLanguage } from '@/contexts/language-context';
-import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube, FaRegCopyright } from 'react-icons/fa';
 
 export default function Footer() {
   const t = useTranslations();
@@ -105,7 +105,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="hover:opacity-80 transition-opacity"
             >
-              <FaFacebook className="w-6 h-6" />
+              <FaFacebookF className="w-6 h-6" />
             </Link>
             <Link
               href="https://instagram.com"
@@ -139,7 +139,7 @@ export default function Footer() {
           <p className="text-base flex items-center justify-center gap-2">
             <span>{t('footer.copyright')}</span>
             <span>{currentYear}</span>
-            <span>©</span>
+            <FaRegCopyright className="w-4 h-4" />
           </p>
         </div>
       </div>
