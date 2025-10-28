@@ -15,9 +15,10 @@ export async function registerServiceWorker(options: ServiceWorkerUpdateOptions 
     return;
   }
 
-  // Only register in production
-  if (process.env.NODE_ENV !== 'production') {
-    console.log('[SW] Service Worker disabled in development');
+  // Check if we should register (can be controlled via env variable)
+  const isDevelopment = typeof window !== 'undefined' && window.location.hostname === 'localhost';
+  if (isDevelopment) {
+    console.log('[SW] Service Worker registration skipped in development (localhost)');
     return;
   }
 

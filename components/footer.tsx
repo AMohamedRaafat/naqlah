@@ -73,7 +73,7 @@ export default function Footer() {
           </div>
 
           <div
-            className={`flex flex-col items-center mb-6
+            className={` hidden md:flex  flex-col items-center mb-6
           ${isRTL ? 'md:order-3' : 'md:order-1'}
           `}
           >
@@ -100,7 +100,7 @@ export default function Footer() {
             </div>
 
             {/* Social Media Icons */}
-            <div className=" hidden md:flex gap-6 flex-row-reverse">
+            <div className="  gap-6 flex-row-reverse">
               <Link
                 href="https://facebook.com"
                 target="_blank"

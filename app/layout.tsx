@@ -111,9 +111,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="flex flex-col min-h-screen font-expo-arabic">
         <AuthProvider>
-          <ThemeColor />
-          <PWAManager />
-          <LanguageProvider>{children}</LanguageProvider>
+          <LanguageProvider>
+            <ThemeColor />
+            <PWAManager />
+            {children}
+          </LanguageProvider>
         </AuthProvider>
       </body>
     </html>
