@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { NextIntlClientProvider } from 'next-intl';
+import LoadingScreen from '@/components/loading-screen';
 
 type Locale = 'ar' | 'en';
 
@@ -45,7 +46,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingScreen />;
   }
 
   return (

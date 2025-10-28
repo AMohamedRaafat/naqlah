@@ -98,7 +98,7 @@ export default function Footer() {
           </div>
 
           {/* Social Media Icons */}
-          <div className="flex gap-6">
+          <div className="flex gap-6 flex-row-reverse">
             <Link
               href="https://facebook.com"
               target="_blank"
@@ -136,10 +136,8 @@ export default function Footer() {
 
         {/* Copyright */}
         <div className="text-center pt-4">
-          <p className="text-base flex items-center justify-center gap-2">
-            <span>{t('footer.copyright')}</span>
-            <span>{currentYear}</span>
-            <FaRegCopyright className="w-4 h-4" />
+          <p className="text-base flex items-center justify-center gap-1">
+            {t('footer.copyright')} {currentYear} <FaRegCopyright className="w-6 h-6" />
           </p>
         </div>
       </div>
