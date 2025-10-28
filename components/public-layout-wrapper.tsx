@@ -2,10 +2,10 @@ import Navbar from '@/components/navbar';
 import Footer from '@/components/footer';
 
 /**
- * Layout for public pages (home, about, etc.)
+ * Layout wrapper for public pages (home, etc.)
  * Includes the main Navbar with navigation links and Footer
  */
-export default function PublicLayout({ children }: { children: React.ReactNode }) {
+export default function PublicLayoutWrapper({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Navbar />
@@ -14,3 +14,4 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
     </>
   );
 }
+
