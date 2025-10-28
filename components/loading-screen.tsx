@@ -11,11 +11,10 @@ export default function LoadingScreen() {
           alt="Loading..."
           width={300}
           height={120}
-          className="w-64 h-auto animate-pulse"
+          className="w-64 h-auto animate-bounce-scale"
           priority
         />
       </div>
     </div>
   );
 }
-
