@@ -89,5 +89,13 @@
   },
   "userMenu": {
     "username": "Username"
+  },
+  "requestMove": {
+    "title": "Request a Move",
+    "subtitle": "Please enter your phone number to start the move request",
+    "phoneLabel": "Phone Number",
+    "phonePlaceholder": "Enter phone number",
+    "saveDataLabel": "Save my data to login again",
+    "submitButton": "Login"
   }
 }

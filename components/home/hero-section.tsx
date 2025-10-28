@@ -1,12 +1,15 @@
 'use client';
 
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import Truck from '@/public/assets/landing/truck.png';
+import RequestMoveModal from '@/components/request-move-modal';
 
 export default function HeroSection() {
   const t = useTranslations('hero');
+  const [modalOpen, setModalOpen] = useState(false);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -45,7 +48,7 @@ export default function HeroSection() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
             <Button
-              onClick={() => scrollToSection('contact')}
+              onClick={() => setModalOpen(true)}
               className="w-full bg-[#00B8A9] hover:bg-[#009688] text-white font-semibold py-6 text-lg"
             >
               {t('ctaOrderMove')}
@@ -67,6 +70,9 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
+
+      {/* Request Move Modal */}
+      <RequestMoveModal open={modalOpen} onOpenChange={setModalOpen} />
     </section>
   );
 }

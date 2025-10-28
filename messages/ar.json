@@ -89,5 +89,13 @@
   },
   "userMenu": {
     "username": "اسم المستخدم"
+  },
+  "requestMove": {
+    "title": "اطلب نقلة",
+    "subtitle": "يرجى إدخال رقم الهاتف لبدء طلب النقل",
+    "phoneLabel": "رقم الهاتف",
+    "phonePlaceholder": "أدخل رقم الهاتف",
+    "saveDataLabel": "احفظ بياناتي للدخول مرة أخرى",
+    "submitButton": "تسجيل الدخول"
   }
 }
