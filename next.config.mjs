@@ -1,12 +1,12 @@
 import createNextIntlPlugin from 'next-intl/plugin';
 
-const withNextIntl = createNextIntlPlugin();
+const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Ensure clean builds
   cleanDistDir: true,
-  
+
   // PWA and Service Worker support
   headers: async () => [
     {
@@ -24,6 +24,23 @@ const nextConfig = {
           key: 'Service-Worker-Allowed',
           value: '/',
         },
+        {
+          key: 'Content-Type',
+          value: 'application/javascript',
+        },
+      ],
+    },
+    {
+      source: '/manifest.json',
+      headers: [
+        {
+          key: 'Cache-Control',
+          value: 'public, max-age=3600, must-revalidate',
+        },
+        {
+          key: 'Content-Type',
+          value: 'application/manifest+json',
+        },
       ],
     },
     {
@@ -40,10 +57,7 @@ const nextConfig = {
       ],
     },
   ],
-  
-  // Optimize builds
-  swcMinify: true,
-  
+
   // Image optimization
   images: {
     formats: ['image/avif', 'image/webp'],

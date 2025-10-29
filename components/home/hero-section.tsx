@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import Truck from '@/public/assets/landing/truck.png';
-import RequestMoveModal from '@/components/request-move-modal';
+import RequestMoveModal from '@/components/modals/request-move-modal';
 
 export default function HeroSection() {
   const t = useTranslations('hero');
@@ -37,7 +37,7 @@ export default function HeroSection() {
 
           {/* Ratings/Stats */}
           <div className="flex items-center justify-center gap-2 mb-8">
-            <p>معتمد لدى</p>
+            <p>{t('certifiedBy')}</p>
             <div>
               <Image src="/assets/hero/sakany.svg" alt="NHC" width={65} height={65} />
             </div>

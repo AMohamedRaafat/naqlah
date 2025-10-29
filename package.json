@@ -8,7 +8,8 @@
     "clean": "rm -rf .next out node_modules/.cache",
     "clean:build": "npm run clean && npm run build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:pwa": "node scripts/test-pwa.js"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
@@ -27,7 +28,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
-    "tailwind-merge": "^2.5.4"
+    "tailwind-merge": "^2.5.4",
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@types/node": "^22",

@@ -20,6 +20,7 @@
     "subtitle": "جاهز للانتقال؟ احجز موعد، حدد الاحتياجات ودلبة فريقنا المحترف بنقل أثاثك بأمانة كاملة وسرعة",
     "ratingExcellent": "متميز جداً",
     "ratingHigh": "تقييم عالي",
+    "certifiedBy": "معتمد لدى",
     "ctaOrderMove": "اطلب نقلة",
     "ctaJoinPartner": "إنضم كشركة نقل"
   },
@@ -110,6 +111,7 @@
   },
   "registerCompany": {
     "pageTitle": "الإنضمام كشركة نقل",
+    "companyLogo": "صورة الشركة",
     "uploadLogo": "رفع الصورة",
     "companyName": "اسم الشركة التجاري",
     "covenant": "الميثاق",
@@ -121,7 +123,8 @@
     "email": "البريد الإلكتروني",
     "password": "الرمز السري",
     "confirmPassword": "تكرار الرمز السري",
-    "secretCode": "رقم الهاتف",
+    "phoneNumber": "رقم الهاتف",
+    "phoneNumberPlaceholder": "أدخل رقم الهاتف",
     "featuredServices": "الخدمات المقدمة",
     "selectServices": "اختر الخدمات المقدمة",
     "aboutCompany": "نبذة قصيرة عن الشركة",
@@ -132,11 +135,11 @@
     "privacyLink": "سياسة الخصوصية",
     "submitButton": "إرسال طلب إنشاء الحساب",
     "services": {
-      "disassembly": "فك وتركيب",
+      "disassembly": "تفكيك وتركيب",
       "packing": "تغليف محكم",
       "insurance": "تأمين ضد الفقد والكسر",
-      "cleaning": "تنظيف",
-      "moving": "نقل من محل لمحل"
+      "cleaning": "تنظيف بعد النقل",
+      "moving": "نقل من بين مدن"
     },
     "cities": {
       "jeddah": "جدة",

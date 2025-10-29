@@ -1,6 +1,14 @@
-# Naqlah - سكني
+# Naqlah - نقلة
 
-A modern, mobile-first furniture moving application built with Next.js 15, TypeScript, and Tailwind CSS.
+A modern, mobile-first Progressive Web App (PWA) for furniture moving services built with Next.js 15, TypeScript, and Tailwind CSS.
+
+## ✨ PWA Features
+
+✅ **Installable** - Install on any device like a native app  
+✅ **Offline Support** - Works without internet connection  
+✅ **Fast & Reliable** - Smart caching for instant loads  
+✅ **Auto Updates** - Always get the latest version  
+✅ **Push Notifications** - Stay informed (coming soon)
 
 ## 🚀 Quick Start
 
@@ -16,6 +24,9 @@ npm run build
 
 # Start production server
 npm start
+
+# Test PWA functionality
+npm run test:pwa
 ```
 
 Visit: **http://localhost:3000**
@@ -33,6 +44,8 @@ Visit: **http://localhost:3000**
 
 ## 🌍 Features
 
+### Core Features
+
 - ✅ Mobile-first responsive design
 - ✅ RTL/LTR support (Arabic & English)
 - ✅ Server-side rendering
@@ -40,6 +53,16 @@ Visit: **http://localhost:3000**
 - ✅ Clean architecture
 - ✅ Smooth scrolling sections
 - ✅ Modern UI components
+
+### PWA Features
+
+- ✅ Offline-first architecture
+- ✅ Service worker with smart caching
+- ✅ Install prompt for home screen
+- ✅ Offline page fallback
+- ✅ Update notifications
+- ✅ Network status indicator
+- ✅ App shortcuts
 
 ## 📁 Project Structure
 
@@ -68,6 +91,27 @@ Supported languages:
 
 - Arabic (ar) - RTL
 - English (en) - LTR
+
+## 📱 PWA Documentation
+
+- 📖 [PWA Repair Complete Guide](./PWA_REPAIR_COMPLETE.md) - Start here!
+- 📖 [PWA Setup Guide](./docs/PWA_SETUP.md)
+- 📖 [PWA Testing Guide](./docs/PWA_TESTING.md)
+- 📖 [Service Worker Documentation](./docs/SERVICE_WORKER.md)
+- 📖 [Detailed Fix Summary](./docs/PWA_FIX_SUMMARY.md)
+
+## 🧪 Testing
+
+```bash
+# Run PWA tests
+npm run test:pwa
+
+# Lint code
+npm run lint
+
+# Clean build
+npm run clean:build
+```
 
 ## 📝 License
 

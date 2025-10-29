@@ -1,4 +1,4 @@
-import PublicLayoutWrapper from '@/components/public-layout-wrapper';
+import PublicLayoutWrapper from '@/components/layout/public-layout-wrapper';
 import HeroSection from '@/components/home/hero-section';
 import PartnersSection from '@/components/home/partners-section';
 import ServicesSection from '@/components/home/services-section';
