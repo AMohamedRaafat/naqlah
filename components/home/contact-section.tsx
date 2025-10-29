@@ -101,8 +101,8 @@ export default function ContactSection() {
     },
   ];
   return (
-    <section id="contact" className="mb-6 px-4 bg-white">
-      <div className="container mx-auto max-w-2xl border-2 border-[#ededed] rounded-3xl p-4">
+    <section id="contact" className="mb-6 md:mb-12 px-4 bg-white">
+      <div className="container mx-auto max-w-4xl border-2 border-[#ededed] rounded-3xl p-4 md:p-8">
         <h2 className="text-2xl md:text-3xl font-bold text-start text-[#4B4F63]  mb-2">
           {t('title')}
         </h2>
@@ -201,10 +201,10 @@ export default function ContactSection() {
         </form>
       </div>
 
-      <div className="mt-4">
-        <div className="flex items-center justify-between flex-wrap ">
+      <div className="mt-4 md:mt-8 container mx-auto max-w-4xl">
+        <div className="flex items-center justify-between md:justify-around flex-wrap gap-4">
           {contactInfo.map((info) => (
-            <div key={info.title} className="flex items-center justify-center gap-2 mb-4">
+            <div key={info.title} className="flex items-center justify-center gap-2 mb-4 md:mb-0">
               <Image src={info.icon} alt={info.title} width={54} height={54} />
               <div>
                 <h3 className="text-md font-medium text-[#00B8A9]">{info.title}</h3>

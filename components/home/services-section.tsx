@@ -34,14 +34,14 @@ export default function ServicesSection() {
   ];
 
   return (
-    <section id="services" className="mb-6 px-4 ">
-      <div className="container mx-auto max-w-6xl">
-        <h2 className="text-2xl md:text-3xl font-bold text-start text-[#4B4F63] mb-4">
+    <section id="services" className="mb-6 md:mb-12 px-4">
+      <div className="container mx-auto max-w-7xl">
+        <h2 className="text-2xl md:text-3xl font-bold text-start text-[#4B4F63] mb-4 md:mb-6">
           {t('title')}
         </h2>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6  md:gap-6 rounded-3xl border-2 border-[#ededed]">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 rounded-3xl border-2 border-[#ededed]">
           {services.map((service, index) => {
             const totalItems = services.length;
             const isLastRow = index >= totalItems - 2; // Last row in 2-col layout
@@ -51,7 +51,7 @@ export default function ServicesSection() {
             return (
               <div
                 key={index}
-                className="border-[#ededed] bg-white mx-2 mb-2 mt-2 py-2 px-2 flex flex-col items-center justify-center text-center hover:shadow-xl transition-shadow duration-300 cursor-pointer group"
+                className="border-[#ededed] bg-white mx-2 mb-2 mt-2 py-4 md:py-8 px-2 md:px-4 flex flex-col items-center justify-center text-center hover:shadow-xl transition-shadow duration-300 cursor-pointer group"
                 style={{
                   borderTopWidth: '0px',
                   borderLeftWidth: index % 2 === 0 && index < totalItems - 1 ? '2px' : '0px', // Right border for left column items

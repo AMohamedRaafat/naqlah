@@ -21,8 +21,8 @@ export default function HeroSection() {
   };
 
   return (
-    <section id="hero" className=" pt-8 pb-12 px-4 font-expo-arabic">
-      <div className="container mx-auto max-w-4xl">
+    <section id="hero" className="pt-8 md:pt-16 pb-12 md:pb-20 px-4 font-expo-arabic">
+      <div className="container mx-auto max-w-7xl">
         {/* Hero Content */}
         <div className="text-center mb-8">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-gray-900 mb-4 leading-tight">
