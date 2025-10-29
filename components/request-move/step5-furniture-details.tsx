@@ -72,10 +72,10 @@ export default function Step5FurnitureDetails({ data, onNext, onBack }: Step5Pro
   const handleRemovePhoto = (index: number) => {
     const newPhotos = photos.filter((_, i) => i !== index);
     const newPreviews = photoPreviews.filter((_, i) => i !== index);
-    
+
     // Revoke the object URL to free memory
     URL.revokeObjectURL(photoPreviews[index]);
-    
+
     setPhotos(newPhotos);
     setPhotoPreviews(newPreviews);
   };
@@ -97,10 +97,10 @@ export default function Step5FurnitureDetails({ data, onNext, onBack }: Step5Pro
     <div className="w-full">
       {/* Title Card */}
       <div className="bg-white rounded-2xl p-6 mb-6 shadow-sm">
-        <h2 className="text-lg font-bold text-gray-900 text-center mb-2">
+        <h2 className="text-lg font-bold text-[#353535] text-start mb-2">
           {t('title') || 'تفاصيل الأثاث'}
         </h2>
-        <p className="text-sm text-gray-600 text-center mb-6">
+        <p className="text-sm text-[#494a4d] text-start mb-6">
           {t('subtitle') || 'يرجي إدخال كافة المعلومات المطلوبة'}
         </p>
 
@@ -132,7 +132,7 @@ export default function Step5FurnitureDetails({ data, onNext, onBack }: Step5Pro
           <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
             {t('furnitureItems') || 'القطع والأثاث'}
           </label>
-          
+
           {/* Add Item Row */}
           <div className="flex gap-2 mb-3">
             <div className="relative flex-1">
@@ -174,17 +174,17 @@ export default function Step5FurnitureDetails({ data, onNext, onBack }: Step5Pro
               {furniture.map((item, index) => (
                 <div
                   key={index}
-                  className="inline-flex items-center gap-2 px-3 py-2 bg-[#00B8A9] text-white rounded-lg text-sm"
+                  className="inline-flex items-center gap-1 px-3 py-2 bg-white text-[#474747] border border-[#EDEDED] rounded-lg text-sm"
                 >
-                  <span>
-                    {item.quantity} {getFurnitureLabel(item.name)}
-                  </span>
                   <button
                     onClick={() => handleRemoveFurniture(index)}
                     className="hover:bg-white/20 rounded-full p-0.5"
                   >
-                    <X className="w-4 h-4" />
+                    <X className="w-5 h-5 text-[#00B8A9]" />
                   </button>
+                  <span>
+                    {item.quantity} {getFurnitureLabel(item.name)}
+                  </span>
                 </div>
               ))}
             </div>
@@ -196,7 +196,7 @@ export default function Step5FurnitureDetails({ data, onNext, onBack }: Step5Pro
           <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
             {t('uploadPhotos') || 'رفع صور وفيديو الأثاث *'}
           </label>
-          
+
           <input
             ref={fileInputRef}
             type="file"
@@ -211,9 +211,7 @@ export default function Step5FurnitureDetails({ data, onNext, onBack }: Step5Pro
             className="w-full border-2 border-dashed border-gray-300 rounded-xl p-8 flex flex-col items-center justify-center hover:border-[#00B8A9] transition-colors"
           >
             <Upload className="w-8 h-8 text-[#00B8A9] mb-2" />
-            <p className="text-sm text-gray-600">
-              {t('uploadHint') || 'أرفق بصيغة PNG, JPG, MP4'}
-            </p>
+            <p className="text-sm text-gray-600">{t('uploadHint') || 'أرفق بصيغة PNG, JPG, MP4'}</p>
           </button>
 
           {/* Photo Previews */}
@@ -221,12 +219,7 @@ export default function Step5FurnitureDetails({ data, onNext, onBack }: Step5Pro
             <div className="grid grid-cols-3 gap-3 mt-4">
               {photoPreviews.map((preview, index) => (
                 <div key={index} className="relative aspect-square rounded-xl overflow-hidden">
-                  <Image
-                    src={preview}
-                    alt={`Preview ${index + 1}`}
-                    fill
-                    className="object-cover"
-                  />
+                  <Image src={preview} alt={`Preview ${index + 1}`} fill className="object-cover" />
                   <button
                     onClick={() => handleRemovePhoto(index)}
                     className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
@@ -259,4 +252,3 @@ export default function Step5FurnitureDetails({ data, onNext, onBack }: Step5Pro
     </div>
   );
 }
-

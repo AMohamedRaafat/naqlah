@@ -70,12 +70,14 @@ export default function Step3DestinationLocation({ data, onNext, onBack }: Step3
         {/* Selected Location Display */}
         {location.address && (
           <div className="mt-4 p-3 bg-gray-50 rounded-xl">
-            <div className="flex items-start gap-2">
-              <MapPin className="w-5 h-5 text-[#00B8A9] mt-1 flex-shrink-0" />
-              <div className="flex-1">
-                <p className="font-semibold text-gray-900 mb-1">{t('result') || 'النتائج'}</p>
-                <p className="text-sm font-bold text-gray-900">{location.city}</p>
-                <p className="text-xs text-gray-600">{location.address}</p>
+            <div className="">
+              <p className="font-semibold text-[#353535] mb-2">{t('result') || 'النتائج'}</p>
+              <div className="flex items-start gap-3">
+                <MapPin className="w-9 h-9 text-[#00B8A9] flex-shrink-0 border border-gray-200 rounded-full p-2" />
+                <div className="flex flex-col">
+                  <p className="text-[14px] font-regular text-[#353535]">{location.city}</p>
+                  <p className="text-[12px] text-[#ABABAB]">{location.address}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -110,4 +112,3 @@ export default function Step3DestinationLocation({ data, onNext, onBack }: Step3
     </div>
   );
 }
-

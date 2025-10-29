@@ -78,10 +78,10 @@ export default function Step6AdditionalServices({ data, onNext, onBack }: Step6P
     <div className="w-full">
       {/* Title Card */}
       <div className="bg-white rounded-2xl p-6 mb-6 shadow-sm">
-        <h2 className="text-lg font-bold text-gray-900 text-center mb-2">
+        <h2 className="text-[14px] font-bold text-[#353535] text-start mb-2">
           {t('title') || 'الخدمات الإضافية'}
         </h2>
-        <p className="text-sm text-gray-600 text-center mb-6">
+        <p className="text-sm text-[#494a4d] text-start mb-6">
           {t('subtitle') || 'يرجي تحديد الخدمات المراد تقديمها عند النقل'}
         </p>
 
@@ -223,16 +223,16 @@ export default function Step6AdditionalServices({ data, onNext, onBack }: Step6P
                     return (
                       <div
                         key={item}
-                        className="inline-flex items-center gap-2 px-3 py-2 bg-[#00B8A9] text-white rounded-lg text-sm"
+                        className="inline-flex items-center gap-2 px-3 py-2 bg-white text-[#474747] border border-[#EDEDED] rounded-lg text-sm"
                       >
-                        <span>{isRTL ? option?.labelAr : option?.labelEn}</span>
                         <button
                           type="button"
                           onClick={() => handleRemoveDisassemblyItem(item)}
                           className="hover:bg-white/20 rounded-full p-0.5 transition-colors"
                         >
-                          <X className="w-4 h-4" />
+                          <X className="w-5 h-5 text-[#00B8A9]" />
                         </button>
+                        <span>{isRTL ? option?.labelAr : option?.labelEn}</span>
                       </div>
                     );
                   })}

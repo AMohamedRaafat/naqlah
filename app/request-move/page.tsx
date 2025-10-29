@@ -238,14 +238,22 @@ export default function OrderMovePage() {
         <div className="bg-white border-b border-gray-200">
           <div className="container mx-auto max-w-4xl px-4 py-4">
             {/* Breadcrumb */}
-            <div className="mb-4 text-sm text-gray-600">
+            <div className="mb-4 text-sm text-[#7E7E7E]">
               <span>{t('navigation.home')}</span>
               <span className="mx-2">—</span>
-              <span className="text-gray-900 font-medium">{t('navigation.requestMove')}</span>
+              <span
+                className={` font-medium ${
+                  currentStep === 9 ? 'text-[#7E7E7E]' : 'text-[#312E37]'
+                }`}
+              >
+                {t('navigation.requestMove')}
+              </span>
               {currentStep === 9 && (
                 <>
                   <span className="mx-2">—</span>
-                  <span className="text-gray-900 font-medium">{t('orderMove.processing.breadcrumb') || 'معالجة الطلب'}</span>
+                  <span className="text-[#312E37] font-medium">
+                    {t('orderMove.processing.breadcrumb') || 'معالجة الطلب'}
+                  </span>
                 </>
               )}
             </div>

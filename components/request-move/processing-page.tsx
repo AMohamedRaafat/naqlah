@@ -41,7 +41,7 @@ export default function ProcessingPage() {
         </h2>
 
         {/* Subtitle */}
-        <p className="text-sm text-gray-600 text-center mb-6 px-4">
+        <p className="text-sm text-black text-center mb-6 px-4">
           {t('subtitle') ||
             'تم إنشاء طلبك بنجاح، سيتم إرسال عروض أسعار لك من قبل شركات النقل خلال الساعات القادمة'}
         </p>
@@ -51,14 +51,15 @@ export default function ProcessingPage() {
 
         {/* Status indicators */}
         <div
-          className="flex items-center justify-between text-sm mb-6 px-4"
-          dir={isRTL ? 'rtl' : 'ltr'}
+          className={`flex items-center justify-between text-sm mb-6 px-4 ${
+            isRTL ? 'flex-row-reverse' : 'flex-row'
+          }`}
         >
           <div className="text-center">
-            <p className="text-gray-600">{t('waitingResponse') || 'بإنتظار الرد'}</p>
+            <p className="text-[#494a4d]">{t('waitingResponse') || 'بإنتظار الرد'}</p>
           </div>
           <div className="text-center">
-            <p className="text-gray-900 font-medium">{t('requestStatus') || 'حالة الطلب'}</p>
+            <p className="text-[#353535] font-medium">{t('requestStatus') || 'حالة الطلب'}</p>
           </div>
         </div>
       </div>
