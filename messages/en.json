@@ -9,6 +9,7 @@
     "error": "An error occurred",
     "submit": "Submit",
     "cancel": "Cancel",
+    "noCancel": "No, Cancel",
     "save": "Save",
     "delete": "Delete",
     "edit": "Edit",

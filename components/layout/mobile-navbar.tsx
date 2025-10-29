@@ -10,6 +10,7 @@ import { usePathname } from 'next/navigation';
 import { Menu, User } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { getMobileMenuItems, getPageTitle as getTitle } from '@/constants/navigation';
+import { PiTranslateBold } from 'react-icons/pi';
 import LoginModal from '@/components/modals/login-modal';
 import LanguageModal from '@/components/modals/language-modal';
 import LogoutModal from '@/components/modals/logout-modal';
@@ -231,10 +232,10 @@ export default function MobileNavbar() {
                           isRTL ? 'flex-row text-right' : 'flex-row text-left'
                         }`}
                       >
-                        <Image src="/assets/menu-icons/out.svg" alt="icon" width={20} height={20} />
+                        <PiTranslateBold className="w-6 h-6 text-[#a9a9a9]" />
                         <span className="text-gray-800 text-[15px]">{t('common.language')}</span>
                       </button>
-                      {!isLoggedIn && (
+                      {isLoggedIn && (
                         <button
                           onClick={openLogoutModal}
                           className={`flex items-center gap-4 px-4 py-4 w-full hover:bg-gray-50 transition-colors ${
@@ -246,7 +247,7 @@ export default function MobileNavbar() {
                             alt="icon"
                             width={20}
                             height={20}
-                            className="w-6 h-6 text-gray-800"
+                            className="w-6 h-6 text-[#a9a9a9]"
                           />
                           <span className="text-gray-800 text-[15px]">
                             {t('navigation.logout')}
