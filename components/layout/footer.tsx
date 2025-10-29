@@ -1,16 +1,19 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useLanguage } from '@/contexts/language-context';
 import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube, FaRegCopyright } from 'react-icons/fa';
+import LoginModal from '@/components/modals/login-modal';
 
 export default function Footer() {
   const t = useTranslations();
   const { locale } = useLanguage();
   const currentYear = new Date().getFullYear();
   const isRTL = locale === 'ar';
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   return (
     <footer className="bg-[#00B8A9] text-white mt-auto font-expo-arabic">
@@ -44,9 +47,12 @@ export default function Footer() {
                 </button>
               </li>
               <li>
-                <Link href="/login" className="hover:opacity-80 transition-opacity">
+                <button
+                  onClick={() => setLoginModalOpen(true)}
+                  className="hover:opacity-80 transition-opacity"
+                >
                   {t('footer.login')}
-                </Link>
+                </button>
               </li>
             </ul>
           </div>
@@ -205,6 +211,9 @@ export default function Footer() {
           </p>
         </div>
       </div>
+
+      {/* Login Modal */}
+      <LoginModal open={loginModalOpen} onOpenChange={setLoginModalOpen} />
     </footer>
   );
 }
