@@ -1,0 +1,99 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+
+// Fix for default marker icon
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+});
+
+interface MapComponentProps {
+  center: [number, number];
+  onLocationSelect: (lat: number, lng: number, address: string, city: string) => void;
+  searchQuery?: string;
+}
+
+function MapEvents({ onLocationSelect }: { onLocationSelect: (lat: number, lng: number, address: string, city: string) => void }) {
+  useMapEvents({
+    click: async (e) => {
+      const { lat, lng } = e.latlng;
+      
+      // Reverse geocoding using Nominatim (free OpenStreetMap service)
+      try {
+        const response = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=ar`
+        );
+        const data = await response.json();
+        
+        const address = data.display_name || `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+        const city = data.address?.city || data.address?.town || data.address?.state || 'الرياض';
+        
+        onLocationSelect(lat, lng, address, city);
+      } catch (error) {
+        console.error('Geocoding error:', error);
+        onLocationSelect(lat, lng, `${lat.toFixed(6)}, ${lng.toFixed(6)}`, 'الرياض');
+      }
+    },
+  });
+  return null;
+}
+
+export default function MapComponent({ center, onLocationSelect, searchQuery }: MapComponentProps) {
+  const [position, setPosition] = useState<[number, number]>(center);
+
+  useEffect(() => {
+    setPosition(center);
+  }, [center]);
+
+  useEffect(() => {
+    if (searchQuery && searchQuery.length > 2) {
+      // Nominatim geocoding search
+      const searchLocation = async () => {
+        try {
+          const response = await fetch(
+            `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}&countrycodes=sa&limit=1&accept-language=ar`
+          );
+          const data = await response.json();
+          
+          if (data && data.length > 0) {
+            const { lat, lon, display_name } = data[0];
+            const newLat = parseFloat(lat);
+            const newLng = parseFloat(lon);
+            const city = data[0].address?.city || data[0].address?.town || data[0].address?.state || 'الرياض';
+            
+            setPosition([newLat, newLng]);
+            onLocationSelect(newLat, newLng, display_name, city);
+          }
+        } catch (error) {
+          console.error('Search error:', error);
+        }
+      };
+
+      const debounce = setTimeout(searchLocation, 500);
+      return () => clearTimeout(debounce);
+    }
+  }, [searchQuery, onLocationSelect]);
+
+  return (
+    <MapContainer
+      center={position}
+      zoom={13}
+      className="w-full h-96"
+      style={{ zIndex: 0 }}
+    >
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      <Marker position={position} />
+      <MapEvents onLocationSelect={onLocationSelect} />
+    </MapContainer>
+  );
+}
+

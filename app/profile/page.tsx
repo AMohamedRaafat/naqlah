@@ -105,8 +105,8 @@ export default function ProfileCompletePage() {
 
     login(updatedUser);
 
-    // Redirect to dashboard
-    router.push('/dashboard');
+    // Redirect to order-move page to start creating an order
+    router.push('/order-move');
   };
 
   return (
