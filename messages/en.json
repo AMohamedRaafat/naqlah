@@ -272,6 +272,7 @@
       "cleaningAfter": "Cleaning After Moving",
       "insurance": "Insurance Against Loss and Breakage",
       "needDisassembly": "Need Disassembly and Assembly?",
+      "selectDisassemblyItems": "Select items that need disassembly and assembly",
       "selectOption": "Select Yes or No",
       "yes": "Yes",
       "no": "No",

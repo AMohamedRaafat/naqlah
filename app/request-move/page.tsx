@@ -66,6 +66,7 @@ export type OrderFormData = {
     cleaningAfter: string;
     insurance: string;
     needDisassembly: string;
+    disassemblyItems: string[];
   };
 
   // Step 7: Date & Time
@@ -114,6 +115,7 @@ export default function OrderMovePage() {
       cleaningAfter: '',
       insurance: '',
       needDisassembly: '',
+      disassemblyItems: [],
     },
     dateTime: {
       date: null,

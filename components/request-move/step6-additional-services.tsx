@@ -13,20 +13,53 @@ interface Step6Props {
     cleaningAfter: string;
     insurance: string;
     needDisassembly: string;
+    disassemblyItems: string[];
   };
   onNext: (data: any) => void;
   onBack: () => void;
 }
+
+const furnitureOptions = [
+  { value: 'bed', labelAr: 'سرير', labelEn: 'Bed' },
+  { value: 'wardrobe', labelAr: 'دولاب', labelEn: 'Wardrobe' },
+  { value: 'sofa', labelAr: 'صوفا', labelEn: 'Sofa' },
+  { value: 'table', labelAr: 'طاولة', labelEn: 'Table' },
+  { value: 'desk', labelAr: 'مكتب', labelEn: 'Desk' },
+  { value: 'kitchen_cabinets', labelAr: 'خزائن المطبخ', labelEn: 'Kitchen Cabinets' },
+];
 
 export default function Step6AdditionalServices({ data, onNext, onBack }: Step6Props) {
   const t = useTranslations('orderMove.step6');
   const { locale } = useLanguage();
   const isRTL = locale === 'ar';
 
-  const [formData, setFormData] = useState(data);
+  const [formData, setFormData] = useState({
+    ...data,
+    disassemblyItems: data.disassemblyItems || [],
+  });
 
   const handleChange = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    setFormData((prev) => {
+      const updated = { ...prev, [field]: value };
+      // Clear disassembly items if needDisassembly is changed to "no"
+      if (field === 'needDisassembly' && value !== 'yes') {
+        updated.disassemblyItems = [];
+      }
+      return updated;
+    });
+  };
+
+  const handleDisassemblyItemToggle = (item: string) => {
+    setFormData((prev) => {
+      const items = prev.disassemblyItems || [];
+      const isSelected = items.includes(item);
+      return {
+        ...prev,
+        disassemblyItems: isSelected
+          ? items.filter((i) => i !== item)
+          : [...items, item],
+      };
+    });
   };
 
   const handleNext = () => {
@@ -145,6 +178,31 @@ export default function Step6AdditionalServices({ data, onNext, onBack }: Step6P
               <ChevronDown className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" />
             </div>
           </div>
+
+          {/* Disassembly Items - Conditional */}
+          {formData.needDisassembly === 'yes' && (
+            <div className="mt-4 p-4 bg-gray-50 rounded-xl">
+              <label className="block text-sm font-medium text-gray-700 mb-3 text-right">
+                {t('selectDisassemblyItems') || 'حدد القطع التي تحتاج للفك والتركيب'}
+              </label>
+              <div className="grid grid-cols-2 gap-3">
+                {furnitureOptions.map((option) => (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => handleDisassemblyItemToggle(option.value)}
+                    className={`px-4 py-3 rounded-xl border-2 text-sm font-medium transition-all ${
+                      formData.disassemblyItems?.includes(option.value)
+                        ? 'border-[#00B8A9] bg-[#D2F2F0] text-[#00B8A9]'
+                        : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
+                    }`}
+                  >
+                    {isRTL ? option.labelAr : option.labelEn}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
