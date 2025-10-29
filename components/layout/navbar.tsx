@@ -51,7 +51,9 @@ export default function Navbar() {
       {/* Desktop Navbar */}
       <nav
         className={`hidden lg:block font-expo-arabic shadow-md ${
-          showLoggedInStyle ? 'bg-white text-gray-900 border-b border-gray-200' : 'bg-[#00B8A9] text-white'
+          showLoggedInStyle
+            ? 'bg-white text-gray-900 border-b border-gray-200'
+            : 'bg-[#00B8A9] text-white'
         }`}
       >
         <div className="container mx-auto px-6">

@@ -16,7 +16,9 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { PhoneInput } from '@/components/ui/phone-input';
-import { Camera, Paperclip, Eye, EyeOff, X } from 'lucide-react';
+import { EmailInput } from '@/components/ui/email-input';
+import { PasswordInput } from '@/components/ui/password-input';
+import { Camera, Paperclip, X } from 'lucide-react';
 import Image from 'next/image';
 import { registerCompanySchema, safeValidate } from '@/lib/validations/schemas';
 
@@ -52,8 +54,6 @@ export default function RegisterCompanyPage() {
     agreeTerms: '',
   });
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [logoPreview, setLogoPreview] = useState<string>('');
 
   // Available services
@@ -269,19 +269,17 @@ export default function RegisterCompanyPage() {
             <Label htmlFor="email" className="text-[#353535] font-medium">
               {t('email')} <span className="text-red-500">*</span>
             </Label>
-            <Input
+            <EmailInput
               id="email"
-              type="email"
               value={formData.email}
-              onChange={(e) => {
-                setFormData({ ...formData, email: e.target.value });
+              onChange={(value) => {
+                setFormData({ ...formData, email: value });
                 if (errors.email) setErrors({ ...errors, email: '' });
               }}
-              className={`border-[#EDEDED] ${errors.email ? 'border-red-500' : ''}`}
-              dir="ltr"
+              error={errors.email}
+              isRTL={isRTL}
               required
             />
-            {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
           </div>
 
           {/* Password */}
@@ -289,36 +287,17 @@ export default function RegisterCompanyPage() {
             <Label htmlFor="password" className="text-[#353535] font-medium">
               {t('password')} <span className="text-red-500">*</span>
             </Label>
-            <div className="relative" dir={isRTL ? 'rtl' : 'ltr'}>
-              <Input
-                id="password"
-                type={showPassword ? 'text' : 'password'}
-                value={formData.password}
-                onChange={(e) => {
-                  setFormData({ ...formData, password: e.target.value });
-                  if (errors.password) setErrors({ ...errors, password: '' });
-                }}
-                className={`border-[#EDEDED] ${isRTL ? 'pl-12' : 'pr-12'} ${
-                  errors.password ? 'border-red-500' : ''
-                }`}
-                dir={isRTL ? 'rtl' : 'ltr'}
-                required
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className={`absolute top-1/2 -translate-y-1/2 cursor-pointer ${
-                  isRTL ? 'left-3' : 'right-3'
-                }`}
-              >
-                {showPassword ? (
-                  <EyeOff className="w-5 h-5 text-gray-400" />
-                ) : (
-                  <Eye className="w-5 h-5 text-gray-400" />
-                )}
-              </button>
-            </div>
-            {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+            <PasswordInput
+              id="password"
+              value={formData.password}
+              onChange={(value) => {
+                setFormData({ ...formData, password: value });
+                if (errors.password) setErrors({ ...errors, password: '' });
+              }}
+              error={errors.password}
+              isRTL={isRTL}
+              required
+            />
           </div>
 
           {/* Confirm Password */}
@@ -326,38 +305,17 @@ export default function RegisterCompanyPage() {
             <Label htmlFor="confirmPassword" className="text-[#353535] font-medium">
               {t('confirmPassword')} <span className="text-red-500">*</span>
             </Label>
-            <div className="relative" dir={isRTL ? 'rtl' : 'ltr'}>
-              <Input
-                id="confirmPassword"
-                type={showConfirmPassword ? 'text' : 'password'}
-                value={formData.confirmPassword}
-                onChange={(e) => {
-                  setFormData({ ...formData, confirmPassword: e.target.value });
-                  if (errors.confirmPassword) setErrors({ ...errors, confirmPassword: '' });
-                }}
-                className={`border-[#EDEDED] ${isRTL ? 'pl-12' : 'pr-12'} ${
-                  errors.confirmPassword ? 'border-red-500' : ''
-                }`}
-                dir={isRTL ? 'rtl' : 'ltr'}
-                required
-              />
-              <button
-                type="button"
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className={`absolute top-1/2 -translate-y-1/2 cursor-pointer ${
-                  isRTL ? 'left-3' : 'right-3'
-                }`}
-              >
-                {showConfirmPassword ? (
-                  <EyeOff className="w-5 h-5 text-gray-400" />
-                ) : (
-                  <Eye className="w-5 h-5 text-gray-400" />
-                )}
-              </button>
-            </div>
-            {errors.confirmPassword && (
-              <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
-            )}
+            <PasswordInput
+              id="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={(value) => {
+                setFormData({ ...formData, confirmPassword: value });
+                if (errors.confirmPassword) setErrors({ ...errors, confirmPassword: '' });
+              }}
+              error={errors.confirmPassword}
+              isRTL={isRTL}
+              required
+            />
           </div>
 
           {/* Phone Number */}
