@@ -156,7 +156,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
     <>
       {/* Main Login Modal */}
       <Dialog open={open && !showOTP} onOpenChange={onOpenChange}>
-        <DialogContent className="w-[90%] sm:max-w-md rounded-2xl" dir={isRTL ? 'rtl' : 'ltr'}>
+        <DialogContent className="w-[90%] sm:max-w-md rounded-xl" dir={isRTL ? 'rtl' : 'ltr'}>
           <DialogHeader>
             <DialogTitle className="text-center text-xl font-bold">{t('login.title')}</DialogTitle>
             <p className="text-center text-sm text-gray-600 mt-2">{t('login.subtitle')}</p>

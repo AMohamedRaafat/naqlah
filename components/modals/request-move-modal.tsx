@@ -124,7 +124,7 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
     <>
       {/* Phone Input Modal */}
       <Dialog open={open && !showOTP} onOpenChange={onOpenChange}>
-        <DialogContent className="w-[90%] sm:max-w-80 font-expo-arabic p-0 gap-0 rounded-2xl">
+        <DialogContent className="w-[90%] sm:max-w-80 font-expo-arabic p-0 gap-0 rounded-xl">
           <DialogHeader className="relative border-b border-gray-200 pb-4 pt-6 px-6">
             <DialogTitle className="text-center text-xl font-semibold text-gray-900">
               {t('firstStepTitle')}
