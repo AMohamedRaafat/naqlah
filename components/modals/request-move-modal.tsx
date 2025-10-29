@@ -55,6 +55,25 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
   const handlePhoneSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Clear previous errors
+    setPhoneError('');
+
+    // Basic validation first
+    if (!phoneNumber || phoneNumber.trim() === '') {
+      setPhoneError(t('phoneIncomplete'));
+      return;
+    }
+
+    if (phoneNumber.length !== 9) {
+      setPhoneError(t('phoneIncomplete'));
+      return;
+    }
+
+    if (!phoneNumber.startsWith('5')) {
+      setPhoneError(t('phoneInvalidStart'));
+      return;
+    }
+
     // Validate using Zod schema
     const error = validateField(saudiPhoneSchema, phoneNumber);
     if (error) {
@@ -157,8 +176,7 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
               {/* Submit button */}
               <Button
                 type="submit"
-                disabled={phoneNumber.length !== 9 || !phoneNumber.startsWith('5') || !!phoneError}
-                className="w-full bg-[#00B8A9] hover:bg-[#009688] text-white font-semibold py-6 text-base disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-[#00B8A9] hover:bg-[#009688] text-white font-semibold py-6 text-base"
               >
                 {t('submitButton')}
               </Button>

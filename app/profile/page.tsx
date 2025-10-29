@@ -39,14 +39,8 @@ export default function ProfileCompletePage() {
   const [photoPreview, setPhotoPreview] = useState<string>('');
 
   useEffect(() => {
-    // Redirect to home if not logged in
-    if (!isLoggedIn) {
-      router.push('/');
-      return;
-    }
-
     // If user already has a name (profile is complete), redirect to dashboard
-    if (user?.name && user.name !== '') {
+    if (isLoggedIn && user?.name && user.name !== '') {
       router.push('/dashboard');
     }
   }, [isLoggedIn, user, router]);
@@ -115,25 +109,13 @@ export default function ProfileCompletePage() {
     router.push('/dashboard');
   };
 
-  if (!isLoggedIn || (user?.name && user.name !== '')) {
-    return null;
-  }
-
   return (
-    <div className="min-h-screen bg-white font-expo-arabic">
-      {/* Mobile Header - Teal background with logo */}
-      <div className="lg:hidden bg-[#00B8A9] px-4 py-5 flex items-center justify-center">
-        <Image
-          src="/assets/logo.svg"
-          alt="سكني"
-          width={150}
-          height={60}
-          className="h-12 w-auto brightness-0 invert"
-        />
-      </div>
+    <div className="min-h-screen bg-[#fafafa] font-expo-arabic">
+      {/* Desktop & Mobile - Main navbar will show automatically */}
 
-      <div className="container mx-auto px-4 py-8 max-w-md">
-        <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="container mx-auto px-4 py-8 max-w-md mt-8">
+        <div className="bg-white rounded-xl shadow-sm p-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
           {/* Profile Photo Upload */}
           <div className="flex flex-col items-center">
             <label
@@ -281,6 +263,7 @@ export default function ProfileCompletePage() {
             {t('submitButton')}
           </Button>
         </form>
+        </div>
       </div>
     </div>
   );
