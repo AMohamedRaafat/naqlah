@@ -10,8 +10,8 @@ import { X } from 'lucide-react';
 // Fix for default marker icon
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 
-// Create custom HTML markers with numbers
-const createNumberedIcon = (number: number) => {
+// Create custom marker without number
+const createMarkerIcon = () => {
   return L.divIcon({
     className: 'custom-marker',
     html: `
@@ -23,16 +23,7 @@ const createNumberedIcon = (number: number) => {
           border-radius: 50% 50% 50% 0;
           transform: rotate(-45deg);
           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-          display: flex;
-          align-items: center;
-          justify-content: center;
         ">
-          <span style="
-            transform: rotate(45deg);
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-          ">${number}</span>
         </div>
       </div>
     `,
@@ -42,8 +33,7 @@ const createNumberedIcon = (number: number) => {
   });
 };
 
-const pickupIcon = createNumberedIcon(1);
-const destinationIcon = createNumberedIcon(2);
+const markerIcon = createMarkerIcon();
 
 interface RouteMapModalProps {
   open: boolean;
@@ -161,8 +151,8 @@ export default function RouteMapModal({
               />
 
               {/* Pickup Marker */}
-              <Marker position={pickupPos} icon={pickupIcon}>
-                <Tooltip permanent direction="top" offset={[0, -40]} className="custom-tooltip">
+              <Marker position={pickupPos} icon={markerIcon}>
+                <Tooltip permanent direction="top" offset={[0, -45]} className="custom-tooltip">
                   <div className="text-center">
                     <p className="font-bold text-[#00B8A9] text-sm">الموقع 1</p>
                   </div>
@@ -170,8 +160,8 @@ export default function RouteMapModal({
               </Marker>
 
               {/* Destination Marker */}
-              <Marker position={destinationPos} icon={destinationIcon}>
-                <Tooltip permanent direction="top" offset={[0, -40]} className="custom-tooltip">
+              <Marker position={destinationPos} icon={markerIcon}>
+                <Tooltip permanent direction="top" offset={[0, -45]} className="custom-tooltip">
                   <div className="text-center">
                     <p className="font-bold text-[#00B8A9] text-sm">الموقع 2</p>
                   </div>
