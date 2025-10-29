@@ -26,18 +26,18 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
   const isRTL = locale === 'ar';
 
   const [activeTab, setActiveTab] = useState<'customer' | 'company'>('customer');
-  
+
   // Customer (phone-based) state
   const [phoneNumber, setPhoneNumber] = useState('');
   const [phoneError, setPhoneError] = useState('');
   const [showOTP, setShowOTP] = useState(false);
-  
+
   // Company (email/password) state
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  
+
   const [saveData, setSaveData] = useState(false);
 
   // Validate Saudi phone number (9 digits, starts with 5)
@@ -247,7 +247,10 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
 
               {/* Password Input */}
               <div className="space-y-2">
-                <label htmlFor="company-password" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="company-password"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   {t('registerCompany.password')}
                 </label>
                 <PasswordInput

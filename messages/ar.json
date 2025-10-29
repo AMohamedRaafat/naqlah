@@ -159,5 +159,21 @@
       "tabuk": "تبوك",
       "abha": "أبها"
     }
+  },
+  "profileComplete": {
+    "title": "أخبرنا عن نفسك",
+    "firstName": "الإسم الأول",
+    "firstNamePlaceholder": "أدخل الإسم",
+    "lastName": "الإسم الأخير",
+    "lastNamePlaceholder": "أدخل الإسم",
+    "phoneNumber": "رقم الهاتف",
+    "requestTitle": "مسمى الطلب",
+    "requestTitlePlaceholder": "أدخل مسمى الطلب (منزل جديد, عمل جديد, إلخ)",
+    "agreeTerms": "من خلال إنشاء حساب، أوافق على",
+    "termsLink": "شروط الإستخدام",
+    "and": "و",
+    "privacyLink": "سياسة الخصوصية",
+    "privacySuffix": "الخاصة بنا",
+    "submitButton": "إبدأ طلبك"
   }
 }

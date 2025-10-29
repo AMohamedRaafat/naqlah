@@ -159,5 +159,20 @@
       "tabuk": "Tabuk",
       "abha": "Abha"
     }
+  },
+  "profileComplete": {
+    "title": "Tell us about yourself",
+    "firstName": "First Name",
+    "firstNamePlaceholder": "Enter first name",
+    "lastName": "Last Name",
+    "lastNamePlaceholder": "Enter last name",
+    "phoneNumber": "Phone Number",
+    "requestTitle": "Request Title",
+    "requestTitlePlaceholder": "Enter request title (new house, new job, etc)",
+    "agreeTerms": "By creating an account, I agree to our",
+    "termsLink": "Terms of Use",
+    "and": "and",
+    "privacyLink": "Privacy Policy",
+    "submitButton": "Start Your Request"
   }
 }

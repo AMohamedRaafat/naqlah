@@ -1,58 +1,287 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
-import { useAuth } from '@/contexts/auth-context';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useTranslations } from 'next-intl';
+import { useLanguage } from '@/contexts/language-context';
+import { useAuth } from '@/contexts/auth-context';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { PhoneInput } from '@/components/ui/phone-input';
+import { Camera } from 'lucide-react';
+import Image from 'next/image';
 
-export default function ProfilePage() {
-  const t = useTranslations();
-  const { user, isLoggedIn } = useAuth();
+export default function ProfileCompletePage() {
+  const t = useTranslations('profileComplete');
+  const { locale } = useLanguage();
+  const { user, isLoggedIn, login } = useAuth();
   const router = useRouter();
+  const isRTL = locale === 'ar';
+
+  const [formData, setFormData] = useState({
+    profilePhoto: null as File | null,
+    firstName: '',
+    lastName: '',
+    phoneNumber: user?.phone?.replace('+966', '') || '',
+    requestTitle: '',
+    agreeTerms: false,
+  });
+
+  const [errors, setErrors] = useState({
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    requestTitle: '',
+    agreeTerms: '',
+  });
+
+  const [photoPreview, setPhotoPreview] = useState<string>('');
 
   useEffect(() => {
     // Redirect to home if not logged in
     if (!isLoggedIn) {
       router.push('/');
+      return;
     }
-  }, [isLoggedIn, router]);
 
-  if (!isLoggedIn) {
+    // If user already has a name (profile is complete), redirect to dashboard
+    if (user?.name && user.name !== '') {
+      router.push('/dashboard');
+    }
+  }, [isLoggedIn, user, router]);
+
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setFormData({ ...formData, profilePhoto: file });
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPhotoPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Reset errors
+    setErrors({
+      firstName: '',
+      lastName: '',
+      phoneNumber: '',
+      requestTitle: '',
+      agreeTerms: '',
+    });
+
+    // Validation
+    let hasError = false;
+
+    if (!formData.firstName.trim()) {
+      setErrors((prev) => ({ ...prev, firstName: 'First name is required' }));
+      hasError = true;
+    }
+
+    if (!formData.lastName.trim()) {
+      setErrors((prev) => ({ ...prev, lastName: 'Last name is required' }));
+      hasError = true;
+    }
+
+    if (!formData.phoneNumber || formData.phoneNumber.length !== 9) {
+      setErrors((prev) => ({ ...prev, phoneNumber: 'Valid phone number is required' }));
+      hasError = true;
+    }
+
+    if (!formData.agreeTerms) {
+      setErrors((prev) => ({ ...prev, agreeTerms: 'You must agree to the terms and conditions' }));
+      hasError = true;
+    }
+
+    if (hasError) {
+      return;
+    }
+
+    // Update user profile
+    const updatedUser = {
+      ...user!,
+      name: `${formData.firstName} ${formData.lastName}`,
+      phone: `+966${formData.phoneNumber}`,
+    };
+
+    login(updatedUser);
+
+    // Redirect to dashboard
+    router.push('/dashboard');
+  };
+
+  if (!isLoggedIn || (user?.name && user.name !== '')) {
     return null;
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Profile</h1>
-      
-      <div className="bg-white rounded-lg shadow-md p-6 max-w-2xl">
-        <div className="flex items-center gap-6 mb-6">
-          <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center">
-            <span className="text-4xl text-gray-600">👤</span>
-          </div>
-          <div>
-            <h2 className="text-2xl font-semibold text-gray-900">{user?.name || 'User'}</h2>
-            <p className="text-gray-600">{user?.email || 'user@example.com'}</p>
-            {user?.isCompany && (
-              <span className="inline-block mt-2 px-3 py-1 bg-[#00B8A9] text-white text-sm rounded-full">
-                Company Account
-              </span>
-            )}
-          </div>
-        </div>
+    <div className="min-h-screen bg-white font-expo-arabic">
+      {/* Mobile Header - Teal background with logo */}
+      <div className="lg:hidden bg-[#00B8A9] px-4 py-5 flex items-center justify-center">
+        <Image
+          src="/assets/logo.svg"
+          alt="سكني"
+          width={150}
+          height={60}
+          className="h-12 w-auto brightness-0 invert"
+        />
+      </div>
 
-        <div className="space-y-4">
-          <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">Account Information</h3>
-            <div className="space-y-2 text-gray-600">
-              <p><strong>Name:</strong> {user?.name || 'User'}</p>
-              <p><strong>Email:</strong> {user?.email || 'user@example.com'}</p>
-              <p><strong>Account Type:</strong> {user?.isCompany ? 'Company' : 'Individual'}</p>
-            </div>
+      <div className="container mx-auto px-4 py-8 max-w-md">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Profile Photo Upload */}
+          <div className="flex flex-col items-center">
+            <label
+              htmlFor="photo-upload"
+              className="w-32 h-32 rounded-full bg-[#00B8A9] flex items-center justify-center cursor-pointer overflow-hidden"
+            >
+              {photoPreview ? (
+                <Image
+                  src={photoPreview}
+                  alt="Profile"
+                  className="object-cover w-full h-full"
+                  width={128}
+                  height={128}
+                />
+              ) : (
+                <Camera className="w-12 h-12 text-white" />
+              )}
+            </label>
+            <input
+              type="file"
+              id="photo-upload"
+              accept="image/*"
+              className="hidden"
+              onChange={handlePhotoUpload}
+            />
           </div>
-        </div>
+
+          {/* Title */}
+          <h1 className="text-center text-xl font-semibold text-gray-900">{t('title')}</h1>
+
+          {/* First Name */}
+          <div className="space-y-2">
+            <Label htmlFor="firstName" className="text-[#353535] font-medium text-right block">
+              {t('firstName')}
+            </Label>
+            <Input
+              id="firstName"
+              value={formData.firstName}
+              onChange={(e) => {
+                setFormData({ ...formData, firstName: e.target.value });
+                if (errors.firstName) setErrors({ ...errors, firstName: '' });
+              }}
+              placeholder={t('firstNamePlaceholder')}
+              className={`border-[#EDEDED] ${errors.firstName ? 'border-red-500' : ''}`}
+              dir={isRTL ? 'rtl' : 'ltr'}
+              required
+            />
+            {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName}</p>}
+          </div>
+
+          {/* Last Name */}
+          <div className="space-y-2">
+            <Label htmlFor="lastName" className="text-[#353535] font-medium text-right block">
+              {t('lastName')}
+            </Label>
+            <Input
+              id="lastName"
+              value={formData.lastName}
+              onChange={(e) => {
+                setFormData({ ...formData, lastName: e.target.value });
+                if (errors.lastName) setErrors({ ...errors, lastName: '' });
+              }}
+              placeholder={t('lastNamePlaceholder')}
+              className={`border-[#EDEDED] ${errors.lastName ? 'border-red-500' : ''}`}
+              dir={isRTL ? 'rtl' : 'ltr'}
+              required
+            />
+            {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
+          </div>
+
+          {/* Phone Number */}
+          <div className="space-y-2">
+            <Label htmlFor="phoneNumber" className="text-[#353535] font-medium text-right block">
+              {t('phoneNumber')}
+            </Label>
+            <PhoneInput
+              id="phoneNumber"
+              value={formData.phoneNumber}
+              onChange={(value) => {
+                setFormData({ ...formData, phoneNumber: value });
+                if (errors.phoneNumber) setErrors({ ...errors, phoneNumber: '' });
+              }}
+              error={errors.phoneNumber}
+              isRTL={isRTL}
+              disabled
+              required
+            />
+          </div>
+
+          {/* Request Title (Optional) */}
+          <div className="space-y-2">
+            <Label htmlFor="requestTitle" className="text-[#353535] font-medium text-right block">
+              {t('requestTitle')}
+            </Label>
+            <Input
+              id="requestTitle"
+              value={formData.requestTitle}
+              onChange={(e) => setFormData({ ...formData, requestTitle: e.target.value })}
+              placeholder={t('requestTitlePlaceholder')}
+              className="border-[#EDEDED]"
+              dir={isRTL ? 'rtl' : 'ltr'}
+            />
+          </div>
+
+          {/* Terms Checkbox */}
+          <div className="space-y-2">
+            <div className="flex items-start gap-3" dir={isRTL ? 'rtl' : 'ltr'}>
+              <input
+                type="checkbox"
+                id="agreeTerms"
+                checked={formData.agreeTerms}
+                onChange={(e) => {
+                  setFormData({ ...formData, agreeTerms: e.target.checked });
+                  if (errors.agreeTerms) setErrors({ ...errors, agreeTerms: '' });
+                }}
+                className={`w-5 h-5 text-[#00B8A9] border-[#E7E7E7] rounded focus:ring-[#00B8A9] mt-1 ${
+                  errors.agreeTerms ? 'border-red-500' : ''
+                }`}
+                required
+              />
+              <Label
+                htmlFor="agreeTerms"
+                className="text-sm text-gray-700 cursor-pointer leading-relaxed"
+              >
+                {t('agreeTerms')}{' '}
+                <a href="/terms" className="text-[#00B8A9] font-semibold underline">
+                  {t('termsLink')}
+                </a>{' '}
+                {t('and')}{' '}
+                <a href="/privacy" className="text-[#00B8A9] font-semibold underline">
+                  {t('privacyLink')}
+                </a>
+                {isRTL && ' الخاصة بنا'}
+              </Label>
+            </div>
+            {errors.agreeTerms && <p className="text-red-500 text-sm">{errors.agreeTerms}</p>}
+          </div>
+
+          {/* Submit Button */}
+          <Button
+            type="submit"
+            disabled={!formData.agreeTerms}
+            className="w-full bg-gray-300 hover:bg-gray-400 text-gray-600 font-semibold py-6 text-base disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {t('submitButton')}
+          </Button>
+        </form>
       </div>
     </div>
   );
 }
-
