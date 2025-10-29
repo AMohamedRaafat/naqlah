@@ -141,10 +141,10 @@ export type ContactFormData = z.infer<typeof contactFormSchema>;
 export function formatZodErrors(error: z.ZodError): Record<string, string> {
   const errors: Record<string, string> = {};
 
-  error.errors.forEach((err) => {
-    const path = err.path.join('.');
+  error.issues.forEach((issue) => {
+    const path = issue.path.join('.');
     if (!errors[path]) {
-      errors[path] = err.message;
+      errors[path] = issue.message;
     }
   });
 
@@ -163,7 +163,7 @@ export function validateField(schema: z.ZodType<any>, value: any): string | null
     return null;
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return error.errors[0]?.message || 'Invalid value';
+      return error.issues[0]?.message || 'Invalid value';
     }
     return 'Validation error';
   }
