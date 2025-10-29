@@ -63,16 +63,14 @@ export default function Step7DateTime({ data, onNext, onBack }: Step7Props) {
           <label className="block text-sm font-medium text-gray-700 mb-3 text-right">
             {t('time') || 'الساعة'}
           </label>
-          
+
           <div className="flex items-center justify-center gap-3 mb-4">
             {/* AM/PM Toggle */}
             <div className="flex bg-gray-200 rounded-lg p-1">
               <button
                 onClick={() => setPeriod('AM')}
                 className={`px-6 py-2 rounded-lg font-medium transition-colors ${
-                  period === 'AM'
-                    ? 'bg-white text-gray-900 shadow-sm'
-                    : 'text-gray-600'
+                  period === 'AM' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600'
                 }`}
               >
                 AM
@@ -80,9 +78,7 @@ export default function Step7DateTime({ data, onNext, onBack }: Step7Props) {
               <button
                 onClick={() => setPeriod('PM')}
                 className={`px-6 py-2 rounded-lg font-medium transition-colors ${
-                  period === 'PM'
-                    ? 'bg-white text-gray-900 shadow-sm'
-                    : 'text-gray-600'
+                  period === 'PM' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600'
                 }`}
               >
                 PM
@@ -90,7 +86,10 @@ export default function Step7DateTime({ data, onNext, onBack }: Step7Props) {
             </div>
 
             {/* Time Display */}
-            <div className="flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-lg">
+            <div
+              className="flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-lg"
+              dir={isRTL ? 'rtl' : 'ltr'}
+            >
               <select
                 value={selectedHour}
                 onChange={(e) => handleTimeChange(e.target.value, selectedMinute)}
@@ -118,7 +117,8 @@ export default function Step7DateTime({ data, onNext, onBack }: Step7Props) {
           </div>
 
           <p className="text-xs text-gray-500 text-center">
-            {t('note') || 'قد تحدث تغيرات بسيطة في التوقيت بسبب الازدحام أو إعادة تنسيق الجداول التشغيلية'}
+            {t('note') ||
+              'قد تحدث تغيرات بسيطة في التوقيت بسبب الازدحام أو إعادة تنسيق الجداول التشغيلية'}
           </p>
         </div>
 
@@ -127,7 +127,7 @@ export default function Step7DateTime({ data, onNext, onBack }: Step7Props) {
           <label className="block text-sm font-medium text-gray-700 mb-3 text-right">
             {t('date') || 'التاريخ'}
           </label>
-          
+
           <div className="flex justify-center" dir="ltr">
             <DatePicker
               selected={selectedDate}
@@ -189,13 +189,13 @@ export default function Step7DateTime({ data, onNext, onBack }: Step7Props) {
           border-radius: 0.5rem;
         }
         .react-datepicker__day--selected {
-          background-color: #00B8A9 !important;
+          background-color: #00b8a9 !important;
           color: white !important;
           border-radius: 0.5rem;
           font-weight: 700;
         }
         .react-datepicker__day--keyboard-selected {
-          background-color: #D2F2F0;
+          background-color: #d2f2f0;
           border-radius: 0.5rem;
         }
         .react-datepicker__day--disabled {
@@ -205,4 +205,3 @@ export default function Step7DateTime({ data, onNext, onBack }: Step7Props) {
     </div>
   );
 }
-

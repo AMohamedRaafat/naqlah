@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useLanguage } from '@/contexts/language-context';
 import { Button } from '@/components/ui/button';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, X } from 'lucide-react';
 
 interface Step6Props {
   data: {
@@ -14,6 +14,7 @@ interface Step6Props {
     insurance: string;
     needDisassembly: string;
     disassemblyItems: string[];
+    disassemblyNotes: string;
   };
   onNext: (data: any) => void;
   onBack: () => void;
@@ -36,30 +37,37 @@ export default function Step6AdditionalServices({ data, onNext, onBack }: Step6P
   const [formData, setFormData] = useState({
     ...data,
     disassemblyItems: data.disassemblyItems || [],
+    disassemblyNotes: data.disassemblyNotes || '',
   });
+  const [selectedItem, setSelectedItem] = useState('');
 
   const handleChange = (field: string, value: string) => {
     setFormData((prev) => {
       const updated = { ...prev, [field]: value };
-      // Clear disassembly items if needDisassembly is changed to "no"
+      // Clear disassembly items and notes if needDisassembly is changed to "no"
       if (field === 'needDisassembly' && value !== 'yes') {
         updated.disassemblyItems = [];
+        updated.disassemblyNotes = '';
       }
       return updated;
     });
   };
 
-  const handleDisassemblyItemToggle = (item: string) => {
-    setFormData((prev) => {
-      const items = prev.disassemblyItems || [];
-      const isSelected = items.includes(item);
-      return {
-        ...prev,
-        disassemblyItems: isSelected
-          ? items.filter((i) => i !== item)
-          : [...items, item],
-      };
-    });
+  const handleAddDisassemblyItem = (item: string) => {
+    if (!item || formData.disassemblyItems.includes(item)) return;
+    
+    setFormData((prev) => ({
+      ...prev,
+      disassemblyItems: [...prev.disassemblyItems, item],
+    }));
+    setSelectedItem('');
+  };
+
+  const handleRemoveDisassemblyItem = (item: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      disassemblyItems: prev.disassemblyItems.filter((i) => i !== item),
+    }));
   };
 
   const handleNext = () => {
@@ -181,25 +189,69 @@ export default function Step6AdditionalServices({ data, onNext, onBack }: Step6P
 
           {/* Disassembly Items - Conditional */}
           {formData.needDisassembly === 'yes' && (
-            <div className="mt-4 p-4 bg-gray-50 rounded-xl">
-              <label className="block text-sm font-medium text-gray-700 mb-3 text-right">
-                {t('selectDisassemblyItems') || 'حدد القطع التي تحتاج للفك والتركيب'}
-              </label>
-              <div className="grid grid-cols-2 gap-3">
-                {furnitureOptions.map((option) => (
-                  <button
-                    key={option.value}
-                    type="button"
-                    onClick={() => handleDisassemblyItemToggle(option.value)}
-                    className={`px-4 py-3 rounded-xl border-2 text-sm font-medium transition-all ${
-                      formData.disassemblyItems?.includes(option.value)
-                        ? 'border-[#00B8A9] bg-[#D2F2F0] text-[#00B8A9]'
-                        : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
-                    }`}
+            <div className="space-y-4">
+              {/* Select Box */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
+                  {t('selectDisassemblyItems') || 'حدد القطع التي تحتاج للفك والتركيب'}
+                </label>
+                <div className="relative">
+                  <select
+                    value={selectedItem}
+                    onChange={(e) => handleAddDisassemblyItem(e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00B8A9] text-sm appearance-none bg-white"
+                    dir={isRTL ? 'rtl' : 'ltr'}
                   >
-                    {isRTL ? option.labelAr : option.labelEn}
-                  </button>
-                ))}
+                    <option value="">{t('selectItem') || 'حدد القطع والأثاث'}</option>
+                    {furnitureOptions
+                      .filter((option) => !formData.disassemblyItems.includes(option.value))
+                      .map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {isRTL ? option.labelAr : option.labelEn}
+                        </option>
+                      ))}
+                  </select>
+                  <ChevronDown className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Selected Items Chips */}
+              {formData.disassemblyItems.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                  {formData.disassemblyItems.map((item) => {
+                    const option = furnitureOptions.find((opt) => opt.value === item);
+                    return (
+                      <div
+                        key={item}
+                        className="inline-flex items-center gap-2 px-3 py-2 bg-[#00B8A9] text-white rounded-lg text-sm"
+                      >
+                        <span>{isRTL ? option?.labelAr : option?.labelEn}</span>
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveDisassemblyItem(item)}
+                          className="hover:bg-white/20 rounded-full p-0.5 transition-colors"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* Disassembly Notes Textarea */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
+                  {t('disassemblyNotes') || 'ملاحظة التفكيك والتركيب (اختياري)'}
+                </label>
+                <textarea
+                  value={formData.disassemblyNotes}
+                  onChange={(e) => handleChange('disassemblyNotes', e.target.value)}
+                  placeholder={t('disassemblyNotesPlaceholder') || 'اكتب ملاحظة خاصة بالتفكيك والتركيب'}
+                  rows={3}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00B8A9] text-sm resize-none placeholder:text-[#7E7E7E]"
+                  dir={isRTL ? 'rtl' : 'ltr'}
+                />
               </div>
             </div>
           )}
@@ -225,4 +277,3 @@ export default function Step6AdditionalServices({ data, onNext, onBack }: Step6P
     </div>
   );
 }
-

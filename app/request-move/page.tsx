@@ -67,6 +67,7 @@ export type OrderFormData = {
     insurance: string;
     needDisassembly: string;
     disassemblyItems: string[];
+    disassemblyNotes: string;
   };
 
   // Step 7: Date & Time
@@ -116,6 +117,7 @@ export default function OrderMovePage() {
       insurance: '',
       needDisassembly: '',
       disassemblyItems: [],
+      disassemblyNotes: '',
     },
     dateTime: {
       date: null,
