@@ -70,6 +70,7 @@
   "navigation": {
     "home": "الرئيسية",
     "dashboard": "لوحة التحكم",
+    "profile": "الملف الشخصي",
     "logIn": "تسجيل الدخول",
     "settings": "الإعدادات",
     "partners": "شركاء النجاح",
@@ -174,6 +175,13 @@
     "and": "و",
     "privacyLink": "سياسة الخصوصية",
     "privacySuffix": "الخاصة بنا",
-    "submitButton": "إبدأ طلبك"
+    "submitButton": "إبدأ طلبك",
+    "errors": {
+      "firstNameRequired": "الإسم الأول مطلوب",
+      "lastNameRequired": "الإسم الأخير مطلوب",
+      "phoneNumberRequired": "رقم الهاتف مطلوب",
+      "phoneNumberInvalid": "رقم الهاتف يجب أن يكون 9 أرقام",
+      "termsRequired": "يجب الموافقة على الشروط والأحكام"
+    }
   }
 }

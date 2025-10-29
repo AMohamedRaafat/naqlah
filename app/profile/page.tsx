@@ -79,22 +79,22 @@ export default function ProfileCompletePage() {
     let hasError = false;
 
     if (!formData.firstName.trim()) {
-      setErrors((prev) => ({ ...prev, firstName: 'First name is required' }));
+      setErrors((prev) => ({ ...prev, firstName: t('errors.firstNameRequired') }));
       hasError = true;
     }
 
     if (!formData.lastName.trim()) {
-      setErrors((prev) => ({ ...prev, lastName: 'Last name is required' }));
+      setErrors((prev) => ({ ...prev, lastName: t('errors.lastNameRequired') }));
       hasError = true;
     }
 
     if (!formData.phoneNumber || formData.phoneNumber.length !== 9) {
-      setErrors((prev) => ({ ...prev, phoneNumber: 'Valid phone number is required' }));
+      setErrors((prev) => ({ ...prev, phoneNumber: t('errors.phoneNumberInvalid') }));
       hasError = true;
     }
 
     if (!formData.agreeTerms) {
-      setErrors((prev) => ({ ...prev, agreeTerms: 'You must agree to the terms and conditions' }));
+      setErrors((prev) => ({ ...prev, agreeTerms: t('errors.termsRequired') }));
       hasError = true;
     }
 

@@ -70,6 +70,7 @@
   "navigation": {
     "home": "Home",
     "dashboard": "Dashboard",
+    "profile": "Profile",
     "logIn": "Login",
     "settings": "Settings",
     "partners": "Success Partners",
@@ -173,6 +174,13 @@
     "termsLink": "Terms of Use",
     "and": "and",
     "privacyLink": "Privacy Policy",
-    "submitButton": "Start Your Request"
+    "submitButton": "Start Your Request",
+    "errors": {
+      "firstNameRequired": "First name is required",
+      "lastNameRequired": "Last name is required",
+      "phoneNumberRequired": "Phone number is required",
+      "phoneNumberInvalid": "Phone number must be 9 digits",
+      "termsRequired": "You must agree to the terms and conditions"
+    }
   }
 }
