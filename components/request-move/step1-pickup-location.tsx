@@ -67,7 +67,7 @@ export default function Step1PickupLocation({ data, onNext, onBack }: Step1Props
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={t('searchPlaceholder') || 'إبحث عن العنوان'}
-            className="w-full px-4 py-3 pr-10 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00B8A9] text-sm placeholder:text-[#7E7E7E]"
+            className="w-full px-4 py-3 pr-10 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00B8A9] text-sm placeholder:text-[#A3A3A3]"
             dir={isRTL ? 'rtl' : 'ltr'}
           />
         </div>

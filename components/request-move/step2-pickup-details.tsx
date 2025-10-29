@@ -55,7 +55,7 @@ export default function Step2PickupDetails({ data, location, onNext, onBack }: S
     <div className="w-full">
       {/* Title Card */}
       <div className="bg-white rounded-2xl p-6 mb-6 shadow-sm">
-        <h2 className="text-lg font-bold text-gray-900 text-center mb-2">
+        <h2 className="text-[14px] font-bold text-[#353535] text-start mb-2">
           {t('title') || 'من فضلك أكمل تفاصيل عنوان النقل الحالي المراد النقل منه'}
         </h2>
 
@@ -71,7 +71,7 @@ export default function Step2PickupDetails({ data, location, onNext, onBack }: S
               value={formData.city}
               onChange={(e) => handleChange('city', e.target.value)}
               placeholder={t('cityPlaceholder') || 'الرياض'}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00B8A9] text-sm placeholder:text-[#7E7E7E]"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00B8A9] text-sm placeholder:text-[#A3A3A3]"
               dir={isRTL ? 'rtl' : 'ltr'}
             />
           </div>
@@ -86,7 +86,7 @@ export default function Step2PickupDetails({ data, location, onNext, onBack }: S
               value={formData.fullAddress}
               onChange={(e) => handleChange('fullAddress', e.target.value)}
               placeholder={location.address}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00B8A9] text-sm placeholder:text-[#7E7E7E]"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00B8A9] text-sm placeholder:text-[#A3A3A3]"
               dir={isRTL ? 'rtl' : 'ltr'}
             />
           </div>
@@ -101,7 +101,7 @@ export default function Step2PickupDetails({ data, location, onNext, onBack }: S
               value={formData.buildingName}
               onChange={(e) => handleChange('buildingName', e.target.value)}
               placeholder={t('buildingPlaceholder') || 'أدخل إسم البناء'}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00B8A9] text-sm placeholder:text-[#7E7E7E]"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00B8A9] text-sm placeholder:text-[#A3A3A3]"
               dir={isRTL ? 'rtl' : 'ltr'}
             />
           </div>
@@ -180,7 +180,7 @@ export default function Step2PickupDetails({ data, location, onNext, onBack }: S
               onChange={(e) => handleChange('additionalNotes', e.target.value)}
               placeholder={t('notesPlaceholder') || 'أترك أي ملاحظة خاصة بالعنوان'}
               rows={3}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00B8A9] text-sm resize-none placeholder:text-[#7E7E7E]"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00B8A9] text-sm resize-none placeholder:text-[#A3A3A3]"
               dir={isRTL ? 'rtl' : 'ltr'}
             />
           </div>
@@ -190,20 +190,19 @@ export default function Step2PickupDetails({ data, location, onNext, onBack }: S
       {/* Action Buttons */}
       <div className="flex gap-3">
         <Button
-          onClick={onBack}
-          variant="outline"
-          className="flex-1 bg-white border-2 border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold py-6 text-base rounded-xl"
-        >
-          {t('back') || 'تراجع'}
-        </Button>
-        <Button
           onClick={handleNext}
-          className="flex-1 bg-[#00B8A9] hover:bg-[#009688] text-white font-semibold py-6 text-base rounded-xl"
+          className="flex-1 bg-[#00B8A9] hover:bg-[#009688] text-white font-semibold py-6 text-base rounded-md"
         >
           {t('continue') || 'التالي'}
+        </Button>
+        <Button
+          onClick={onBack}
+          variant="outline"
+          className="flex-2 bg-white border-2 border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold py-6 text-base rounded-md"
+        >
+          {t('back') || 'تراجع'}
         </Button>
       </div>
     </div>
   );
 }
-

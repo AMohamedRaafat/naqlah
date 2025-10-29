@@ -61,7 +61,7 @@ export default function Step3DestinationLocation({ data, onNext, onBack }: Step3
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={t('searchPlaceholder') || 'إبحث عن العنوان'}
-            className="w-full px-4 py-3 pr-10 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00B8A9] text-sm placeholder:text-[#7E7E7E]"
+            className="w-full px-4 py-3 pr-10 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00B8A9] text-sm placeholder:text-[#A3A3A3]"
             dir={isRTL ? 'rtl' : 'ltr'}
           />
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#00B8A9] w-5 h-5" />
@@ -94,17 +94,17 @@ export default function Step3DestinationLocation({ data, onNext, onBack }: Step3
       {/* Action Buttons */}
       <div className="flex gap-3">
         <Button
-          onClick={onBack}
-          variant="outline"
-          className="flex-1 bg-white border-2 border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold py-6 text-base rounded-xl"
-        >
-          {t('back') || 'تراجع'}
-        </Button>
-        <Button
           onClick={handleNext}
-          className="flex-1 bg-[#00B8A9] hover:bg-[#009688] text-white font-semibold py-6 text-base rounded-xl"
+          className="flex-1 bg-[#00B8A9] hover:bg-[#009688] text-white font-semibold py-6 text-base rounded-md"
         >
           {t('continue') || 'أكمل'}
+        </Button>
+        <Button
+          onClick={onBack}
+          variant="outline"
+          className="flex-2 bg-white border-2 border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold py-6 text-base rounded-md"
+        >
+          {t('back') || 'تراجع'}
         </Button>
       </div>
     </div>

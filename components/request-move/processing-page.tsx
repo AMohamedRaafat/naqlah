@@ -67,7 +67,7 @@ export default function ProcessingPage() {
       <div className="space-y-3">
         <Button
           onClick={handleFollowUp}
-          className="w-full bg-[#00B8A9] hover:bg-[#009688] text-white font-semibold py-6 text-base rounded-xl"
+          className="w-full bg-[#00B8A9] hover:bg-[#009688] text-white font-semibold py-6 text-base rounded-md"
         >
           {t('followUp') || 'متابعة الطلب'}
         </Button>
@@ -75,7 +75,7 @@ export default function ProcessingPage() {
         <Button
           onClick={handleGoHome}
           variant="outline"
-          className="w-full bg-white border-2 border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold py-6 text-base rounded-xl"
+          className="w-full bg-white border-2 border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold py-6 text-base rounded-md"
         >
           {t('backToHome') || 'العودة إلي الرئيسية'}
         </Button>

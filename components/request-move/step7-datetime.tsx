@@ -148,19 +148,19 @@ export default function Step7DateTime({ data, onNext, onBack }: Step7Props) {
       </div>
 
       {/* Action Buttons */}
-      <div className={`flex gap-3 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+      <div className="flex gap-3">
+        <Button
+          onClick={handleNext}
+          className="flex-1 bg-[#00B8A9] hover:bg-[#009688] text-white font-semibold py-6 text-base rounded-md"
+        >
+          {t('continue') || 'التالي'}
+        </Button>
         <Button
           onClick={onBack}
           variant="outline"
-          className="flex-2 bg-white border-2 border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold py-6 text-base rounded-xl"
+          className="flex-2 bg-white border-2 border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold py-6 text-base rounded-md"
         >
           {t('back') || 'تراجع'}
-        </Button>
-        <Button
-          onClick={handleNext}
-          className="flex-1 bg-[#00B8A9] hover:bg-[#009688] text-white font-semibold py-6 text-base rounded-xl"
-        >
-          {t('continue') || 'التالي'}
         </Button>
       </div>
 
