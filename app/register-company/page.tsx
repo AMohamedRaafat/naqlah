@@ -15,8 +15,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { PhoneInput } from '@/components/ui/phone-input';
 import { Camera, Paperclip, Eye, EyeOff, X } from 'lucide-react';
 import Image from 'next/image';
+import { registerCompanySchema, safeValidate } from '@/lib/validations/schemas';
 
 export default function RegisterCompanyPage() {
   const t = useTranslations('registerCompany');
@@ -27,16 +29,27 @@ export default function RegisterCompanyPage() {
   const [formData, setFormData] = useState({
     companyLogo: null as File | null,
     companyName: '',
-    covenant: '',
     commercialRegistration: null as File | null,
     city: '',
     email: '',
     password: '',
     confirmPassword: '',
-    secretCode: '',
+    phoneNumber: '',
     services: [] as string[],
     aboutCompany: '',
     agreeTerms: false,
+  });
+
+  const [errors, setErrors] = useState({
+    companyName: '',
+    city: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    phoneNumber: '',
+    services: '',
+    aboutCompany: '',
+    agreeTerms: '',
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -90,30 +103,57 @@ export default function RegisterCompanyPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
-    // You can add validation and API call here
+
+    // Validate using Zod schema
+    const validation = safeValidate(registerCompanySchema, formData);
+
+    if (!validation.success) {
+      // Set all errors from Zod validation
+      setErrors({
+        companyName: validation.errors?.companyName || '',
+        city: validation.errors?.city || '',
+        email: validation.errors?.email || '',
+        password: validation.errors?.password || '',
+        confirmPassword: validation.errors?.confirmPassword || '',
+        phoneNumber: validation.errors?.phoneNumber || '',
+        services: validation.errors?.services || '',
+        aboutCompany: validation.errors?.aboutCompany || '',
+        agreeTerms: validation.errors?.agreeTerms || '',
+      });
+
+      // Scroll to first error
+      const firstErrorField = Object.keys(validation.errors || {})[0];
+      if (firstErrorField) {
+        const element = document.getElementById(firstErrorField);
+        element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        element?.focus();
+      }
+
+      return;
+    }
+
+    // Handle form submission with validated data
+    console.log('Form submitted:', validation.data);
+    // You can add API call here
+    router.push('/dashboard');
   };
 
   return (
-    <div className="min-h-screen pb-8">
-      <div className="container mx-auto px-4 max-w-2xl">
+    <div className="min-h-screen pb-8 bg-[#fafafa] p-4">
+      <div className="container bg-white mx-auto px-4 max-w-2xl py-6 rounded-xl">
         <form onSubmit={handleSubmit} className="space-y-6 pt-6">
           {/* Company Logo Upload */}
-          <div className="flex flex-col items-center">
-            <div className="relative">
-              <div className="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+          <div className="flex flex-row items-center justify-between">
+            <div className="relative flex items-center gap-4">
+              <label
+                htmlFor="logo-upload"
+                className="w-20 h-20 rounded-full border border-gray-200 bg-white flex items-center justify-center overflow-hidden"
+              >
                 {logoPreview ? (
                   <Image src={logoPreview} alt="Logo" fill className="object-cover rounded-full" />
                 ) : (
-                  <Camera className="w-12 h-12 text-gray-400" />
+                  <Camera className="w-12 h-12 text-gray-400 rounded-full p-2" />
                 )}
-              </div>
-              <label
-                htmlFor="logo-upload"
-                className="absolute bottom-0 right-0 w-10 h-10 bg-[#00B8A9] rounded-full flex items-center justify-center cursor-pointer shadow-lg"
-              >
-                <Camera className="w-5 h-5 text-white" />
               </label>
               <input
                 type="file"
@@ -122,6 +162,7 @@ export default function RegisterCompanyPage() {
                 className="hidden"
                 onChange={handleLogoUpload}
               />
+              <p className="text-[#353535] text-md mt-2">{t('companyLogo')}</p>
             </div>
             <p className="text-[#00B8A9] text-sm mt-2">{t('uploadLogo')}</p>
           </div>
@@ -129,29 +170,20 @@ export default function RegisterCompanyPage() {
           {/* Company Name */}
           <div className="space-y-2">
             <Label htmlFor="companyName" className="text-[#353535] font-medium">
-              {t('companyName')}
+              {t('companyName')} <span className="text-red-500">*</span>
             </Label>
             <Input
               id="companyName"
               value={formData.companyName}
-              onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-              className="border-[#EDEDED]"
+              onChange={(e) => {
+                setFormData({ ...formData, companyName: e.target.value });
+                if (errors.companyName) setErrors({ ...errors, companyName: '' });
+              }}
+              className={`border-[#EDEDED] ${errors.companyName ? 'border-red-500' : ''}`}
               dir={isRTL ? 'rtl' : 'ltr'}
+              required
             />
-          </div>
-
-          {/* Covenant */}
-          <div className="space-y-2">
-            <Label htmlFor="covenant" className="text-[#353535] font-medium">
-              {t('covenant')}
-            </Label>
-            <Input
-              id="covenant"
-              value={formData.covenant}
-              onChange={(e) => setFormData({ ...formData, covenant: e.target.value })}
-              className="border-[#EDEDED]"
-              dir={isRTL ? 'rtl' : 'ltr'}
-            />
+            {errors.companyName && <p className="text-red-500 text-sm">{errors.companyName}</p>}
           </div>
 
           {/* Commercial Registration */}
@@ -160,20 +192,22 @@ export default function RegisterCompanyPage() {
               {t('commercialRegistration')}
             </Label>
             <div className="relative">
-              <Input
+              {/* <Input
                 id="commercial-reg"
                 value={formData.commercialRegistration?.name || ''}
                 placeholder={t('attachFile')}
                 readOnly
-                className="border-[#EDEDED] pr-20"
+                className="border-[#EDEDED]  text-start"
                 dir={isRTL ? 'rtl' : 'ltr'}
-              />
+              /> */}
               <label
                 htmlFor="file-upload"
-                className="absolute left-3 top-1/2 -translate-y-1/2 cursor-pointer"
+                className="border border-gray-200 rounded-md p-3 flex items-center gap-2 justify-between"
               >
+                <p className="text-[#A3A3A3] text-sm">{t('attachFile')}</p>
                 <Paperclip className="w-5 h-5 text-gray-400" />
               </label>
+
               <input
                 type="file"
                 id="file-upload"
@@ -181,18 +215,15 @@ export default function RegisterCompanyPage() {
                 className="hidden"
                 onChange={handleFileUpload}
               />
-              {formData.commercialRegistration && (
+            </div>
+            {formData.commercialRegistration && (
+              <p className="text-[#00B8A9] text-sm flex items-center gap-2 border border-[#EDEDED] rounded-md p-2 w-fit">
                 <button
                   type="button"
                   onClick={() => setFormData({ ...formData, commercialRegistration: null })}
-                  className="absolute right-3 top-1/2 -translate-y-1/2"
                 >
-                  <X className="w-5 h-5 text-red-500" />
+                  <X className="w-5 h-5 text-[#00B8A9]" />
                 </button>
-              )}
-            </div>
-            {formData.commercialRegistration && (
-              <p className="text-[#00B8A9] text-sm flex items-center gap-2">
                 <Paperclip className="w-4 h-4" />
                 {t('fileAttached')}
               </p>
@@ -202,13 +233,18 @@ export default function RegisterCompanyPage() {
           {/* City */}
           <div className="space-y-2">
             <Label htmlFor="city" className="text-[#353535] font-medium">
-              {t('city')}
+              {t('city')} <span className="text-red-500">*</span>
             </Label>
             <Select
+              dir={isRTL ? 'rtl' : 'ltr'}
               value={formData.city}
-              onValueChange={(value) => setFormData({ ...formData, city: value })}
+              onValueChange={(value) => {
+                setFormData({ ...formData, city: value });
+                if (errors.city) setErrors({ ...errors, city: '' });
+              }}
+              required
             >
-              <SelectTrigger className="border-[#EDEDED]">
+              <SelectTrigger className={`border-[#EDEDED] ${errors.city ? 'border-red-500' : ''}`}>
                 <SelectValue placeholder={t('selectCity')} />
               </SelectTrigger>
               <SelectContent>
@@ -219,41 +255,55 @@ export default function RegisterCompanyPage() {
                 ))}
               </SelectContent>
             </Select>
+            {errors.city && <p className="text-red-500 text-sm">{errors.city}</p>}
           </div>
 
           {/* Email */}
           <div className="space-y-2">
             <Label htmlFor="email" className="text-[#353535] font-medium">
-              {t('email')}
+              {t('email')} <span className="text-red-500">*</span>
             </Label>
             <Input
               id="email"
               type="email"
               value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="border-[#EDEDED]"
+              onChange={(e) => {
+                setFormData({ ...formData, email: e.target.value });
+                if (errors.email) setErrors({ ...errors, email: '' });
+              }}
+              className={`border-[#EDEDED] ${errors.email ? 'border-red-500' : ''}`}
               dir="ltr"
+              required
             />
+            {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
           </div>
 
           {/* Password */}
           <div className="space-y-2">
             <Label htmlFor="password" className="text-[#353535] font-medium">
-              {t('password')}
+              {t('password')} <span className="text-red-500">*</span>
             </Label>
-            <div className="relative">
+            <div className="relative" dir={isRTL ? 'rtl' : 'ltr'}>
               <Input
                 id="password"
                 type={showPassword ? 'text' : 'password'}
                 value={formData.password}
-                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                className="border-[#EDEDED] pr-12"
-                dir="ltr"
+                onChange={(e) => {
+                  setFormData({ ...formData, password: e.target.value });
+                  if (errors.password) setErrors({ ...errors, password: '' });
+                }}
+                className={`border-[#EDEDED] ${isRTL ? 'pl-12' : 'pr-12'} ${
+                  errors.password ? 'border-red-500' : ''
+                }`}
+                dir={isRTL ? 'rtl' : 'ltr'}
+                required
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2"
+                className={`absolute top-1/2 -translate-y-1/2 cursor-pointer ${
+                  isRTL ? 'left-3' : 'right-3'
+                }`}
               >
                 {showPassword ? (
                   <EyeOff className="w-5 h-5 text-gray-400" />
@@ -262,26 +312,35 @@ export default function RegisterCompanyPage() {
                 )}
               </button>
             </div>
+            {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
           </div>
 
           {/* Confirm Password */}
           <div className="space-y-2">
             <Label htmlFor="confirmPassword" className="text-[#353535] font-medium">
-              {t('confirmPassword')}
+              {t('confirmPassword')} <span className="text-red-500">*</span>
             </Label>
-            <div className="relative">
+            <div className="relative" dir={isRTL ? 'rtl' : 'ltr'}>
               <Input
                 id="confirmPassword"
                 type={showConfirmPassword ? 'text' : 'password'}
                 value={formData.confirmPassword}
-                onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                className="border-[#EDEDED] pr-12"
-                dir="ltr"
+                onChange={(e) => {
+                  setFormData({ ...formData, confirmPassword: e.target.value });
+                  if (errors.confirmPassword) setErrors({ ...errors, confirmPassword: '' });
+                }}
+                className={`border-[#EDEDED] ${isRTL ? 'pl-12' : 'pr-12'} ${
+                  errors.confirmPassword ? 'border-red-500' : ''
+                }`}
+                dir={isRTL ? 'rtl' : 'ltr'}
+                required
               />
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2"
+                className={`absolute top-1/2 -translate-y-1/2 cursor-pointer ${
+                  isRTL ? 'left-3' : 'right-3'
+                }`}
               >
                 {showConfirmPassword ? (
                   <EyeOff className="w-5 h-5 text-gray-400" />
@@ -290,32 +349,39 @@ export default function RegisterCompanyPage() {
                 )}
               </button>
             </div>
+            {errors.confirmPassword && (
+              <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
+            )}
           </div>
 
-          {/* Secret Code */}
+          {/* Phone Number */}
           <div className="space-y-2">
-            <Label htmlFor="secretCode" className="text-[#353535] font-medium">
-              {t('secretCode')}
+            <Label htmlFor="phoneNumber" className="text-[#353535] font-medium">
+              {t('phoneNumber')} <span className="text-red-500">*</span>
             </Label>
-            <Input
-              id="secretCode"
-              type="tel"
-              value={formData.secretCode}
-              onChange={(e) =>
-                setFormData({ ...formData, secretCode: e.target.value.replace(/\D/g, '') })
-              }
-              maxLength={4}
-              className="border-[#EDEDED]"
-              dir="ltr"
-              placeholder="+966 591002006"
+            <PhoneInput
+              id="phoneNumber"
+              value={formData.phoneNumber}
+              onChange={(value) => {
+                setFormData({ ...formData, phoneNumber: value });
+                if (errors.phoneNumber) setErrors({ ...errors, phoneNumber: '' });
+              }}
+              error={errors.phoneNumber}
+              placeholder={t('phoneNumberPlaceholder')}
+              isRTL={isRTL}
+              required
             />
           </div>
 
           {/* Featured Services */}
           <div className="space-y-3">
-            <Label className="text-[#353535] font-medium">{t('featuredServices')}</Label>
-            <Select>
-              <SelectTrigger className="border-[#EDEDED]">
+            <Label className="text-[#353535] font-medium">
+              {t('featuredServices')} <span className="text-red-500">*</span>
+            </Label>
+            <Select dir={isRTL ? 'rtl' : 'ltr'}>
+              <SelectTrigger
+                className={`border-[#EDEDED] ${errors.services ? 'border-red-500' : ''}`}
+              >
                 <SelectValue placeholder={t('selectServices')} />
               </SelectTrigger>
               <SelectContent>
@@ -323,7 +389,10 @@ export default function RegisterCompanyPage() {
                   <SelectItem
                     key={service.id}
                     value={service.id}
-                    onClick={() => toggleService(service.id)}
+                    onClick={() => {
+                      toggleService(service.id);
+                      if (errors.services) setErrors({ ...errors, services: '' });
+                    }}
                   >
                     {service.label}
                   </SelectItem>
@@ -339,57 +408,74 @@ export default function RegisterCompanyPage() {
                   return (
                     <div
                       key={serviceId}
-                      className="inline-flex items-center gap-2 bg-[#E8F8F6] text-[#00B8A9] px-3 py-1.5 rounded-full text-sm"
+                      className="inline-flex items-center gap-2 bg-[#fff] text-[#35353] px-3 py-1.5 rounded-md border border-[#ededed] text-sm"
                     >
-                      <span>{service?.label}</span>
                       <button
                         type="button"
                         onClick={() => toggleService(serviceId)}
-                        className="hover:bg-[#00B8A9] hover:text-white rounded-full p-0.5"
+                        className=" hover:bg-[#00B8A9] hover:text-white rounded-full p-0.5"
                       >
-                        <X className="w-4 h-4" />
+                        <X className="w-4 h-4 text-[#00B8A9]" />
                       </button>
+                      <span>{service?.label}</span>
                     </div>
                   );
                 })}
               </div>
             )}
+            {errors.services && <p className="text-red-500 text-sm">{errors.services}</p>}
           </div>
 
           {/* About Company */}
           <div className="space-y-2">
             <Label htmlFor="aboutCompany" className="text-[#353535] font-medium">
-              {t('aboutCompany')}
+              {t('aboutCompany')} <span className="text-red-500">*</span>
             </Label>
             <Textarea
               id="aboutCompany"
               value={formData.aboutCompany}
-              onChange={(e) => setFormData({ ...formData, aboutCompany: e.target.value })}
+              onChange={(e) => {
+                setFormData({ ...formData, aboutCompany: e.target.value });
+                if (errors.aboutCompany) setErrors({ ...errors, aboutCompany: '' });
+              }}
               placeholder={t('aboutCompanyPlaceholder')}
-              className="border-[#EDEDED] min-h-[100px] resize-none"
+              className={`border-[#EDEDED] min-h-[100px] resize-none ${
+                errors.aboutCompany ? 'border-red-500' : ''
+              }`}
               dir={isRTL ? 'rtl' : 'ltr'}
+              required
             />
+            {errors.aboutCompany && <p className="text-red-500 text-sm">{errors.aboutCompany}</p>}
           </div>
 
           {/* Terms Checkbox */}
-          <div className="flex items-center gap-3">
-            <input
-              type="checkbox"
-              id="agreeTerms"
-              checked={formData.agreeTerms}
-              onChange={(e) => setFormData({ ...formData, agreeTerms: e.target.checked })}
-              className="w-5 h-5 text-[#00B8A9] border-[#E7E7E7] rounded focus:ring-[#00B8A9]"
-            />
-            <Label htmlFor="agreeTerms" className="text-sm text-gray-700 cursor-pointer">
-              {t('agreeTerms')}{' '}
-              <a href="/terms" className="text-[#00B8A9] underline">
-                {t('termsLink')}
-              </a>{' '}
-              {t('and')}{' '}
-              <a href="/privacy" className="text-[#00B8A9] underline">
-                {t('privacyLink')}
-              </a>
-            </Label>
+          <div className="space-y-2">
+            <div className="flex items-center gap-3">
+              <input
+                type="checkbox"
+                id="agreeTerms"
+                checked={formData.agreeTerms}
+                onChange={(e) => {
+                  setFormData({ ...formData, agreeTerms: e.target.checked });
+                  if (errors.agreeTerms) setErrors({ ...errors, agreeTerms: '' });
+                }}
+                className={`w-5 h-5 text-[#00B8A9] border-[#E7E7E7] rounded focus:ring-[#00B8A9] ${
+                  errors.agreeTerms ? 'border-red-500' : ''
+                }`}
+                required
+              />
+              <Label htmlFor="agreeTerms" className="text-sm text-gray-700 cursor-pointer">
+                {t('agreeTerms')}{' '}
+                <a href="/terms" className="text-[#00B8A9] underline">
+                  {t('termsLink')}
+                </a>{' '}
+                {t('and')}{' '}
+                <a href="/privacy" className="text-[#00B8A9] underline">
+                  {t('privacyLink')}
+                </a>
+              </Label>
+            </div>
+            {errors.agreeTerms && <p className="text-red-500 text-sm">{errors.agreeTerms}</p>}
           </div>
 
           {/* Submit Button */}

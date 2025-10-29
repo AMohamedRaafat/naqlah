@@ -38,10 +38,10 @@ export default function ThemeColor() {
 
     if (isLoggedIn || isAppLayout) {
       // App layout pages: White (light mode) or Dark gray (dark mode)
-      themeColor = isDark ? '#1F2937' : '#FFFFFF';
+      themeColor = '#fff';
     } else {
       // Public pages: Primary teal (light mode) or Darker teal (dark mode)
-      themeColor = isDark ? '#007973' : '#00B8A9';
+      themeColor = '#00B8A9';
     }
 
     // Update existing meta tag or create new one

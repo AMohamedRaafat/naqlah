@@ -20,6 +20,7 @@
     "subtitle": "Ready to move? Book an appointment, specify your needs, and let our professional team move your furniture safely and quickly",
     "ratingExcellent": "Excellent",
     "ratingHigh": "High Rating",
+    "certifiedBy": "Certified by",
     "ctaOrderMove": "Request a transfer",
     "ctaJoinPartner": "Join as a moving company"
   },
@@ -110,6 +111,7 @@
   },
   "registerCompany": {
     "pageTitle": "Join as Moving Company",
+    "companyLogo": "Company Logo",
     "uploadLogo": "Upload Logo",
     "companyName": "Company Commercial Name",
     "covenant": "Covenant",
@@ -121,7 +123,8 @@
     "email": "Email",
     "password": "Password",
     "confirmPassword": "Confirm Password",
-    "secretCode": "Phone Number",
+    "phoneNumber": "Phone Number",
+    "phoneNumberPlaceholder": "Enter phone number",
     "featuredServices": "Featured Services",
     "selectServices": "Select Featured Services",
     "aboutCompany": "Brief About Company",
@@ -132,11 +135,11 @@
     "privacyLink": "Privacy Policy",
     "submitButton": "Submit Account Creation Request",
     "services": {
-      "disassembly": "Disassembly & Installation",
+      "disassembly": "Disassembly & Assembly",
       "packing": "Secure Packing",
       "insurance": "Insurance Against Loss",
-      "cleaning": "Cleaning",
-      "moving": "Store to Store Moving"
+      "cleaning": "Cleaning After Moving",
+      "moving": "Moving Between Cities"
     },
     "cities": {
       "jeddah": "Jeddah",

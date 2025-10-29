@@ -1,7 +1,7 @@
 import { LanguageProvider } from '@/contexts/language-context';
 import { AuthProvider } from '@/contexts/auth-context';
-import ThemeColor from '@/components/theme-color';
-import PWAManager from '@/components/pwa-manager';
+import ThemeColor from '@/components/pwa/theme-color';
+import PWAManager from '@/components/pwa/pwa-manager';
 import type { Metadata } from 'next';
 import './globals.css';
 

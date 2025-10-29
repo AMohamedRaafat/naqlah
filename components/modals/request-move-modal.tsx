@@ -13,7 +13,14 @@ import {
   DialogClose,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import { PhoneInput } from '@/components/ui/phone-input';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
+import {
+  requestMovePhoneSchema,
+  requestMoveOTPSchema,
+  validateField,
+  saudiPhoneSchema,
+} from '@/lib/validations/schemas';
 import { X } from 'lucide-react';
 
 interface RequestMoveModalProps {
@@ -49,38 +56,10 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
     }
   }, [open]);
 
-  // Validate Saudi phone number
-  const validatePhoneNumber = (phone: string): boolean => {
-    // Saudi phone numbers should be 9 digits and start with 5
-    if (phone.length === 0) {
-      setPhoneError('');
-      return false;
-    }
-
-    if (phone.length < 9) {
-      setPhoneError(t('phoneIncomplete'));
-      return false;
-    }
-
-    if (!phone.startsWith('5')) {
-      setPhoneError(t('phoneInvalidStart'));
-      return false;
-    }
-
-    if (phone.length === 9) {
-      setPhoneError('');
-      return true;
-    }
-
-    return false;
-  };
-
   const handlePhoneChange = (value: string) => {
-    const cleanedValue = value.replace(/\D/g, '');
-    setPhoneNumber(cleanedValue);
-    if (cleanedValue.length > 0) {
-      validatePhoneNumber(cleanedValue);
-    } else {
+    setPhoneNumber(value);
+    // Clear error when user starts typing
+    if (phoneError && value.length > 0) {
       setPhoneError('');
     }
   };
@@ -88,8 +67,10 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
   const handlePhoneSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validate before submitting
-    if (!validatePhoneNumber(phoneNumber)) {
+    // Validate using Zod schema
+    const error = validateField(saudiPhoneSchema, phoneNumber);
+    if (error) {
+      setPhoneError(error);
       return;
     }
 
@@ -162,8 +143,10 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
   const handleOtpSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (otp.length !== 6) {
-      setOtpError(t('otpIncomplete'));
+    // Validate OTP using Zod schema
+    const error = validateField(requestMoveOTPSchema.shape.otp, otp);
+    if (error) {
+      setOtpError(error);
       return;
     }
 
@@ -236,28 +219,15 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
                   <label htmlFor="phone" className="block text-md font-medium text-[#353535] mb-2">
                     {t('phoneLabel')}
                   </label>
-                  <div
-                    className={`flex items-center border rounded-lg overflow-hidden focus-within:ring-2 flex-row ${
-                      phoneError
-                        ? 'border-red-500 focus-within:ring-red-500 focus-within:border-red-500'
-                        : 'border-[#EDEDED] focus-within:ring-[#00B8A9] focus-within:border-[#00B8A9]'
-                    }`}
-                  >
-                    <input
-                      type="tel"
-                      id="phone"
-                      value={phoneNumber}
-                      onChange={(e) => handlePhoneChange(e.target.value)}
-                      placeholder={t('phonePlaceholder')}
-                      className={`flex-1 px-4 py-3 outline-none ${
-                        isRTL ? 'text-right' : 'text-left'
-                      }`}
-                      dir={'ltr'}
-                      maxLength={9}
-                    />
-                    <span className="px-4 py-3 text-[#A3A3A3] font-regular">+966</span>
-                  </div>
-                  {phoneError && <p className="text-red-500 text-sm mt-2">{phoneError}</p>}
+                  <PhoneInput
+                    id="phone"
+                    value={phoneNumber}
+                    onChange={handlePhoneChange}
+                    error={phoneError}
+                    placeholder={t('phonePlaceholder')}
+                    isRTL={isRTL}
+                    required
+                  />
                 </div>
 
                 {/* Checkbox */}
