@@ -44,7 +44,7 @@ export const getNavItems = ({ isLoggedIn, isCompany, t }: NavigationConfig): Nav
   if (!isLoggedIn) {
     items.push({
       label: t('navigation.logIn'),
-      href: '/dashboard',
+      href: '/login',
     });
   }
 

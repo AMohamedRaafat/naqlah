@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
@@ -9,6 +9,7 @@ import { useAuth } from '@/contexts/auth-context';
 import { usePathname } from 'next/navigation';
 import MobileNavbar from './mobile-navbar';
 import DesktopUserMenu from './desktop-user-menu';
+import LoginModal from '@/components/modals/login-modal';
 import { getNavItems, getPageTitle as getTitle } from '@/constants/navigation';
 
 export default function Navbar() {
@@ -16,6 +17,7 @@ export default function Navbar() {
   const { locale, setLocale } = useLanguage();
   const { isLoggedIn, isCompany } = useAuth();
   const pathname = usePathname();
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
   // Get current page title from centralized function
   const pageTitle = getTitle(pathname, t);
@@ -31,6 +33,14 @@ export default function Navbar() {
   const switchLanguage = () => {
     const newLocale = locale === 'ar' ? 'en' : 'ar';
     setLocale(newLocale);
+  };
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    // Check if this is the login link
+    if (href === '/login') {
+      e.preventDefault();
+      setShowLoginModal(true);
+    }
   };
 
   return (
@@ -69,6 +79,7 @@ export default function Navbar() {
                 <Link
                   key={item.href}
                   href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href)}
                   className={`font-medium relative group transition-colors ${
                     showLoggedInStyle
                       ? 'text-gray-900 hover:text-[#00B8A9]'
@@ -104,6 +115,9 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
+
+      {/* Login Modal */}
+      <LoginModal open={showLoginModal} onOpenChange={setShowLoginModal} />
     </>
   );
 }

@@ -103,22 +103,16 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
             onValueChange={(value) => setActiveTab(value as 'customer' | 'company')}
             dir={isRTL ? 'rtl' : 'ltr'}
           >
-            <TabsList className="grid w-full grid-cols-2 bg-white text-[#B1B1B1] ">
+            <TabsList className="grid w-full grid-cols-2 bg-white text-[#B1B1B1]">
               <TabsTrigger
                 value="customer"
-                className={`${
-                  activeTab === 'customer' &&
-                  ' text-[#00B8A9 !important] border-b-2 border-[#00B8A9] rounded-none'
-                }`}
+                className="rounded-none data-[state=active]:text-[#00B8A9] data-[state=active]:border-b-2 data-[state=active]:border-[#00B8A9] data-[state=active]:bg-transparent data-[state=active]:shadow-none"
               >
                 {t('login.customerTab')}
               </TabsTrigger>
               <TabsTrigger
                 value="company"
-                className={`${
-                  activeTab === 'company' &&
-                  ' text-[#00B8A9] border-b-2 border-[#00B8A9] rounded-none'
-                }`}
+                className="rounded-none data-[state=active]:text-[#00B8A9] data-[state=active]:border-b-2 data-[state=active]:border-[#00B8A9] data-[state=active]:bg-transparent data-[state=active]:shadow-none"
               >
                 {t('login.companyTab')}
               </TabsTrigger>

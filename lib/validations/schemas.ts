@@ -84,9 +84,7 @@ export const registerCompanySchema = z
       .string({ required_error: 'Please confirm your password' })
       .min(1, { message: 'Please confirm your password' }),
     phoneNumber: saudiPhoneSchema,
-    services: z
-      .array(z.string())
-      .min(1, { message: 'Please select at least one service' }),
+    services: z.array(z.string()).min(1, { message: 'Please select at least one service' }),
     aboutCompany: nonEmptyStringSchema.min(10, {
       message: 'About company must be at least 10 characters',
     }),
@@ -172,10 +170,10 @@ export type ContactFormData = z.infer<typeof contactFormSchema>;
 export function formatZodErrors(error: z.ZodError): Record<string, string> {
   const errors: Record<string, string> = {};
 
-  error.issues.forEach((issue) => {
-    const path = issue.path.join('.');
+  error.errors.forEach((err) => {
+    const path = err.path.join('.');
     if (!errors[path]) {
-      errors[path] = issue.message;
+      errors[path] = err.message;
     }
   });
 
@@ -194,7 +192,7 @@ export function validateField<T>(schema: z.ZodType<T>, value: unknown): string |
     return null;
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return error.issues[0]?.message || 'Invalid value';
+      return error.errors[0]?.message || 'Invalid value';
     }
     return 'Validation error';
   }
