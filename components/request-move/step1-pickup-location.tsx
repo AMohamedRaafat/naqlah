@@ -48,15 +48,20 @@ export default function Step1PickupLocation({ data, onNext, onBack }: Step1Props
     <div className="w-full">
       {/* Title Card */}
       <div className="bg-white rounded-2xl p-6 mb-6 shadow-sm">
-        <h2 className="text-xl font-bold text-gray-900 text-center mb-2">
+        <h2 className="text-xl font-bold text-[#353535] text-start mb-2">
           {t('title') || 'ماهو الموقع المراد النقل منه'}
         </h2>
-        <p className="text-sm text-gray-600 text-center">
+        <p className="text-[12px] text-[#494A4D] text-start">
           {t('subtitle') || 'من فضلك أدخل علي الخريطة تفاصيل الموقع'}
         </p>
 
         {/* Search Input */}
-        <div className="mt-4 relative">
+        <div className={`mt-4 relative ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+          <Search
+            className={`absolute ${
+              isRTL ? 'right-3' : 'left-3'
+            } top-1/2 transform -translate-y-1/2 text-[#00B8A9] w-5 h-5`}
+          />
           <input
             type="text"
             value={searchQuery}
@@ -65,18 +70,19 @@ export default function Step1PickupLocation({ data, onNext, onBack }: Step1Props
             className="w-full px-4 py-3 pr-10 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00B8A9] text-sm placeholder:text-[#7E7E7E]"
             dir={isRTL ? 'rtl' : 'ltr'}
           />
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#00B8A9] w-5 h-5" />
         </div>
 
         {/* Selected Location Display */}
         {location.address && (
-          <div className="mt-4 p-3 bg-gray-50 rounded-xl">
-            <div className="flex items-start gap-2">
-              <MapPin className="w-5 h-5 text-[#00B8A9] mt-1 flex-shrink-0" />
-              <div className="flex-1">
-                <p className="font-semibold text-gray-900 mb-1">{t('result') || 'النتائج'}</p>
-                <p className="text-sm font-bold text-gray-900">{location.city}</p>
-                <p className="text-xs text-gray-600">{location.address}</p>
+          <div className="mt-2 p-3 border-b border-gray-200 ">
+            <div className="">
+              <p className="font-semibold text-[#353535] mb-2">{t('result') || 'النتائج'}</p>
+              <div className="flex items-start gap-3">
+                <MapPin className="w-9 h-9 text-[#00B8A9] flex-shrink-0 border border-gray-200 rounded-full p-2" />
+                <div className="flex flex-col">
+                  <p className="text-[14px] font-regular text-[#353535]">{location.city}</p>
+                  <p className="text-[12px] text-[#ABABAB]">{location.address}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -95,17 +101,17 @@ export default function Step1PickupLocation({ data, onNext, onBack }: Step1Props
       {/* Action Buttons */}
       <div className="flex gap-3">
         <Button
-          onClick={onBack}
-          variant="outline"
-          className="flex-1 bg-white border-2 border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold py-6 text-base rounded-xl"
-        >
-          {t('back') || 'تراجع'}
-        </Button>
-        <Button
           onClick={handleNext}
-          className="flex-1 bg-[#00B8A9] hover:bg-[#009688] text-white font-semibold py-6 text-base rounded-xl"
+          className="flex-1 bg-[#00B8A9] hover:bg-[#009688] text-white font-semibold py-6 text-base rounded-md"
         >
           {t('continue') || 'أكمل'}
+        </Button>
+        <Button
+          onClick={onBack}
+          variant="outline"
+          className="flex-2  bg-white border-2 border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold py-6 text-base rounded-md"
+        >
+          {t('back') || 'تراجع'}
         </Button>
       </div>
     </div>

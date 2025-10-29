@@ -312,7 +312,13 @@
       "rooms": "Rooms",
       "agreeTerms": "I agree to the terms of use and privacy policy",
       "back": "Back",
-      "confirm": "Confirm Order"
+      "confirm": "Confirm Order",
+      "showMap": "Show Map",
+      "mapTitle": "Route Map",
+      "distance": "Distance",
+      "km": "km",
+      "pickup": "Pickup Location",
+      "destination": "Destination Location"
     },
     "processing": {
       "breadcrumb": "Processing Request",

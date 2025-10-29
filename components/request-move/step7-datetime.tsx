@@ -51,22 +51,26 @@ export default function Step7DateTime({ data, onNext, onBack }: Step7Props) {
     <div className="w-full">
       {/* Title Card */}
       <div className="bg-white rounded-2xl p-6 mb-6 shadow-sm">
-        <h2 className="text-lg font-bold text-gray-900 text-center mb-2">
+        <h2 className="text-[14px] font-bold text-[#353535] text-start mb-2">
           {t('title') || 'الموعد والمرونة'}
         </h2>
-        <p className="text-sm text-gray-600 text-center mb-6">
+        <p className="text-[12px] text-[#494A4D] text-start mb-6">
           {t('subtitle') || 'يرجي تحديد تاريخ ووقت النقل المطلوب'}
         </p>
 
         {/* Time Picker */}
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-3 text-right">
+          <label className="block text-[12px] font-regular text-[#353535] mb-3 text-start">
             {t('time') || 'الساعة'}
           </label>
 
           <div className="flex items-center justify-center gap-3 mb-4">
             {/* AM/PM Toggle */}
-            <div className="flex bg-gray-200 rounded-lg p-1">
+            <div
+              className={`flex bg-gray-200 rounded-lg p-1 ${
+                isRTL ? 'flex-row-reverse' : 'flex-row'
+              }`}
+            >
               <button
                 onClick={() => setPeriod('AM')}
                 className={`px-6 py-2 rounded-lg font-medium transition-colors ${
@@ -87,8 +91,9 @@ export default function Step7DateTime({ data, onNext, onBack }: Step7Props) {
 
             {/* Time Display */}
             <div
-              className="flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-lg"
-              dir={isRTL ? 'rtl' : 'ltr'}
+              className={`flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-lg
+                  ${isRTL ? 'flex-row-reverse' : 'flex-row'}
+              `}
             >
               <select
                 value={selectedHour}
@@ -116,7 +121,7 @@ export default function Step7DateTime({ data, onNext, onBack }: Step7Props) {
             </div>
           </div>
 
-          <p className="text-xs text-gray-500 text-center">
+          <p className="text-[12px] text-[#A7A7A7] text-start">
             {t('note') ||
               'قد تحدث تغيرات بسيطة في التوقيت بسبب الازدحام أو إعادة تنسيق الجداول التشغيلية'}
           </p>
@@ -124,7 +129,7 @@ export default function Step7DateTime({ data, onNext, onBack }: Step7Props) {
 
         {/* Date Picker */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-3 text-right">
+          <label className="block text-[14px] font-regualr text-[#353535] mb-3 text-start">
             {t('date') || 'التاريخ'}
           </label>
 
@@ -136,18 +141,18 @@ export default function Step7DateTime({ data, onNext, onBack }: Step7Props) {
               minDate={new Date()}
               dateFormat="MMMM d, yyyy"
               calendarClassName="custom-calendar"
-              className="w-full"
+              className="w-full text-[14px] font-regular text-[#353535]"
             />
           </div>
         </div>
       </div>
 
       {/* Action Buttons */}
-      <div className="flex gap-3">
+      <div className={`flex gap-3 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
         <Button
           onClick={onBack}
           variant="outline"
-          className="flex-1 bg-white border-2 border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold py-6 text-base rounded-xl"
+          className="flex-2 bg-white border-2 border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold py-6 text-base rounded-xl"
         >
           {t('back') || 'تراجع'}
         </Button>

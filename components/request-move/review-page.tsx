@@ -1,11 +1,13 @@
 'use client';
 
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useLanguage } from '@/contexts/language-context';
 import { Button } from '@/components/ui/button';
-import { Pencil, Check } from 'lucide-react';
+import { Pencil, Check, Map } from 'lucide-react';
 import Image from 'next/image';
 import { OrderFormData } from '@/app/request-move/page';
+import RouteMapModal from './route-map-modal';
 
 interface ReviewPageProps {
   formData: OrderFormData;
@@ -18,6 +20,7 @@ export default function ReviewPage({ formData, onEdit, onSubmit, onBack }: Revie
   const t = useTranslations('orderMove.review');
   const { locale } = useLanguage();
   const isRTL = locale === 'ar';
+  const [showMapModal, setShowMapModal] = useState(false);
 
   const formatDate = (date: Date | null) => {
     if (!date) return '';
@@ -240,6 +243,32 @@ export default function ReviewPage({ formData, onEdit, onSubmit, onBack }: Revie
           {t('confirm') || 'تأكيد الطلب'}
         </Button>
       </div>
+
+      {/* Show Map Button */}
+      <Button
+        onClick={() => setShowMapModal(true)}
+        variant="outline"
+        className="w-full mt-3 bg-white border-2 border-[#00B8A9] text-[#00B8A9] hover:bg-[#00B8A9] hover:text-white font-semibold py-6 text-base rounded-xl flex items-center justify-center gap-2"
+      >
+        <Map className="w-5 h-5" />
+        {t('showMap') || 'أظهر الخريطة'}
+      </Button>
+
+      {/* Route Map Modal */}
+      <RouteMapModal
+        open={showMapModal}
+        onOpenChange={setShowMapModal}
+        pickupLocation={{
+          lat: formData.pickupLocation.lat,
+          lng: formData.pickupLocation.lng,
+          address: formData.pickupLocation.address,
+        }}
+        destinationLocation={{
+          lat: formData.destinationLocation.lat,
+          lng: formData.destinationLocation.lng,
+          address: formData.destinationLocation.address,
+        }}
+      />
     </div>
   );
 }

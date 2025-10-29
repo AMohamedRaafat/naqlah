@@ -55,7 +55,7 @@ export default function Step6AdditionalServices({ data, onNext, onBack }: Step6P
 
   const handleAddDisassemblyItem = (item: string) => {
     if (!item || formData.disassemblyItems.includes(item)) return;
-    
+
     setFormData((prev) => ({
       ...prev,
       disassemblyItems: [...prev.disassemblyItems, item],
@@ -247,7 +247,9 @@ export default function Step6AdditionalServices({ data, onNext, onBack }: Step6P
                 <textarea
                   value={formData.disassemblyNotes}
                   onChange={(e) => handleChange('disassemblyNotes', e.target.value)}
-                  placeholder={t('disassemblyNotesPlaceholder') || 'اكتب ملاحظة خاصة بالتفكيك والتركيب'}
+                  placeholder={
+                    t('disassemblyNotesPlaceholder') || 'اكتب ملاحظة خاصة بالتفكيك والتركيب'
+                  }
                   rows={3}
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00B8A9] text-sm resize-none placeholder:text-[#7E7E7E]"
                   dir={isRTL ? 'rtl' : 'ltr'}
