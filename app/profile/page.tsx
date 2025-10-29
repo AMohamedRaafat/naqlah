@@ -111,25 +111,25 @@ export default function ProfileCompletePage() {
 
   return (
     <div className="min-h-screen bg-[#fafafa] font-expo-arabic">
-      <div className="container mx-auto px-4 py-8 max-w-md mt-8">
-        <div className="bg-white rounded-xl shadow-sm p-6">
+      <div className="container mx-auto px-2 py-2 max-w-md mt-4">
+        <div className="bg-white rounded-xl border border-[#EDEDED] shadow-sm p-6">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Profile Photo Upload */}
             <div className="flex flex-col items-center">
               <label
                 htmlFor="photo-upload"
-                className="w-32 h-32 rounded-full bg-[#00B8A9] flex items-center justify-center cursor-pointer overflow-hidden"
+                className="w-24 h-24 rounded-full bg-[#00B8A9] flex items-center justify-center cursor-pointer overflow-hidden"
               >
                 {photoPreview ? (
                   <Image
                     src={photoPreview}
                     alt="Profile"
                     className="object-cover w-full h-full"
-                    width={128}
-                    height={128}
+                    width={54}
+                    height={54}
                   />
                 ) : (
-                  <Camera className="w-12 h-12 text-white" />
+                  <Camera className="w-10 h-10 text-white" />
                 )}
               </label>
               <input
@@ -142,11 +142,11 @@ export default function ProfileCompletePage() {
             </div>
 
             {/* Title */}
-            <h1 className="text-center text-xl font-semibold text-gray-900">{t('title')}</h1>
+            <h1 className="text-start text-md font-medium text-gray-900">{t('title')}</h1>
 
             {/* First Name */}
             <div className="space-y-2">
-              <Label htmlFor="firstName" className="text-[#353535] font-medium text-right block">
+              <Label htmlFor="firstName" className="text-[#353535] font-regular text-start block">
                 {t('firstName')}
               </Label>
               <Input
@@ -157,7 +157,9 @@ export default function ProfileCompletePage() {
                   if (errors.firstName) setErrors({ ...errors, firstName: '' });
                 }}
                 placeholder={t('firstNamePlaceholder')}
-                className={`border-[#EDEDED] ${errors.firstName ? 'border-red-500' : ''}`}
+                className={`border-[#EDEDED] ${
+                  errors.firstName ? 'border-red-500' : ''
+                } text-[14px] placeholder:text-[#7E7E7E]`}
                 dir={isRTL ? 'rtl' : 'ltr'}
                 required
               />
@@ -166,7 +168,7 @@ export default function ProfileCompletePage() {
 
             {/* Last Name */}
             <div className="space-y-2">
-              <Label htmlFor="lastName" className="text-[#353535] font-medium text-right block">
+              <Label htmlFor="lastName" className="text-[#353535] font-regular text-right block">
                 {t('lastName')}
               </Label>
               <Input
@@ -177,7 +179,9 @@ export default function ProfileCompletePage() {
                   if (errors.lastName) setErrors({ ...errors, lastName: '' });
                 }}
                 placeholder={t('lastNamePlaceholder')}
-                className={`border-[#EDEDED] ${errors.lastName ? 'border-red-500' : ''}`}
+                className={`border-[#EDEDED] ${
+                  errors.lastName ? 'border-red-500' : ''
+                } text-[14px] placeholder:text-[#7E7E7E]`}
                 dir={isRTL ? 'rtl' : 'ltr'}
                 required
               />
@@ -213,7 +217,7 @@ export default function ProfileCompletePage() {
                 value={formData.requestTitle}
                 onChange={(e) => setFormData({ ...formData, requestTitle: e.target.value })}
                 placeholder={t('requestTitlePlaceholder')}
-                className="border-[#EDEDED]"
+                className="border-[#EDEDED] text-[14px] placeholder:text-[#7E7E7E]"
                 dir={isRTL ? 'rtl' : 'ltr'}
               />
             </div>

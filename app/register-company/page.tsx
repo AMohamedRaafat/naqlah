@@ -185,7 +185,7 @@ export default function RegisterCompanyPage() {
                 setFormData({ ...formData, companyName: e.target.value });
                 if (errors.companyName) setErrors({ ...errors, companyName: '' });
               }}
-              className={`border-[#EDEDED] ${errors.companyName ? 'border-red-500' : ''}`}
+              className={`border-[#EDEDED] ${errors.companyName ? 'border-red-500' : ''} placeholder:text-[#7E7E7E]`}
               dir={isRTL ? 'rtl' : 'ltr'}
               required
             />
@@ -405,7 +405,7 @@ export default function RegisterCompanyPage() {
               placeholder={t('aboutCompanyPlaceholder')}
               className={`border-[#EDEDED] min-h-[100px] resize-none ${
                 errors.aboutCompany ? 'border-red-500' : ''
-              }`}
+              } placeholder:text-[#7E7E7E]`}
               dir={isRTL ? 'rtl' : 'ltr'}
               required
             />

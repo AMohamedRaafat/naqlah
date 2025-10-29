@@ -71,7 +71,7 @@ export const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputPro
             disabled={disabled}
             required={required}
             className={cn(
-              'flex-1 px-4 py-3 outline-none bg-transparent text-[14px]',
+              'flex-1 px-4 py-3 outline-none bg-transparent text-[14px] placeholder:text-[#7E7E7E]',
               isRTL ? 'text-right' : 'text-left',
               disabled && 'cursor-not-allowed'
             )}
