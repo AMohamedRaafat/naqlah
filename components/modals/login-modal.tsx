@@ -49,10 +49,10 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
 
     // Phone is valid, proceed to OTP
     setPhoneError('');
-    
+
     // Close the main login modal when opening OTP
     onOpenChange(false);
-    
+
     // Open OTP modal
     setShowOTP(true);
   };

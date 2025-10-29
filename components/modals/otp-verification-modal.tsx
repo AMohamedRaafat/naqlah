@@ -3,12 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { useLanguage } from '@/contexts/language-context';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 
@@ -111,8 +106,7 @@ export default function OTPVerificationModal({
         <div className="px-6 py-6">
           {/* Phone Number Display */}
           <p className="text-center text-[#868686] mb-2 text-sm">
-            {t('otpSubtitle')}{' '}
-            <span className="text-[#353535] font-medium">+966{phoneNumber}</span>
+            {t('otpSubtitle')} <span className="text-[#353535] font-medium">+966{phoneNumber}</span>
           </p>
 
           <form
@@ -123,7 +117,7 @@ export default function OTPVerificationModal({
           >
             {/* OTP Label */}
             <div className="mb-4 mt-4">
-              <label className="block text-sm font-medium text-gray-700 mb-3 text-center">
+              <label className="block text-sm font-medium text-gray-700 mb-3 text-start">
                 {t('otpLabel')}
               </label>
 
@@ -211,4 +205,3 @@ export default function OTPVerificationModal({
     </Dialog>
   );
 }
-

@@ -84,7 +84,7 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
       id: phoneNumber,
       name: isNewUser ? '' : 'User Name',
       phone: `+966${phoneNumber}`,
-      type: 'customer' as const,
+      isCompany: false, // Request Move is for customers, not companies
     };
 
     // Login user if save data is checked

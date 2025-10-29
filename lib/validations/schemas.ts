@@ -1,6 +1,7 @@
 /**
  * Zod Validation Schemas
  * Centralized validation for all forms in the application
+ * Updated for Zod v3.25+
  */
 
 import { z } from 'zod';
@@ -15,16 +16,19 @@ import { z } from 'zod';
  * Example: 591002006
  */
 export const saudiPhoneSchema = z
-  .string()
-  .min(1, 'Phone number is required')
-  .length(9, 'Phone number must be exactly 9 digits')
-  .regex(/^5[0-9]{8}$/, 'Phone number must start with 5 and contain only digits');
+  .string({ required_error: 'Phone number is required' })
+  .min(1, { message: 'Phone number is required' })
+  .length(9, { message: 'Phone number must be exactly 9 digits' })
+  .regex(/^5[0-9]{8}$/, { message: 'Phone number must start with 5 and contain only digits' });
 
 /**
  * Email Schema
  * Standard email validation
  */
-export const emailSchema = z.string().min(1, 'Email is required').email('Invalid email address');
+export const emailSchema = z
+  .string({ required_error: 'Email is required' })
+  .min(1, { message: 'Email is required' })
+  .email({ message: 'Invalid email address' });
 
 /**
  * Password Schema
@@ -36,24 +40,33 @@ export const emailSchema = z.string().min(1, 'Email is required').email('Invalid
  * - At least one special character
  */
 export const passwordSchema = z
-  .string()
-  .min(8, 'Password must be at least 8 characters long')
-  .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
-  .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
-  .regex(/[0-9]/, 'Password must contain at least one number')
-  .regex(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one special character');
+  .string({ required_error: 'Password is required' })
+  .min(8, { message: 'Password must be at least 8 characters long' })
+  .regex(/[A-Z]/, { message: 'Password must contain at least one uppercase letter' })
+  .regex(/[a-z]/, { message: 'Password must contain at least one lowercase letter' })
+  .regex(/[0-9]/, { message: 'Password must contain at least one number' })
+  .regex(/[!@#$%^&*(),.?":{}|<>]/, {
+    message: 'Password must contain at least one special character',
+  });
 
 /**
  * Non-empty String Schema
  * For required text fields
  */
-export const nonEmptyStringSchema = z.string().min(1, 'This field is required').trim();
+export const nonEmptyStringSchema = z
+  .string({ required_error: 'This field is required' })
+  .min(1, { message: 'This field is required' })
+  .trim();
 
 /**
  * URL Schema
  * Validates proper URL format
  */
-export const urlSchema = z.string().url('Invalid URL format').optional().or(z.literal(''));
+export const urlSchema = z
+  .string()
+  .url({ message: 'Invalid URL format' })
+  .optional()
+  .or(z.literal(''));
 
 // ============================================================================
 // REGISTER COMPANY SCHEMA
@@ -61,17 +74,27 @@ export const urlSchema = z.string().url('Invalid URL format').optional().or(z.li
 
 export const registerCompanySchema = z
   .object({
-    companyName: nonEmptyStringSchema.min(2, 'Company name must be at least 2 characters'),
-    city: nonEmptyStringSchema.min(1, 'Please select a city'),
+    companyName: nonEmptyStringSchema.min(2, {
+      message: 'Company name must be at least 2 characters',
+    }),
+    city: nonEmptyStringSchema.min(1, { message: 'Please select a city' }),
     email: emailSchema,
     password: passwordSchema,
-    confirmPassword: z.string().min(1, 'Please confirm your password'),
+    confirmPassword: z
+      .string({ required_error: 'Please confirm your password' })
+      .min(1, { message: 'Please confirm your password' }),
     phoneNumber: saudiPhoneSchema,
-    services: z.array(z.string()).min(1, 'Please select at least one service'),
-    aboutCompany: nonEmptyStringSchema.min(10, 'About company must be at least 10 characters'),
-    agreeTerms: z.boolean().refine((val) => val === true, {
-      message: 'You must agree to the terms and conditions',
+    services: z
+      .array(z.string())
+      .min(1, { message: 'Please select at least one service' }),
+    aboutCompany: nonEmptyStringSchema.min(10, {
+      message: 'About company must be at least 10 characters',
     }),
+    agreeTerms: z
+      .boolean({ required_error: 'You must agree to the terms and conditions' })
+      .refine((val) => val === true, {
+        message: 'You must agree to the terms and conditions',
+      }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Passwords do not match',
@@ -94,9 +117,9 @@ export type RequestMovePhoneData = z.infer<typeof requestMovePhoneSchema>;
 
 export const requestMoveOTPSchema = z.object({
   otp: z
-    .string()
-    .length(6, 'OTP must be exactly 6 digits')
-    .regex(/^[0-9]{6}$/, 'OTP must contain only digits'),
+    .string({ required_error: 'OTP is required' })
+    .length(6, { message: 'OTP must be exactly 6 digits' })
+    .regex(/^[0-9]{6}$/, { message: 'OTP must contain only digits' }),
 });
 
 export type RequestMoveOTPData = z.infer<typeof requestMoveOTPSchema>;
@@ -106,7 +129,9 @@ export type RequestMoveOTPData = z.infer<typeof requestMoveOTPSchema>;
 // ============================================================================
 
 export const profileUpdateSchema = z.object({
-  name: nonEmptyStringSchema.min(2, 'Name must be at least 2 characters'),
+  name: nonEmptyStringSchema.min(2, {
+    message: 'Name must be at least 2 characters',
+  }),
   email: emailSchema,
   phoneNumber: saudiPhoneSchema,
   address: nonEmptyStringSchema.optional(),
@@ -120,11 +145,17 @@ export type ProfileUpdateData = z.infer<typeof profileUpdateSchema>;
 // ============================================================================
 
 export const contactFormSchema = z.object({
-  name: nonEmptyStringSchema.min(2, 'Name must be at least 2 characters'),
+  name: nonEmptyStringSchema.min(2, {
+    message: 'Name must be at least 2 characters',
+  }),
   email: emailSchema,
   phoneNumber: saudiPhoneSchema,
-  subject: nonEmptyStringSchema.min(3, 'Subject must be at least 3 characters'),
-  message: nonEmptyStringSchema.min(10, 'Message must be at least 10 characters'),
+  subject: nonEmptyStringSchema.min(3, {
+    message: 'Subject must be at least 3 characters',
+  }),
+  message: nonEmptyStringSchema.min(10, {
+    message: 'Message must be at least 10 characters',
+  }),
 });
 
 export type ContactFormData = z.infer<typeof contactFormSchema>;
@@ -157,7 +188,7 @@ export function formatZodErrors(error: z.ZodError): Record<string, string> {
  * @param value - Value to validate
  * @returns Error message or null if valid
  */
-export function validateField(schema: z.ZodType<any>, value: any): string | null {
+export function validateField<T>(schema: z.ZodType<T>, value: unknown): string | null {
   try {
     schema.parse(value);
     return null;
@@ -176,7 +207,7 @@ export function validateField(schema: z.ZodType<any>, value: any): string | null
  * @returns Object with success flag and data or errors
  */
 export function safeValidate<T>(
-  schema: z.ZodSchema<T>,
+  schema: z.ZodType<T>,
   data: unknown
 ): {
   success: boolean;
