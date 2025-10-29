@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -60,8 +60,21 @@ function MapEvents({
   return null;
 }
 
+function ChangeMapView({ center }: { center: [number, number] }) {
+  const map = useMap();
+  useEffect(() => {
+    map.setView(center);
+  }, [center, map]);
+  return null;
+}
+
 export default function MapComponent({ center, onLocationSelect, searchQuery }: MapComponentProps) {
   const [position, setPosition] = useState<[number, number]>(center);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     setPosition(center);
@@ -109,6 +122,10 @@ export default function MapComponent({ center, onLocationSelect, searchQuery }: 
     }
   }, [searchQuery, onLocationSelect]);
 
+  if (!isMounted) {
+    return <div className="w-full h-96 bg-gray-100 rounded-lg flex items-center justify-center">Loading map...</div>;
+  }
+
   return (
     <MapContainer center={position} zoom={13} className="w-full h-96" style={{ zIndex: 0 }}>
       <TileLayer
@@ -117,6 +134,7 @@ export default function MapComponent({ center, onLocationSelect, searchQuery }: 
       />
       <Marker position={position} />
       <MapEvents onLocationSelect={onLocationSelect} />
+      <ChangeMapView center={position} />
     </MapContainer>
   );
 }
