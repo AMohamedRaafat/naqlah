@@ -12,7 +12,10 @@
     "save": "حفظ",
     "delete": "حذف",
     "edit": "تعديل",
-    "search": "بحث"
+    "search": "بحث",
+    "logoutTitle": "تسجيل الخروج",
+    "logoutConfirmation": "هل أنت متأكد من أنك تريد تسجيل الخروج من حسابك؟",
+    "confirmLogout": "نعم الخروج"
   },
   "hero": {
     "title": "ابدأ طلبك الآن واستمتع",

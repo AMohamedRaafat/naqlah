@@ -12,7 +12,10 @@
     "save": "Save",
     "delete": "Delete",
     "edit": "Edit",
-    "search": "Search"
+    "search": "Search",
+    "logoutTitle": "Logout",
+    "logoutConfirmation": "Are you sure you want to logout from your account?",
+    "confirmLogout": "Yes, Logout"
   },
   "hero": {
     "title": "Start your order now and enjoy",

@@ -117,7 +117,7 @@ export default function Navbar() {
 
       {/* Login Modal */}
       <LoginModal open={showLoginModal} onOpenChange={setShowLoginModal} />
-      
+
       {/* Language Modal */}
       <LanguageModal open={showLanguageModal} onOpenChange={setShowLanguageModal} />
     </>

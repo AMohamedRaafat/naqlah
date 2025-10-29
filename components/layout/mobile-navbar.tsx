@@ -12,6 +12,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { getMobileMenuItems, getPageTitle as getTitle } from '@/constants/navigation';
 import LoginModal from '@/components/modals/login-modal';
 import LanguageModal from '@/components/modals/language-modal';
+import LogoutModal from '@/components/modals/logout-modal';
 
 export default function MobileNavbar() {
   const t = useTranslations();
@@ -21,6 +22,7 @@ export default function MobileNavbar() {
   const [open, setOpen] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [languageModalOpen, setLanguageModalOpen] = useState(false);
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
   const isRTL = locale === 'ar';
 
   // Get current page title from centralized function
@@ -47,9 +49,9 @@ export default function MobileNavbar() {
     setLanguageModalOpen(true);
   };
 
-  const handleLogout = () => {
-    logout();
+  const openLogoutModal = () => {
     setOpen(false);
+    setLogoutModalOpen(true);
   };
 
   return (
@@ -57,7 +59,9 @@ export default function MobileNavbar() {
       {/* Mobile Header */}
       <div
         className={`lg:hidden font-expo-arabic ${
-          showLoggedInStyle ? 'bg-white text-gray-900 border-b border-gray-200' : 'bg-[#00B8A9] text-white'
+          showLoggedInStyle
+            ? 'bg-white text-gray-900 border-b border-gray-200'
+            : 'bg-[#00B8A9] text-white'
         }`}
       >
         <div className="flex items-end justify-between px-4 py-5">
@@ -103,7 +107,7 @@ export default function MobileNavbar() {
                       {menuItems.map((item, index) => {
                         // Check if this item is active
                         const isActive = pathname === item.href;
-                        
+
                         // Check if this is the login item
                         const isLoginItem = item.label === t('navigation.logIn');
 
@@ -230,9 +234,9 @@ export default function MobileNavbar() {
                         <Image src="/assets/menu-icons/out.svg" alt="icon" width={20} height={20} />
                         <span className="text-gray-800 text-[15px]">{t('common.language')}</span>
                       </button>
-                      {isLoggedIn && (
+                      {!isLoggedIn && (
                         <button
-                          onClick={handleLogout}
+                          onClick={openLogoutModal}
                           className={`flex items-center gap-4 px-4 py-4 w-full hover:bg-gray-50 transition-colors ${
                             isRTL ? 'flex-row text-right' : 'flex-row text-left'
                           }`}
@@ -272,9 +276,12 @@ export default function MobileNavbar() {
 
       {/* Login Modal */}
       <LoginModal open={loginModalOpen} onOpenChange={setLoginModalOpen} />
-      
+
       {/* Language Modal */}
       <LanguageModal open={languageModalOpen} onOpenChange={setLanguageModalOpen} />
+
+      {/* Logout Modal */}
+      <LogoutModal open={logoutModalOpen} onOpenChange={setLogoutModalOpen} />
     </>
   );
 }

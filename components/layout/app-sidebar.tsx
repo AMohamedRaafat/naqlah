@@ -9,6 +9,7 @@ import { useAuth } from '@/contexts/auth-context';
 import { usePathname } from 'next/navigation';
 import { getMobileMenuItems } from '@/constants/navigation';
 import LanguageModal from '@/components/modals/language-modal';
+import LogoutModal from '@/components/modals/logout-modal';
 
 interface AppSidebarProps {
   isOpen: boolean;
@@ -25,6 +26,7 @@ export default function AppSidebar({ isOpen }: AppSidebarProps) {
   const pathname = usePathname();
   const isRTL = locale === 'ar';
   const [languageModalOpen, setLanguageModalOpen] = useState(false);
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
 
   // Get menu items
   const menuItems = useMemo(() => {
@@ -36,10 +38,6 @@ export default function AppSidebar({ isOpen }: AppSidebarProps) {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-  };
-
-  const handleLogout = () => {
-    logout();
   };
 
   if (!isOpen) return null;
@@ -141,7 +139,7 @@ export default function AppSidebar({ isOpen }: AppSidebarProps) {
           </button>
           {isLoggedIn && (
             <button
-              onClick={handleLogout}
+              onClick={() => setLogoutModalOpen(true)}
               className={`flex items-center gap-4 px-4 py-4 w-full hover:bg-gray-50 transition-colors rounded-md ${
                 isRTL ? 'flex-row text-right' : 'flex-row text-left'
               }`}
@@ -161,6 +159,9 @@ export default function AppSidebar({ isOpen }: AppSidebarProps) {
       
       {/* Language Modal */}
       <LanguageModal open={languageModalOpen} onOpenChange={setLanguageModalOpen} />
+      
+      {/* Logout Modal */}
+      <LogoutModal open={logoutModalOpen} onOpenChange={setLogoutModalOpen} />
     </aside>
   );
 }

@@ -11,6 +11,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { getMobileMenuItems, getPageTitle } from '@/constants/navigation';
 import LanguageModal from '@/components/modals/language-modal';
+import LogoutModal from '@/components/modals/logout-modal';
 
 /**
  * Simplified navbar for authenticated/app pages
@@ -28,6 +29,7 @@ export default function AppNavbar({ onToggleSidebar }: AppNavbarProps) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [languageModalOpen, setLanguageModalOpen] = useState(false);
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
   const isRTL = locale === 'ar';
 
   // Get current page title
@@ -49,9 +51,9 @@ export default function AppNavbar({ onToggleSidebar }: AppNavbarProps) {
     setLanguageModalOpen(true);
   };
 
-  const handleLogout = () => {
-    logout();
+  const openLogoutModal = () => {
     setMobileOpen(false);
+    setLogoutModalOpen(true);
   };
 
   return (
@@ -183,7 +185,7 @@ export default function AppNavbar({ onToggleSidebar }: AppNavbarProps) {
                     </button>
                     {isLoggedIn && (
                       <button
-                        onClick={handleLogout}
+                        onClick={openLogoutModal}
                         className={`flex items-center gap-4 px-4 py-4 w-full hover:bg-gray-50 transition-colors ${
                           isRTL ? 'flex-row text-right' : 'flex-row text-left'
                         }`}
@@ -208,6 +210,9 @@ export default function AppNavbar({ onToggleSidebar }: AppNavbarProps) {
       
       {/* Language Modal */}
       <LanguageModal open={languageModalOpen} onOpenChange={setLanguageModalOpen} />
+      
+      {/* Logout Modal */}
+      <LogoutModal open={logoutModalOpen} onOpenChange={setLogoutModalOpen} />
     </div>
   );
 }
