@@ -7,7 +7,7 @@ import { useLanguage } from '@/contexts/language-context';
 import { useAuth } from '@/contexts/auth-context';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { PhoneInput } from '@/components/ui/phone-input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import OTPVerificationModal from './otp-verification-modal';
 
@@ -103,9 +103,25 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
             onValueChange={(value) => setActiveTab(value as 'customer' | 'company')}
             dir={isRTL ? 'rtl' : 'ltr'}
           >
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="customer">{t('login.customerTab')}</TabsTrigger>
-              <TabsTrigger value="company">{t('login.companyTab')}</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2 bg-white text-[#B1B1B1] ">
+              <TabsTrigger
+                value="customer"
+                className={`${
+                  activeTab === 'customer' &&
+                  ' text-[#00B8A9 !important] border-b-2 border-[#00B8A9] rounded-none'
+                }`}
+              >
+                {t('login.customerTab')}
+              </TabsTrigger>
+              <TabsTrigger
+                value="company"
+                className={`${
+                  activeTab === 'company' &&
+                  ' text-[#00B8A9] border-b-2 border-[#00B8A9] rounded-none'
+                }`}
+              >
+                {t('login.companyTab')}
+              </TabsTrigger>
             </TabsList>
 
             {/* Customer Tab */}
@@ -115,26 +131,17 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
                 <label htmlFor="customer-phone" className="block text-sm font-medium text-gray-700">
                   {t('requestMove.phoneLabel')}
                 </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
-                    +966
-                  </span>
-                  <Input
-                    id="customer-phone"
-                    type="tel"
-                    value={phoneNumber}
-                    onChange={(e) => {
-                      const value = e.target.value.replace(/\D/g, '');
-                      setPhoneNumber(value);
-                      setPhoneError('');
-                    }}
-                    maxLength={9}
-                    placeholder={t('requestMove.phonePlaceholder')}
-                    className={`pl-16 ${phoneError ? 'border-red-500' : ''}`}
-                    dir="ltr"
-                  />
-                </div>
-                {phoneError && <p className="text-sm text-red-500">{phoneError}</p>}
+                <PhoneInput
+                  id="customer-phone"
+                  value={phoneNumber}
+                  onChange={(value) => {
+                    setPhoneNumber(value);
+                    setPhoneError('');
+                  }}
+                  error={phoneError}
+                  placeholder={t('requestMove.phonePlaceholder')}
+                  isRTL={isRTL}
+                />
               </div>
 
               {/* Save Data Checkbox */}
@@ -167,26 +174,17 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
                 <label htmlFor="company-phone" className="block text-sm font-medium text-gray-700">
                   {t('requestMove.phoneLabel')}
                 </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
-                    +966
-                  </span>
-                  <Input
-                    id="company-phone"
-                    type="tel"
-                    value={phoneNumber}
-                    onChange={(e) => {
-                      const value = e.target.value.replace(/\D/g, '');
-                      setPhoneNumber(value);
-                      setPhoneError('');
-                    }}
-                    maxLength={9}
-                    placeholder={t('requestMove.phonePlaceholder')}
-                    className={`pl-16 ${phoneError ? 'border-red-500' : ''}`}
-                    dir="ltr"
-                  />
-                </div>
-                {phoneError && <p className="text-sm text-red-500">{phoneError}</p>}
+                <PhoneInput
+                  id="company-phone"
+                  value={phoneNumber}
+                  onChange={(value) => {
+                    setPhoneNumber(value);
+                    setPhoneError('');
+                  }}
+                  error={phoneError}
+                  placeholder={t('requestMove.phonePlaceholder')}
+                  isRTL={isRTL}
+                />
               </div>
 
               {/* Save Data Checkbox */}
