@@ -150,7 +150,13 @@ export default function RegisterCompanyPage() {
                 className="w-20 h-20 rounded-full border border-gray-200 bg-white flex items-center justify-center overflow-hidden"
               >
                 {logoPreview ? (
-                  <Image src={logoPreview} alt="Logo" fill className="object-cover rounded-full" />
+                  <Image
+                    src={logoPreview}
+                    alt="Logo"
+                    className="object-cover rounded-full"
+                    width={100}
+                    height={100}
+                  />
                 ) : (
                   <Camera className="w-12 h-12 text-gray-400 rounded-full p-2" />
                 )}
