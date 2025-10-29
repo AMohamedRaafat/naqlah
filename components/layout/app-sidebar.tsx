@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
@@ -8,6 +8,7 @@ import { useLanguage } from '@/contexts/language-context';
 import { useAuth } from '@/contexts/auth-context';
 import { usePathname } from 'next/navigation';
 import { getMobileMenuItems } from '@/constants/navigation';
+import LanguageModal from '@/components/modals/language-modal';
 
 interface AppSidebarProps {
   isOpen: boolean;
@@ -23,6 +24,7 @@ export default function AppSidebar({ isOpen }: AppSidebarProps) {
   const { isLoggedIn, isCompany, logout } = useAuth();
   const pathname = usePathname();
   const isRTL = locale === 'ar';
+  const [languageModalOpen, setLanguageModalOpen] = useState(false);
 
   // Get menu items
   const menuItems = useMemo(() => {
@@ -34,11 +36,6 @@ export default function AppSidebar({ isOpen }: AppSidebarProps) {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-  };
-
-  const switchLanguage = () => {
-    const newLocale = locale === 'ar' ? 'en' : 'ar';
-    setLocale(newLocale);
   };
 
   const handleLogout = () => {
@@ -134,7 +131,7 @@ export default function AppSidebar({ isOpen }: AppSidebarProps) {
 
         <div className="border-t border-gray-200 mt-4 py-3">
           <button
-            onClick={switchLanguage}
+            onClick={() => setLanguageModalOpen(true)}
             className={`flex items-center gap-4 px-4 py-4 w-full hover:bg-gray-50 transition-colors rounded-md ${
               isRTL ? 'flex-row text-right' : 'flex-row text-left'
             }`}
@@ -161,6 +158,9 @@ export default function AppSidebar({ isOpen }: AppSidebarProps) {
           )}
         </div>
       </nav>
+      
+      {/* Language Modal */}
+      <LanguageModal open={languageModalOpen} onOpenChange={setLanguageModalOpen} />
     </aside>
   );
 }

@@ -10,6 +10,7 @@ import { usePathname } from 'next/navigation';
 import MobileNavbar from './mobile-navbar';
 import DesktopUserMenu from './desktop-user-menu';
 import LoginModal from '@/components/modals/login-modal';
+import LanguageModal from '@/components/modals/language-modal';
 import { getNavItems, getPageTitle as getTitle } from '@/constants/navigation';
 
 export default function Navbar() {
@@ -18,6 +19,7 @@ export default function Navbar() {
   const { isLoggedIn, isCompany } = useAuth();
   const pathname = usePathname();
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showLanguageModal, setShowLanguageModal] = useState(false);
 
   // Get current page title from centralized function
   const pageTitle = getTitle(pathname, t);
@@ -29,11 +31,6 @@ export default function Navbar() {
   const navItems = useMemo(() => {
     return getNavItems({ isLoggedIn, isCompany, t });
   }, [isLoggedIn, isCompany, t]);
-
-  const switchLanguage = () => {
-    const newLocale = locale === 'ar' ? 'en' : 'ar';
-    setLocale(newLocale);
-  };
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     // Check if this is the login link
@@ -101,7 +98,7 @@ export default function Navbar() {
             <div className="flex items-center gap-4 order-3">
               {/* Language Switcher */}
               <button
-                onClick={switchLanguage}
+                onClick={() => setShowLanguageModal(true)}
                 className={`px-4 py-2 rounded-lg transition-colors text-sm font-medium ${
                   showLoggedInStyle
                     ? 'bg-gray-100 hover:bg-gray-200 text-gray-900'
@@ -120,6 +117,9 @@ export default function Navbar() {
 
       {/* Login Modal */}
       <LoginModal open={showLoginModal} onOpenChange={setShowLoginModal} />
+      
+      {/* Language Modal */}
+      <LanguageModal open={showLanguageModal} onOpenChange={setShowLanguageModal} />
     </>
   );
 }

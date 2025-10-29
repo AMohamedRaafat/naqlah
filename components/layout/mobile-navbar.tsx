@@ -11,6 +11,7 @@ import { Menu, User } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { getMobileMenuItems, getPageTitle as getTitle } from '@/constants/navigation';
 import LoginModal from '@/components/modals/login-modal';
+import LanguageModal from '@/components/modals/language-modal';
 
 export default function MobileNavbar() {
   const t = useTranslations();
@@ -19,6 +20,7 @@ export default function MobileNavbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [languageModalOpen, setLanguageModalOpen] = useState(false);
   const isRTL = locale === 'ar';
 
   // Get current page title from centralized function
@@ -40,10 +42,9 @@ export default function MobileNavbar() {
     }
   };
 
-  const switchLanguage = () => {
-    const newLocale = locale === 'ar' ? 'en' : 'ar';
-    setLocale(newLocale);
+  const openLanguageModal = () => {
     setOpen(false);
+    setLanguageModalOpen(true);
   };
 
   const handleLogout = () => {
@@ -221,7 +222,7 @@ export default function MobileNavbar() {
                     </ul>
                     <div className="border-t border-gray-200 mt-4 py-3 ">
                       <button
-                        onClick={switchLanguage}
+                        onClick={openLanguageModal}
                         className={`flex items-center gap-4 px-4 py-4 w-full hover:bg-gray-50 transition-colors  ${
                           isRTL ? 'flex-row text-right' : 'flex-row text-left'
                         }`}
@@ -271,6 +272,9 @@ export default function MobileNavbar() {
 
       {/* Login Modal */}
       <LoginModal open={loginModalOpen} onOpenChange={setLoginModalOpen} />
+      
+      {/* Language Modal */}
+      <LanguageModal open={languageModalOpen} onOpenChange={setLanguageModalOpen} />
     </>
   );
 }
