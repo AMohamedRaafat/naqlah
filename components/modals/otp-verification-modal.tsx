@@ -94,7 +94,7 @@ export default function OTPVerificationModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-80 font-expo-arabic p-0 gap-0">
+      <DialogContent className="w-[90%] sm:max-w-80 font-expo-arabic p-0 gap-0">
         {/* Header */}
         <DialogHeader className="relative border-b border-gray-200 pb-4 pt-6 px-6">
           <DialogTitle className="text-center text-xl font-semibold text-gray-900">
