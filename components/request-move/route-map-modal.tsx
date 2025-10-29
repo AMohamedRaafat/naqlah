@@ -6,6 +6,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { X } from 'lucide-react';
+import { DialogTitle } from '@radix-ui/react-dialog';
 
 // Fix for default marker icon
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -72,7 +73,7 @@ export default function RouteMapModal({
           `https://router.project-osrm.org/route/v1/driving/${pickupLocation.lng},${pickupLocation.lat};${destinationLocation.lng},${destinationLocation.lat}?overview=full&geometries=geojson`
         );
         const data = await response.json();
-        
+
         if (data.routes && data.routes.length > 0) {
           const coordinates = data.routes[0].geometry.coordinates.map(
             (coord: [number, number]) => [coord[1], coord[0]] as [number, number]
@@ -94,6 +95,7 @@ export default function RouteMapModal({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="w-[95%] sm:max-w-4xl max-h-[90vh] rounded-xl p-0 overflow-hidden">
+        <DialogTitle></DialogTitle>
         <style>{`
           .custom-tooltip {
             background-color: white !important;
@@ -106,7 +108,7 @@ export default function RouteMapModal({
             display: none !important;
           }
         `}</style>
-        
+
         {/* Close Button */}
         <button
           onClick={() => onOpenChange(false)}
@@ -149,12 +151,7 @@ export default function RouteMapModal({
 
               {/* Route Line - Real Road Route */}
               {routeCoordinates.length > 0 && (
-                <Polyline
-                  positions={routeCoordinates}
-                  color="#808080"
-                  weight={5}
-                  opacity={0.8}
-                />
+                <Polyline positions={routeCoordinates} color="#808080" weight={5} opacity={0.8} />
               )}
 
               {/* Auto-fit bounds */}
