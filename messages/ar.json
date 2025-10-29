@@ -109,6 +109,14 @@
     "resendOtp": "إعادة الإرسال",
     "verifying": "جاري التحقق..."
   },
+  "login": {
+    "title": "تسجيل الدخول",
+    "subtitle": "يرجى إدخال رقم الهاتف",
+    "customerTab": "طالب خدمة",
+    "companyTab": "شركة نقل",
+    "noAccount": "ليس لديك حساب؟",
+    "registerNow": "سجل الآن"
+  },
   "registerCompany": {
     "pageTitle": "الإنضمام كشركة نقل",
     "companyLogo": "صورة الشركة",

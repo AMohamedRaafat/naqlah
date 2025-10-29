@@ -10,6 +10,7 @@ import { usePathname } from 'next/navigation';
 import { Menu, User } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { getMobileMenuItems, getPageTitle as getTitle } from '@/constants/navigation';
+import LoginModal from '@/components/modals/login-modal';
 
 export default function MobileNavbar() {
   const t = useTranslations();
@@ -17,6 +18,7 @@ export default function MobileNavbar() {
   const { isLoggedIn, isCompany, logout } = useAuth();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
   const isRTL = locale === 'ar';
 
   // Get current page title from centralized function
@@ -100,10 +102,50 @@ export default function MobileNavbar() {
                       {menuItems.map((item, index) => {
                         // Check if this item is active
                         const isActive = pathname === item.href;
+                        
+                        // Check if this is the login item
+                        const isLoginItem = item.label === t('navigation.logIn');
 
                         return (
                           <li key={index}>
-                            {item.isExternal ? (
+                            {isLoginItem ? (
+                              <button
+                                onClick={() => {
+                                  setOpen(false);
+                                  setLoginModalOpen(true);
+                                }}
+                                className={`flex items-center gap-4 px-4 py-3 transition-colors w-full ${
+                                  isRTL ? 'flex-row text-right' : 'flex-row text-left'
+                                } ${
+                                  isActive
+                                    ? 'bg-[#D2F2F0] rounded-md border-r-2 border-[#00B8A9]'
+                                    : 'hover:bg-gray-50'
+                                }`}
+                              >
+                                <Image
+                                  src={item.icon}
+                                  alt="icon"
+                                  width={20}
+                                  height={20}
+                                  className="w-6 h-6"
+                                  style={
+                                    isActive
+                                      ? {
+                                          filter:
+                                            'invert(61%) sepia(85%) saturate(490%) hue-rotate(122deg) brightness(93%) contrast(101%)',
+                                        }
+                                      : undefined
+                                  }
+                                />
+                                <span
+                                  className={`text-[15px] ${
+                                    isActive ? 'text-[#00B8A9] font-semibold' : 'text-gray-800'
+                                  }`}
+                                >
+                                  {item.label}
+                                </span>
+                              </button>
+                            ) : item.isExternal ? (
                               <Link
                                 href={item.href || '/'}
                                 onClick={() => setOpen(false)}
@@ -226,6 +268,9 @@ export default function MobileNavbar() {
           </div>
         </div>
       </div>
+
+      {/* Login Modal */}
+      <LoginModal open={loginModalOpen} onOpenChange={setLoginModalOpen} />
     </>
   );
 }

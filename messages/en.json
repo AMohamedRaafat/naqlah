@@ -109,6 +109,14 @@
     "resendOtp": "Resend",
     "verifying": "Verifying..."
   },
+  "login": {
+    "title": "Login",
+    "subtitle": "Please enter your phone number",
+    "customerTab": "Service Seeker",
+    "companyTab": "Moving Company",
+    "noAccount": "Don't have an account?",
+    "registerNow": "Register Now"
+  },
   "registerCompany": {
     "pageTitle": "Join as Moving Company",
     "companyLogo": "Company Logo",
