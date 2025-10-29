@@ -8,6 +8,8 @@ import { useAuth } from '@/contexts/auth-context';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { PhoneInput } from '@/components/ui/phone-input';
+import { EmailInput } from '@/components/ui/email-input';
+import { PasswordInput } from '@/components/ui/password-input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import OTPVerificationModal from './otp-verification-modal';
 
@@ -24,9 +26,18 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
   const isRTL = locale === 'ar';
 
   const [activeTab, setActiveTab] = useState<'customer' | 'company'>('customer');
+  
+  // Customer (phone-based) state
   const [phoneNumber, setPhoneNumber] = useState('');
   const [phoneError, setPhoneError] = useState('');
   const [showOTP, setShowOTP] = useState(false);
+  
+  // Company (email/password) state
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  
   const [saveData, setSaveData] = useState(false);
 
   // Validate Saudi phone number (9 digits, starts with 5)
@@ -37,6 +48,33 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
     }
     if (!phone.startsWith('5')) {
       setPhoneError(t('requestMove.phoneInvalidStart'));
+      return false;
+    }
+    return true;
+  };
+
+  // Validate email
+  const validateEmail = (emailValue: string): boolean => {
+    if (!emailValue) {
+      setEmailError('Email is required');
+      return false;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailValue)) {
+      setEmailError('Invalid email address');
+      return false;
+    }
+    return true;
+  };
+
+  // Validate password
+  const validatePassword = (passwordValue: string): boolean => {
+    if (!passwordValue) {
+      setPasswordError('Password is required');
+      return false;
+    }
+    if (passwordValue.length < 6) {
+      setPasswordError('Password must be at least 6 characters');
       return false;
     }
     return true;
@@ -55,6 +93,32 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
 
     // Open OTP modal
     setShowOTP(true);
+  };
+
+  const handleCompanySubmit = () => {
+    // Validate both fields
+    const isEmailValid = validateEmail(email);
+    const isPasswordValid = validatePassword(password);
+
+    if (!isEmailValid || !isPasswordValid) {
+      return;
+    }
+
+    // Clear errors
+    setEmailError('');
+    setPasswordError('');
+
+    // Mock: Login company user directly (no OTP needed)
+    login({
+      id: '1',
+      name: 'شركة النقل',
+      email: email,
+      isCompany: true,
+    });
+
+    // Close modal and redirect
+    onOpenChange(false);
+    router.push('/dashboard');
   };
 
   const handleOTPVerifySuccess = () => {
@@ -163,20 +227,38 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
 
             {/* Company Tab */}
             <TabsContent value="company" className="space-y-4 mt-6">
-              {/* Phone Number Input */}
+              {/* Email Input */}
               <div className="space-y-2">
-                <label htmlFor="company-phone" className="block text-sm font-medium text-gray-700">
-                  {t('requestMove.phoneLabel')}
+                <label htmlFor="company-email" className="block text-sm font-medium text-gray-700">
+                  {t('registerCompany.email')}
                 </label>
-                <PhoneInput
-                  id="company-phone"
-                  value={phoneNumber}
+                <EmailInput
+                  id="company-email"
+                  value={email}
                   onChange={(value) => {
-                    setPhoneNumber(value);
-                    setPhoneError('');
+                    setEmail(value);
+                    setEmailError('');
                   }}
-                  error={phoneError}
-                  placeholder={t('requestMove.phonePlaceholder')}
+                  error={emailError}
+                  placeholder="example@company.com"
+                  isRTL={isRTL}
+                />
+              </div>
+
+              {/* Password Input */}
+              <div className="space-y-2">
+                <label htmlFor="company-password" className="block text-sm font-medium text-gray-700">
+                  {t('registerCompany.password')}
+                </label>
+                <PasswordInput
+                  id="company-password"
+                  value={password}
+                  onChange={(value) => {
+                    setPassword(value);
+                    setPasswordError('');
+                  }}
+                  error={passwordError}
+                  placeholder="••••••••"
                   isRTL={isRTL}
                 />
               </div>
@@ -197,7 +279,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
 
               {/* Submit Button */}
               <Button
-                onClick={handlePhoneSubmit}
+                onClick={handleCompanySubmit}
                 className="w-full bg-[#00B8A9] hover:bg-[#009688] text-white"
               >
                 {t('requestMove.submitButton')}
