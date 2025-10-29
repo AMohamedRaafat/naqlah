@@ -10,30 +10,13 @@ import { X } from 'lucide-react';
 // Fix for default marker icon
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 
-// Create custom marker without number
-const createMarkerIcon = () => {
-  return L.divIcon({
-    className: 'custom-marker',
-    html: `
-      <div style="position: relative;">
-        <div style="
-          width: 40px;
-          height: 40px;
-          background-color: #00B8A9;
-          border-radius: 50% 50% 50% 0;
-          transform: rotate(-45deg);
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-        ">
-        </div>
-      </div>
-    `,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-    popupAnchor: [0, -40],
-  });
-};
-
-const markerIcon = createMarkerIcon();
+// Create custom marker using the SVG icon
+const markerIcon = new L.Icon({
+  iconUrl: '/assets/steps/map-marker.svg',
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+  popupAnchor: [0, -40],
+});
 
 interface RouteMapModalProps {
   open: boolean;
@@ -121,10 +104,6 @@ export default function RouteMapModal({
           }
           .custom-tooltip:before {
             display: none !important;
-          }
-          .custom-marker {
-            background: transparent !important;
-            border: none !important;
           }
         `}</style>
         
