@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Polyline, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Polyline, useMap, Tooltip } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
@@ -10,20 +10,40 @@ import { X } from 'lucide-react';
 // Fix for default marker icon
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 
-// Custom marker icons
-const pickupIcon = new L.Icon({
-  iconUrl: '/assets/steps/map-marker.svg',
-  iconSize: [32, 32],
-  iconAnchor: [16, 32],
-  popupAnchor: [0, -32],
-});
+// Create custom HTML markers with numbers
+const createNumberedIcon = (number: number) => {
+  return L.divIcon({
+    className: 'custom-marker',
+    html: `
+      <div style="position: relative;">
+        <div style="
+          width: 40px;
+          height: 40px;
+          background-color: #00B8A9;
+          border-radius: 50% 50% 50% 0;
+          transform: rotate(-45deg);
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        ">
+          <span style="
+            transform: rotate(45deg);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+          ">${number}</span>
+        </div>
+      </div>
+    `,
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+    popupAnchor: [0, -40],
+  });
+};
 
-const destinationIcon = new L.Icon({
-  iconUrl: '/assets/steps/map-marker.svg',
-  iconSize: [32, 32],
-  iconAnchor: [16, 32],
-  popupAnchor: [0, -32],
-});
+const pickupIcon = createNumberedIcon(1);
+const destinationIcon = createNumberedIcon(2);
 
 interface RouteMapModalProps {
   open: boolean;
@@ -32,20 +52,20 @@ interface RouteMapModalProps {
   destinationLocation: { lat: number; lng: number; address: string };
 }
 
-function MapBounds({ 
-  pickupLocation, 
-  destinationLocation 
-}: { 
-  pickupLocation: [number, number]; 
-  destinationLocation: [number, number]; 
+function MapBounds({
+  pickupLocation,
+  destinationLocation,
+}: {
+  pickupLocation: [number, number];
+  destinationLocation: [number, number];
 }) {
   const map = useMap();
-  
+
   useEffect(() => {
     const bounds = L.latLngBounds([pickupLocation, destinationLocation]);
     map.fitBounds(bounds, { padding: [50, 50] });
   }, [map, pickupLocation, destinationLocation]);
-  
+
   return null;
 }
 
@@ -56,6 +76,7 @@ export default function RouteMapModal({
   destinationLocation,
 }: RouteMapModalProps) {
   const [isMounted, setIsMounted] = useState(false);
+  const [routeCoordinates, setRouteCoordinates] = useState<[number, number][]>([]);
 
   useEffect(() => {
     setIsMounted(true);
@@ -63,16 +84,60 @@ export default function RouteMapModal({
 
   const pickupPos: [number, number] = [pickupLocation.lat, pickupLocation.lng];
   const destinationPos: [number, number] = [destinationLocation.lat, destinationLocation.lng];
-  
+
   // Calculate center point
   const center: [number, number] = [
     (pickupLocation.lat + destinationLocation.lat) / 2,
     (pickupLocation.lng + destinationLocation.lng) / 2,
   ];
 
+  // Fetch route from OSRM API
+  useEffect(() => {
+    const fetchRoute = async () => {
+      try {
+        const response = await fetch(
+          `https://router.project-osrm.org/route/v1/driving/${pickupLocation.lng},${pickupLocation.lat};${destinationLocation.lng},${destinationLocation.lat}?overview=full&geometries=geojson`
+        );
+        const data = await response.json();
+        
+        if (data.routes && data.routes.length > 0) {
+          const coordinates = data.routes[0].geometry.coordinates.map(
+            (coord: [number, number]) => [coord[1], coord[0]] as [number, number]
+          );
+          setRouteCoordinates(coordinates);
+        }
+      } catch (error) {
+        console.error('Error fetching route:', error);
+        // Fallback to straight line if routing fails
+        setRouteCoordinates([pickupPos, destinationPos]);
+      }
+    };
+
+    if (open && isMounted) {
+      fetchRoute();
+    }
+  }, [open, isMounted, pickupLocation, destinationLocation, pickupPos, destinationPos]);
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="w-[95%] sm:max-w-4xl max-h-[90vh] rounded-xl p-0 overflow-hidden">
+        <style>{`
+          .custom-tooltip {
+            background-color: white !important;
+            border: none !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+            border-radius: 8px !important;
+            padding: 6px 12px !important;
+          }
+          .custom-tooltip:before {
+            display: none !important;
+          }
+          .custom-marker {
+            background: transparent !important;
+            border: none !important;
+          }
+        `}</style>
+        
         {/* Close Button */}
         <button
           onClick={() => onOpenChange(false)}
@@ -94,27 +159,37 @@ export default function RouteMapModal({
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-              
+
               {/* Pickup Marker */}
-              <Marker position={pickupPos} icon={pickupIcon} />
-              
+              <Marker position={pickupPos} icon={pickupIcon}>
+                <Tooltip permanent direction="top" offset={[0, -40]} className="custom-tooltip">
+                  <div className="text-center">
+                    <p className="font-bold text-[#00B8A9] text-sm">الموقع 1</p>
+                  </div>
+                </Tooltip>
+              </Marker>
+
               {/* Destination Marker */}
-              <Marker position={destinationPos} icon={destinationIcon} />
-              
-              {/* Route Line */}
-              <Polyline
-                positions={[pickupPos, destinationPos]}
-                color="#00B8A9"
-                weight={4}
-                opacity={0.7}
-                dashArray="10, 10"
-              />
-              
+              <Marker position={destinationPos} icon={destinationIcon}>
+                <Tooltip permanent direction="top" offset={[0, -40]} className="custom-tooltip">
+                  <div className="text-center">
+                    <p className="font-bold text-[#00B8A9] text-sm">الموقع 2</p>
+                  </div>
+                </Tooltip>
+              </Marker>
+
+              {/* Route Line - Real Road Route */}
+              {routeCoordinates.length > 0 && (
+                <Polyline
+                  positions={routeCoordinates}
+                  color="#808080"
+                  weight={5}
+                  opacity={0.8}
+                />
+              )}
+
               {/* Auto-fit bounds */}
-              <MapBounds 
-                pickupLocation={pickupPos} 
-                destinationLocation={destinationPos} 
-              />
+              <MapBounds pickupLocation={pickupPos} destinationLocation={destinationPos} />
             </MapContainer>
           ) : (
             <div className="w-full h-full bg-gray-100 flex items-center justify-center rounded-xl">
@@ -126,4 +201,3 @@ export default function RouteMapModal({
     </Dialog>
   );
 }
-
