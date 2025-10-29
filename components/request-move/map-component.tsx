@@ -31,12 +31,7 @@ function MapEvents({
       // Reverse geocoding using Nominatim (free OpenStreetMap service)
       try {
         const response = await fetch(
-          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=ar`,
-          {
-            headers: {
-              'User-Agent': 'Naqlah-Moving-App/1.0',
-            },
-          }
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=ar`
         );
 
         if (!response.ok) {
@@ -88,12 +83,7 @@ export default function MapComponent({ center, onLocationSelect, searchQuery }: 
           const response = await fetch(
             `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
               searchQuery
-            )},Saudi Arabia&countrycodes=sa&limit=1&accept-language=ar`,
-            {
-              headers: {
-                'User-Agent': 'Naqlah-Moving-App/1.0',
-              },
-            }
+            )},Saudi Arabia&countrycodes=sa&limit=1&accept-language=ar`
           );
 
           if (!response.ok) {
@@ -123,7 +113,11 @@ export default function MapComponent({ center, onLocationSelect, searchQuery }: 
   }, [searchQuery, onLocationSelect]);
 
   if (!isMounted) {
-    return <div className="w-full h-96 bg-gray-100 rounded-lg flex items-center justify-center">Loading map...</div>;
+    return (
+      <div className="w-full h-96 bg-gray-100 rounded-lg flex items-center justify-center">
+        Loading map...
+      </div>
+    );
   }
 
   return (
