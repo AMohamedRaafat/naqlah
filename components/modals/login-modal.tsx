@@ -5,12 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useLanguage } from '@/contexts/language-context';
 import { useAuth } from '@/contexts/auth-context';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -54,6 +49,11 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
 
     // Phone is valid, proceed to OTP
     setPhoneError('');
+    
+    // Close the main login modal when opening OTP
+    onOpenChange(false);
+    
+    // Open OTP modal
     setShowOTP(true);
   };
 
@@ -75,7 +75,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
         id: '1',
         name: isCompany ? 'شركة النقل' : 'محمد أحمد',
         phone: `+966${phoneNumber}`,
-        type: isCompany ? 'company' : 'customer',
+        isCompany: isCompany,
       });
       onOpenChange(false);
       router.push('/dashboard');
@@ -84,8 +84,8 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
 
   const handleBackToPhone = () => {
     setShowOTP(false);
-    setPhoneNumber('');
-    setPhoneError('');
+    // Reopen the login modal when going back
+    onOpenChange(true);
   };
 
   return (
@@ -94,12 +94,8 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
       <Dialog open={open && !showOTP} onOpenChange={onOpenChange}>
         <DialogContent className="sm:max-w-md" dir={isRTL ? 'rtl' : 'ltr'}>
           <DialogHeader>
-            <DialogTitle className="text-center text-xl font-bold">
-              {t('login.title')}
-            </DialogTitle>
-            <p className="text-center text-sm text-gray-600 mt-2">
-              {t('login.subtitle')}
-            </p>
+            <DialogTitle className="text-center text-xl font-bold">{t('login.title')}</DialogTitle>
+            <p className="text-center text-sm text-gray-600 mt-2">{t('login.subtitle')}</p>
           </DialogHeader>
 
           <Tabs
@@ -116,10 +112,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
             <TabsContent value="customer" className="space-y-4 mt-6">
               {/* Phone Number Input */}
               <div className="space-y-2">
-                <label
-                  htmlFor="customer-phone"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="customer-phone" className="block text-sm font-medium text-gray-700">
                   {t('requestMove.phoneLabel')}
                 </label>
                 <div className="relative">
@@ -141,9 +134,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
                     dir="ltr"
                   />
                 </div>
-                {phoneError && (
-                  <p className="text-sm text-red-500">{phoneError}</p>
-                )}
+                {phoneError && <p className="text-sm text-red-500">{phoneError}</p>}
               </div>
 
               {/* Save Data Checkbox */}
@@ -155,10 +146,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
                   onChange={(e) => setSaveData(e.target.checked)}
                   className="w-4 h-4 text-[#00B8A9] border-gray-300 rounded focus:ring-[#00B8A9]"
                 />
-                <label
-                  htmlFor="customer-save"
-                  className="text-sm text-gray-700 cursor-pointer"
-                >
+                <label htmlFor="customer-save" className="text-sm text-gray-700 cursor-pointer">
                   {t('requestMove.saveDataLabel')}
                 </label>
               </div>
@@ -176,10 +164,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
             <TabsContent value="company" className="space-y-4 mt-6">
               {/* Phone Number Input */}
               <div className="space-y-2">
-                <label
-                  htmlFor="company-phone"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="company-phone" className="block text-sm font-medium text-gray-700">
                   {t('requestMove.phoneLabel')}
                 </label>
                 <div className="relative">
@@ -201,9 +186,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
                     dir="ltr"
                   />
                 </div>
-                {phoneError && (
-                  <p className="text-sm text-red-500">{phoneError}</p>
-                )}
+                {phoneError && <p className="text-sm text-red-500">{phoneError}</p>}
               </div>
 
               {/* Save Data Checkbox */}
@@ -215,10 +198,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
                   onChange={(e) => setSaveData(e.target.checked)}
                   className="w-4 h-4 text-[#00B8A9] border-gray-300 rounded focus:ring-[#00B8A9]"
                 />
-                <label
-                  htmlFor="company-save"
-                  className="text-sm text-gray-700 cursor-pointer"
-                >
+                <label htmlFor="company-save" className="text-sm text-gray-700 cursor-pointer">
                   {t('requestMove.saveDataLabel')}
                 </label>
               </div>
@@ -262,4 +242,3 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
     </>
   );
 }
-

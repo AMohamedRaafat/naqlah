@@ -99,83 +99,113 @@ export default function OTPVerificationModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md" dir={isRTL ? 'rtl' : 'ltr'}>
-        <DialogHeader>
-          <DialogTitle className="text-center text-xl font-bold">
+      <DialogContent className="sm:max-w-80 font-expo-arabic p-0 gap-0">
+        {/* Header */}
+        <DialogHeader className="relative border-b border-gray-200 pb-4 pt-6 px-6">
+          <DialogTitle className="text-center text-xl font-semibold text-gray-900">
             {t('secondStepTitle')}
           </DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-6 py-4">
+        {/* Modal body */}
+        <div className="px-6 py-6">
           {/* Phone Number Display */}
-          <p className="text-center text-gray-600">
-            {t('otpSubtitle')} <span className="font-semibold">+966 {phoneNumber}</span>
+          <p className="text-center text-[#868686] mb-2 text-sm">
+            {t('otpSubtitle')}{' '}
+            <span className="text-[#353535] font-medium">+966{phoneNumber}</span>
           </p>
 
-          {/* OTP Input */}
-          <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700">
-              {t('otpLabel')}
-            </label>
-            <div className="flex justify-center" dir="ltr">
-              <InputOTP
-                maxLength={6}
-                value={otp}
-                onChange={(value) => {
-                  setOtp(value);
-                  setOtpError('');
-                }}
-                autoComplete="one-time-code"
-              >
-                <InputOTPGroup>
-                  <InputOTPSlot index={0} />
-                  <InputOTPSlot index={1} />
-                  <InputOTPSlot index={2} />
-                  <InputOTPSlot index={3} />
-                  <InputOTPSlot index={4} />
-                  <InputOTPSlot index={5} />
-                </InputOTPGroup>
-              </InputOTP>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleVerifyOTP();
+            }}
+          >
+            {/* OTP Label */}
+            <div className="mb-4 mt-4">
+              <label className="block text-sm font-medium text-gray-700 mb-3 text-center">
+                {t('otpLabel')}
+              </label>
+
+              {/* OTP Input using shadcn InputOTP */}
+              <div className="flex justify-center mb-4 flex-row">
+                <InputOTP
+                  maxLength={6}
+                  value={otp}
+                  onChange={(value) => {
+                    setOtp(value);
+                    setOtpError('');
+                  }}
+                  autoComplete="one-time-code"
+                >
+                  <InputOTPGroup className="gap-2 flex-row-reverse">
+                    <InputOTPSlot
+                      index={0}
+                      className={`rounded-md w-12 h-12 text-lg font-semibold border-2 ${
+                        otpError ? 'border-red-500 bg-red-50' : 'border-[#E7E7E7]'
+                      }`}
+                    />
+                    <InputOTPSlot
+                      index={1}
+                      className={`rounded-md w-12 h-12 text-lg font-semibold border-2 ${
+                        otpError ? 'border-red-500 bg-red-50' : 'border-[#E7E7E7]'
+                      }`}
+                    />
+                    <InputOTPSlot
+                      index={2}
+                      className={`rounded-md w-12 h-12 text-lg font-semibold border-2 ${
+                        otpError ? 'border-red-500 bg-red-50' : 'border-[#E7E7E7]'
+                      }`}
+                    />
+                    <InputOTPSlot
+                      index={3}
+                      className={`rounded-md w-12 h-12 text-lg font-semibold border-2 ${
+                        otpError ? 'border-red-500 bg-red-50' : 'border-[#E7E7E7]'
+                      }`}
+                    />
+                    <InputOTPSlot
+                      index={4}
+                      className={`rounded-md w-12 h-12 text-lg font-semibold border-2 ${
+                        otpError ? 'border-red-500 bg-red-50' : 'border-[#E7E7E7]'
+                      }`}
+                    />
+                    <InputOTPSlot
+                      index={5}
+                      className={`rounded-md w-12 h-12 text-lg font-semibold border-2 ${
+                        otpError ? 'border-red-500 bg-red-50' : 'border-[#E7E7E7]'
+                      }`}
+                    />
+                  </InputOTPGroup>
+                </InputOTP>
+              </div>
+
+              {/* OTP Error Message */}
+              {otpError && <p className="text-red-500 text-sm text-center mb-3">{otpError}</p>}
             </div>
-            {otpError && (
-              <p className="text-sm text-red-500 text-center">{otpError}</p>
-            )}
-          </div>
 
-          {/* Resend OTP */}
-          <div className="text-center">
-            <p className="text-sm text-gray-600">
-              {t('didNotReceive')}{' '}
-              <button
-                type="button"
-                onClick={handleResendOTP}
-                className="text-[#00B8A9] font-semibold hover:underline"
-              >
-                {t('resendOtp')}
-              </button>
-            </p>
-          </div>
+            {/* Resend OTP Link */}
+            <div className="text-center mb-6">
+              <p className="text-sm text-gray-600">
+                {t('didNotReceive')}{' '}
+                <button
+                  type="button"
+                  onClick={handleResendOTP}
+                  className="text-[#00B8A9] hover:underline font-medium"
+                >
+                  {t('resendOtp')}
+                </button>
+              </p>
+            </div>
 
-          {/* Action Buttons */}
-          <div className="flex gap-3">
-            {onBack && (
-              <Button
-                type="button"
-                variant="outline"
-                onClick={onBack}
-                className="flex-1"
-              >
-                {isRTL ? 'رجوع' : 'Back'}
-              </Button>
-            )}
+            {/* Verify OTP button */}
             <Button
-              onClick={handleVerifyOTP}
-              disabled={isVerifying || otp.length !== 6}
-              className="flex-1 bg-[#00B8A9] hover:bg-[#009688] text-white"
+              type="submit"
+              disabled={otp.length !== 6 || isVerifying}
+              className="w-full bg-[#00B8A9] hover:bg-[#009688] text-white font-semibold py-6 text-base disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isVerifying ? t('verifying') : t('submitButton')}
             </Button>
-          </div>
+          </form>
         </div>
       </DialogContent>
     </Dialog>

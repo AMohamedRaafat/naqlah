@@ -64,6 +64,11 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
 
     // Phone is valid, proceed to OTP
     console.log('Sending OTP to:', '+966' + phoneNumber);
+    
+    // Close the main request modal when opening OTP
+    onOpenChange(false);
+    
+    // Open OTP modal
     setShowOTP(true);
   };
 
@@ -100,8 +105,8 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
 
   const handleBackToPhone = () => {
     setShowOTP(false);
-    setPhoneNumber('');
-    setPhoneError('');
+    // Reopen the request modal when going back
+    onOpenChange(true);
   };
 
   return (
