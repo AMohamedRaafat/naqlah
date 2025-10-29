@@ -5,18 +5,10 @@ import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useLanguage } from '@/contexts/language-context';
 import { useAuth } from '@/contexts/auth-context';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { PhoneInput } from '@/components/ui/phone-input';
-import {
-  validateField,
-  saudiPhoneSchema,
-} from '@/lib/validations/schemas';
+import { validateField, saudiPhoneSchema } from '@/lib/validations/schemas';
 import OTPVerificationModal from './otp-verification-modal';
 
 interface RequestMoveModalProps {
@@ -83,10 +75,10 @@ export default function RequestMoveModal({ open, onOpenChange }: RequestMoveModa
 
     // Phone is valid, proceed to OTP
     console.log('Sending OTP to:', '+966' + phoneNumber);
-    
+
     // Close the main request modal when opening OTP
     onOpenChange(false);
-    
+
     // Open OTP modal
     setShowOTP(true);
   };

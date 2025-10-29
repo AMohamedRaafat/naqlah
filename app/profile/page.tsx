@@ -111,158 +111,156 @@ export default function ProfileCompletePage() {
 
   return (
     <div className="min-h-screen bg-[#fafafa] font-expo-arabic">
-      {/* Desktop & Mobile - Main navbar will show automatically */}
-
       <div className="container mx-auto px-4 py-8 max-w-md mt-8">
         <div className="bg-white rounded-xl shadow-sm p-6">
           <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Profile Photo Upload */}
-          <div className="flex flex-col items-center">
-            <label
-              htmlFor="photo-upload"
-              className="w-32 h-32 rounded-full bg-[#00B8A9] flex items-center justify-center cursor-pointer overflow-hidden"
-            >
-              {photoPreview ? (
-                <Image
-                  src={photoPreview}
-                  alt="Profile"
-                  className="object-cover w-full h-full"
-                  width={128}
-                  height={128}
-                />
-              ) : (
-                <Camera className="w-12 h-12 text-white" />
-              )}
-            </label>
-            <input
-              type="file"
-              id="photo-upload"
-              accept="image/*"
-              className="hidden"
-              onChange={handlePhotoUpload}
-            />
-          </div>
-
-          {/* Title */}
-          <h1 className="text-center text-xl font-semibold text-gray-900">{t('title')}</h1>
-
-          {/* First Name */}
-          <div className="space-y-2">
-            <Label htmlFor="firstName" className="text-[#353535] font-medium text-right block">
-              {t('firstName')}
-            </Label>
-            <Input
-              id="firstName"
-              value={formData.firstName}
-              onChange={(e) => {
-                setFormData({ ...formData, firstName: e.target.value });
-                if (errors.firstName) setErrors({ ...errors, firstName: '' });
-              }}
-              placeholder={t('firstNamePlaceholder')}
-              className={`border-[#EDEDED] ${errors.firstName ? 'border-red-500' : ''}`}
-              dir={isRTL ? 'rtl' : 'ltr'}
-              required
-            />
-            {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName}</p>}
-          </div>
-
-          {/* Last Name */}
-          <div className="space-y-2">
-            <Label htmlFor="lastName" className="text-[#353535] font-medium text-right block">
-              {t('lastName')}
-            </Label>
-            <Input
-              id="lastName"
-              value={formData.lastName}
-              onChange={(e) => {
-                setFormData({ ...formData, lastName: e.target.value });
-                if (errors.lastName) setErrors({ ...errors, lastName: '' });
-              }}
-              placeholder={t('lastNamePlaceholder')}
-              className={`border-[#EDEDED] ${errors.lastName ? 'border-red-500' : ''}`}
-              dir={isRTL ? 'rtl' : 'ltr'}
-              required
-            />
-            {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
-          </div>
-
-          {/* Phone Number */}
-          <div className="space-y-2">
-            <Label htmlFor="phoneNumber" className="text-[#353535] font-medium text-right block">
-              {t('phoneNumber')}
-            </Label>
-            <PhoneInput
-              id="phoneNumber"
-              value={formData.phoneNumber}
-              onChange={(value) => {
-                setFormData({ ...formData, phoneNumber: value });
-                if (errors.phoneNumber) setErrors({ ...errors, phoneNumber: '' });
-              }}
-              error={errors.phoneNumber}
-              isRTL={isRTL}
-              disabled
-              required
-            />
-          </div>
-
-          {/* Request Title (Optional) */}
-          <div className="space-y-2">
-            <Label htmlFor="requestTitle" className="text-[#353535] font-medium text-right block">
-              {t('requestTitle')}
-            </Label>
-            <Input
-              id="requestTitle"
-              value={formData.requestTitle}
-              onChange={(e) => setFormData({ ...formData, requestTitle: e.target.value })}
-              placeholder={t('requestTitlePlaceholder')}
-              className="border-[#EDEDED]"
-              dir={isRTL ? 'rtl' : 'ltr'}
-            />
-          </div>
-
-          {/* Terms Checkbox */}
-          <div className="space-y-2">
-            <div className="flex items-start gap-3" dir={isRTL ? 'rtl' : 'ltr'}>
+            {/* Profile Photo Upload */}
+            <div className="flex flex-col items-center">
+              <label
+                htmlFor="photo-upload"
+                className="w-32 h-32 rounded-full bg-[#00B8A9] flex items-center justify-center cursor-pointer overflow-hidden"
+              >
+                {photoPreview ? (
+                  <Image
+                    src={photoPreview}
+                    alt="Profile"
+                    className="object-cover w-full h-full"
+                    width={128}
+                    height={128}
+                  />
+                ) : (
+                  <Camera className="w-12 h-12 text-white" />
+                )}
+              </label>
               <input
-                type="checkbox"
-                id="agreeTerms"
-                checked={formData.agreeTerms}
+                type="file"
+                id="photo-upload"
+                accept="image/*"
+                className="hidden"
+                onChange={handlePhotoUpload}
+              />
+            </div>
+
+            {/* Title */}
+            <h1 className="text-center text-xl font-semibold text-gray-900">{t('title')}</h1>
+
+            {/* First Name */}
+            <div className="space-y-2">
+              <Label htmlFor="firstName" className="text-[#353535] font-medium text-right block">
+                {t('firstName')}
+              </Label>
+              <Input
+                id="firstName"
+                value={formData.firstName}
                 onChange={(e) => {
-                  setFormData({ ...formData, agreeTerms: e.target.checked });
-                  if (errors.agreeTerms) setErrors({ ...errors, agreeTerms: '' });
+                  setFormData({ ...formData, firstName: e.target.value });
+                  if (errors.firstName) setErrors({ ...errors, firstName: '' });
                 }}
-                className={`w-5 h-5 text-[#00B8A9] border-[#E7E7E7] rounded focus:ring-[#00B8A9] mt-1 ${
-                  errors.agreeTerms ? 'border-red-500' : ''
-                }`}
+                placeholder={t('firstNamePlaceholder')}
+                className={`border-[#EDEDED] ${errors.firstName ? 'border-red-500' : ''}`}
+                dir={isRTL ? 'rtl' : 'ltr'}
                 required
               />
-              <Label
-                htmlFor="agreeTerms"
-                className="text-sm text-gray-700 cursor-pointer leading-relaxed"
-              >
-                {t('agreeTerms')}{' '}
-                <a href="/terms" className="text-[#00B8A9] font-semibold underline">
-                  {t('termsLink')}
-                </a>{' '}
-                {t('and')}{' '}
-                <a href="/privacy" className="text-[#00B8A9] font-semibold underline">
-                  {t('privacyLink')}
-                </a>
-                {isRTL && ' الخاصة بنا'}
-              </Label>
+              {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName}</p>}
             </div>
-            {errors.agreeTerms && <p className="text-red-500 text-sm">{errors.agreeTerms}</p>}
-          </div>
 
-          {/* Submit Button */}
-          <Button
-            type="submit"
-            disabled={!formData.agreeTerms}
-            className="w-full bg-gray-300 hover:bg-gray-400 text-gray-600 font-semibold py-6 text-base disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {t('submitButton')}
-          </Button>
-        </form>
+            {/* Last Name */}
+            <div className="space-y-2">
+              <Label htmlFor="lastName" className="text-[#353535] font-medium text-right block">
+                {t('lastName')}
+              </Label>
+              <Input
+                id="lastName"
+                value={formData.lastName}
+                onChange={(e) => {
+                  setFormData({ ...formData, lastName: e.target.value });
+                  if (errors.lastName) setErrors({ ...errors, lastName: '' });
+                }}
+                placeholder={t('lastNamePlaceholder')}
+                className={`border-[#EDEDED] ${errors.lastName ? 'border-red-500' : ''}`}
+                dir={isRTL ? 'rtl' : 'ltr'}
+                required
+              />
+              {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
+            </div>
+
+            {/* Phone Number */}
+            <div className="space-y-2">
+              <Label htmlFor="phoneNumber" className="text-[#353535] font-medium text-right block">
+                {t('phoneNumber')}
+              </Label>
+              <PhoneInput
+                id="phoneNumber"
+                value={formData.phoneNumber}
+                onChange={(value) => {
+                  setFormData({ ...formData, phoneNumber: value });
+                  if (errors.phoneNumber) setErrors({ ...errors, phoneNumber: '' });
+                }}
+                error={errors.phoneNumber}
+                isRTL={isRTL}
+                disabled
+                required
+              />
+            </div>
+
+            {/* Request Title (Optional) */}
+            <div className="space-y-2">
+              <Label htmlFor="requestTitle" className="text-[#353535] font-medium text-right block">
+                {t('requestTitle')}
+              </Label>
+              <Input
+                id="requestTitle"
+                value={formData.requestTitle}
+                onChange={(e) => setFormData({ ...formData, requestTitle: e.target.value })}
+                placeholder={t('requestTitlePlaceholder')}
+                className="border-[#EDEDED]"
+                dir={isRTL ? 'rtl' : 'ltr'}
+              />
+            </div>
+
+            {/* Terms Checkbox */}
+            <div className="space-y-2">
+              <div className="flex items-start gap-3" dir={isRTL ? 'rtl' : 'ltr'}>
+                <input
+                  type="checkbox"
+                  id="agreeTerms"
+                  checked={formData.agreeTerms}
+                  onChange={(e) => {
+                    setFormData({ ...formData, agreeTerms: e.target.checked });
+                    if (errors.agreeTerms) setErrors({ ...errors, agreeTerms: '' });
+                  }}
+                  className={`w-5 h-5 text-[#00B8A9] border-[#E7E7E7] rounded focus:ring-[#00B8A9] mt-1 ${
+                    errors.agreeTerms ? 'border-red-500' : ''
+                  }`}
+                  required
+                />
+                <Label
+                  htmlFor="agreeTerms"
+                  className="text-sm text-gray-700 cursor-pointer leading-relaxed"
+                >
+                  {t('agreeTerms')}{' '}
+                  <a href="/terms" className="text-[#00B8A9] font-semibold underline">
+                    {t('termsLink')}
+                  </a>{' '}
+                  {t('and')}{' '}
+                  <a href="/privacy" className="text-[#00B8A9] font-semibold underline">
+                    {t('privacyLink')}
+                  </a>
+                  {isRTL && ' الخاصة بنا'}
+                </Label>
+              </div>
+              {errors.agreeTerms && <p className="text-red-500 text-sm">{errors.agreeTerms}</p>}
+            </div>
+
+            {/* Submit Button */}
+            <Button
+              type="submit"
+              disabled={!formData.agreeTerms}
+              className="w-full bg-gray-300 hover:bg-gray-400 text-gray-600 font-semibold py-6 text-base disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {t('submitButton')}
+            </Button>
+          </form>
         </div>
       </div>
     </div>

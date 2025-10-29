@@ -1,5 +1,5 @@
-import AppLayoutWrapper from '@/components/layout/app-layout-wrapper';
+import PublicLayoutWrapper from '@/components/layout/public-layout-wrapper';
 
 export default function ProfileLayout({ children }: { children: React.ReactNode }) {
-  return <AppLayoutWrapper>{children}</AppLayoutWrapper>;
+  return <PublicLayoutWrapper>{children}</PublicLayoutWrapper>;
 }
