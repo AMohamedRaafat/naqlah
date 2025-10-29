@@ -75,7 +75,8 @@
     "settings": "Settings",
     "partners": "Success Partners",
     "services": "Services",
-    "logout": "Logout"
+    "logout": "Logout",
+    "requestMove": "Request a Move"
   },
   "footer": {
     "companyName": "Naqlah",
@@ -308,6 +309,15 @@
       "agreeTerms": "I agree to the terms of use and privacy policy",
       "back": "Back",
       "confirm": "Confirm Order"
+    },
+    "processing": {
+      "breadcrumb": "Processing Request",
+      "title": "Your Request is Being Processed",
+      "subtitle": "Your request has been successfully created. You will receive price quotes from moving companies within the next few hours",
+      "waitingResponse": "Waiting for Response",
+      "requestStatus": "Request Status",
+      "followUp": "Follow Up Request",
+      "backToHome": "Return to Home"
     }
   }
 }

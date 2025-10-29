@@ -4,15 +4,16 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useAuth } from '@/contexts/auth-context';
-import Step1PickupLocation from '@/components/order-move/step1-pickup-location';
-import Step2PickupDetails from '@/components/order-move/step2-pickup-details';
-import Step3DestinationLocation from '@/components/order-move/step3-destination-location';
-import Step4DestinationDetails from '@/components/order-move/step4-destination-details';
-import Step5FurnitureDetails from '@/components/order-move/step5-furniture-details';
-import Step6AdditionalServices from '@/components/order-move/step6-additional-services';
-import Step7DateTime from '@/components/order-move/step7-datetime';
-import ReviewPage from '@/components/order-move/review-page';
-import ProgressBar from '@/components/order-move/progress-bar';
+import Step1PickupLocation from '@/components/request-move/step1-pickup-location';
+import Step2PickupDetails from '@/components/request-move/step2-pickup-details';
+import Step3DestinationLocation from '@/components/request-move/step3-destination-location';
+import Step4DestinationDetails from '@/components/request-move/step4-destination-details';
+import Step5FurnitureDetails from '@/components/request-move/step5-furniture-details';
+import Step6AdditionalServices from '@/components/request-move/step6-additional-services';
+import Step7DateTime from '@/components/request-move/step7-datetime';
+import ReviewPage from '@/components/request-move/review-page';
+import ProcessingPage from '@/components/request-move/processing-page';
+import ProgressBar from '@/components/request-move/progress-bar';
 
 export type OrderFormData = {
   // Step 1 & 3: Locations
@@ -152,7 +153,8 @@ export default function OrderMovePage() {
   const handleSubmit = () => {
     console.log('Final Form Data:', formData);
     // Handle final submission (API call, etc.)
-    router.push('/dashboard');
+    // Move to processing page
+    setCurrentStep(9);
   };
 
   const renderStep = () => {
@@ -218,6 +220,8 @@ export default function OrderMovePage() {
             onBack={handleBack}
           />
         );
+      case 9:
+        return <ProcessingPage />;
       default:
         return null;
     }
@@ -225,11 +229,27 @@ export default function OrderMovePage() {
 
   return (
     <div className="min-h-screen bg-[#fafafa] font-expo-arabic">
-      {/* Progress Bar - Only show for steps 1-7, not on review page */}
-      {currentStep <= totalSteps && (
+      {/* Breadcrumb and Progress Bar - Show for steps 1-7 and processing page */}
+      {(currentStep <= totalSteps || currentStep === 9) && (
         <div className="bg-white border-b border-gray-200">
           <div className="container mx-auto max-w-4xl px-4 py-4">
-            <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
+            {/* Breadcrumb */}
+            <div className="mb-4 text-sm text-gray-600">
+              <span>{t('navigation.home')}</span>
+              <span className="mx-2">—</span>
+              <span className="text-gray-900 font-medium">{t('navigation.requestMove')}</span>
+              {currentStep === 9 && (
+                <>
+                  <span className="mx-2">—</span>
+                  <span className="text-gray-900 font-medium">{t('orderMove.processing.breadcrumb') || 'معالجة الطلب'}</span>
+                </>
+              )}
+            </div>
+
+            {/* Progress Bar - Only show for steps 1-7 */}
+            {currentStep <= totalSteps && (
+              <ProgressBar currentStep={currentStep} totalSteps={totalSteps} onBack={handleBack} />
+            )}
           </div>
         </div>
       )}

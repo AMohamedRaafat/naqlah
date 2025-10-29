@@ -5,7 +5,7 @@ import { useLanguage } from '@/contexts/language-context';
 import { Button } from '@/components/ui/button';
 import { Pencil, Check } from 'lucide-react';
 import Image from 'next/image';
-import { OrderFormData } from '@/app/order-move/page';
+import { OrderFormData } from '@/app/request-move/page';
 
 interface ReviewPageProps {
   formData: OrderFormData;
