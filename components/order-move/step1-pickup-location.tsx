@@ -111,4 +111,3 @@ export default function Step1PickupLocation({ data, onNext, onBack }: Step1Props
     </div>
   );
 }
-

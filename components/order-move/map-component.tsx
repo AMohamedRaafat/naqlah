@@ -19,25 +19,41 @@ interface MapComponentProps {
   searchQuery?: string;
 }
 
-function MapEvents({ onLocationSelect }: { onLocationSelect: (lat: number, lng: number, address: string, city: string) => void }) {
+function MapEvents({
+  onLocationSelect,
+}: {
+  onLocationSelect: (lat: number, lng: number, address: string, city: string) => void;
+}) {
   useMapEvents({
     click: async (e) => {
       const { lat, lng } = e.latlng;
-      
+
       // Reverse geocoding using Nominatim (free OpenStreetMap service)
       try {
         const response = await fetch(
-          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=ar`
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=ar`,
+          {
+            headers: {
+              'User-Agent': 'Naqlah-Moving-App/1.0',
+            },
+          }
         );
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
         const data = await response.json();
-        
+
         const address = data.display_name || `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
         const city = data.address?.city || data.address?.town || data.address?.state || 'الرياض';
-        
+
         onLocationSelect(lat, lng, address, city);
       } catch (error) {
         console.error('Geocoding error:', error);
-        onLocationSelect(lat, lng, `${lat.toFixed(6)}, ${lng.toFixed(6)}`, 'الرياض');
+        // Fallback: use coordinates as address
+        const fallbackAddress = `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+        onLocationSelect(lat, lng, fallbackAddress, 'الرياض');
       }
     },
   });
@@ -57,16 +73,29 @@ export default function MapComponent({ center, onLocationSelect, searchQuery }: 
       const searchLocation = async () => {
         try {
           const response = await fetch(
-            `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}&countrycodes=sa&limit=1&accept-language=ar`
+            `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+              searchQuery
+            )},Saudi Arabia&countrycodes=sa&limit=1&accept-language=ar`,
+            {
+              headers: {
+                'User-Agent': 'Naqlah-Moving-App/1.0',
+              },
+            }
           );
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
           const data = await response.json();
-          
+
           if (data && data.length > 0) {
             const { lat, lon, display_name } = data[0];
             const newLat = parseFloat(lat);
             const newLng = parseFloat(lon);
-            const city = data[0].address?.city || data[0].address?.town || data[0].address?.state || 'الرياض';
-            
+            const city =
+              data[0].address?.city || data[0].address?.town || data[0].address?.state || 'الرياض';
+
             setPosition([newLat, newLng]);
             onLocationSelect(newLat, newLng, display_name, city);
           }
@@ -75,18 +104,13 @@ export default function MapComponent({ center, onLocationSelect, searchQuery }: 
         }
       };
 
-      const debounce = setTimeout(searchLocation, 500);
+      const debounce = setTimeout(searchLocation, 800);
       return () => clearTimeout(debounce);
     }
   }, [searchQuery, onLocationSelect]);
 
   return (
-    <MapContainer
-      center={position}
-      zoom={13}
-      className="w-full h-96"
-      style={{ zIndex: 0 }}
-    >
+    <MapContainer center={position} zoom={13} className="w-full h-96" style={{ zIndex: 0 }}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -96,4 +120,3 @@ export default function MapComponent({ center, onLocationSelect, searchQuery }: 
     </MapContainer>
   );
 }
-

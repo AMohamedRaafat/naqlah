@@ -28,7 +28,7 @@ export type OrderFormData = {
     address: string;
     city: string;
   };
-  
+
   // Step 2: Pickup Details
   pickupDetails: {
     city: string;
@@ -39,7 +39,7 @@ export type OrderFormData = {
     elevatorSize: string;
     additionalNotes: string;
   };
-  
+
   // Step 4: Destination Details
   destinationDetails: {
     city: string;
@@ -50,14 +50,14 @@ export type OrderFormData = {
     elevatorSize: string;
     additionalNotes: string;
   };
-  
+
   // Step 5: Furniture Details
   furnitureDetails: {
     roomsCount: string;
     furniture: Array<{ name: string; quantity: number }>;
     photos: File[];
   };
-  
+
   // Step 6: Additional Services
   additionalServices: {
     packaging: string;
@@ -66,7 +66,7 @@ export type OrderFormData = {
     insurance: string;
     needDisassembly: string;
   };
-  
+
   // Step 7: Date & Time
   dateTime: {
     date: Date | null;
@@ -79,7 +79,7 @@ export default function OrderMovePage() {
   const router = useRouter();
   const { isLoggedIn } = useAuth();
   const t = useTranslations();
-  
+
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<OrderFormData>({
     pickupLocation: { lat: 24.7136, lng: 46.6753, address: '', city: '' },
@@ -122,10 +122,10 @@ export default function OrderMovePage() {
   });
 
   // Redirect if not logged in
-  if (!isLoggedIn) {
-    router.push('/');
-    return null;
-  }
+  // if (!isLoggedIn) {
+  //   router.push('/');
+  //   return null;
+  // }
 
   const totalSteps = 7;
 
@@ -208,13 +208,7 @@ export default function OrderMovePage() {
           />
         );
       case 7:
-        return (
-          <Step7DateTime
-            data={formData.dateTime}
-            onNext={handleNext}
-            onBack={handleBack}
-          />
-        );
+        return <Step7DateTime data={formData.dateTime} onNext={handleNext} onBack={handleBack} />;
       case 8:
         return (
           <ReviewPage
@@ -241,10 +235,7 @@ export default function OrderMovePage() {
       )}
 
       {/* Step Content */}
-      <div className="container mx-auto max-w-4xl px-4 py-6">
-        {renderStep()}
-      </div>
+      <div className="container mx-auto max-w-4xl px-4 py-6">{renderStep()}</div>
     </div>
   );
 }
-
